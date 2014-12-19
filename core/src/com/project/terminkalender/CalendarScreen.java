@@ -5,11 +5,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 
 public class CalendarScreen extends AbstractScreen {
-	private Texture texture;
+	private Calendar calendar;
 
 	public CalendarScreen(Main main) {
 		super(main);
-		texture = new Texture("badlogic.jpg");
+		calendar = new Calendar();
 	}
 	
 	@Override
@@ -18,9 +18,10 @@ public class CalendarScreen extends AbstractScreen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		camera.update();
+		calendar.update();
 		
 		batch.begin();
-		batch.draw(texture, 0, 0, texture.getWidth(), texture.getHeight());
+		calendar.draw(batch);
 		batch.end();
 	}
 }

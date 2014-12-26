@@ -16,12 +16,13 @@ public class Main extends Game {
 	private OrthographicCamera camera;
 	
 	@Override
-	public void create() { // Método que se llama cuando se ejecuta el juego
+	public void create() {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
-		viewport = new FitViewport(WIDTH, HEIGHT, camera); // Inicializamos todo
+		viewport = new FitViewport(WIDTH, HEIGHT, camera);
+		viewport.update(WIDTH, HEIGHT, true);
 		calendarScreen = new CalendarScreen(this);
-		setScreen(calendarScreen); // Establecemos la pantalla del juego como principal
+		setScreen(calendarScreen);
 	}
 	
 	public SpriteBatch getBatch() {

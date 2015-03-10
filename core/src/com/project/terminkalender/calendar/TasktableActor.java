@@ -11,12 +11,6 @@ public class TasktableActor extends Window {
 	
 	public TasktableActor(Tasktable tasktable, DragAndDrop dragAndDrop, Skin skin) {
 		super("Tasktable", skin);
-
-		//TextButton closeButton = new TextButton("X", skin);
-		//closeButton.addListener(new HidingClickListener(this));
-		//getButtonTable().add(closeButton).height(getPadTop());
-		//ScrollPane scroll = new ScrollPane(getButtonTable());
-		//scroll.setFillParent(false);
 		
 		Table table = new Table();
 		
@@ -28,7 +22,7 @@ public class TasktableActor extends Window {
 			table.add(slotActor);
 
 			i++;
-			if (i % 3 == 0) {
+			if (i % 1 == 0) {
 				table.row();
 			}
 		}
@@ -36,10 +30,11 @@ public class TasktableActor extends Window {
 		final ScrollPane scroll = new ScrollPane(table, skin);
 
 		scroll.setFlickScroll(false);
-		//setFillParent(true);
-		add(scroll);
+		scroll.setFadeScrollBars(false);
+		add(scroll).fill().expand();
 		
 		setPosition(Main.WIDTH, Main.HEIGHT);
+		setBounds(Main.WIDTH, Main.HEIGHT, 100, Main.HEIGHT);
 		setMovable(false);
 		defaults().space(8);
 		row().fill().expandX();

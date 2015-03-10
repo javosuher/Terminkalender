@@ -5,7 +5,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -40,6 +39,7 @@ public class Main extends Game {
 		assets.load("skins/uiskin.json", Skin.class);
 		assets.load("Slot.png", Texture.class);
 		assets.load("EmptySlot.png", Texture.class);
+		assets.load("background.png", Texture.class);
 		assets.finishLoading();
 	}
 	

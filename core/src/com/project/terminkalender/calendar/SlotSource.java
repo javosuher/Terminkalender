@@ -23,8 +23,9 @@ public class SlotSource extends Source {
 		}
 		
 		Payload payload = new Payload();
-		Slot payloadSlot = new Slot(sourceSlot.isEmpty());
-		sourceSlot.setEmpty(true);
+		Slot payloadSlot = new Slot();
+		payloadSlot.copy(sourceSlot.isEmpty(), sourceSlot.getTask());
+		sourceSlot.setEmpty();
 		payload.setObject(payloadSlot);
 
 		TextureRegion icon = payloadSlot.getImage();
@@ -46,10 +47,10 @@ public class SlotSource extends Source {
 		Slot payloadSlot = (Slot) payload.getObject();
 		if (target != null) {
 			Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
-			sourceSlot.setEmpty(targetSlot.isEmpty());
-			targetSlot.setEmpty(payloadSlot.isEmpty());
+			sourceSlot.copy(targetSlot.isEmpty(), targetSlot.getTask());
+			targetSlot.copy(payloadSlot.isEmpty(), payloadSlot.getTask());
 		} else {
-			sourceSlot.setEmpty(payloadSlot.isEmpty());
+			sourceSlot.copy(payloadSlot.isEmpty(), payloadSlot.getTask());
 		}
 	}
 }

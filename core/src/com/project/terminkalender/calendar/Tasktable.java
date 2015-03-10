@@ -9,7 +9,7 @@ public class Tasktable {
 		int nSlots = 20;
 		slots = new Array<Slot>(nSlots);
 		for (int i = 0; i < nSlots; i++) {
-			slots.add(new Slot(false));
+			slots.add(new Slot(new Task()));
 		}
 	}
 

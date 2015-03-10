@@ -9,7 +9,7 @@ public class Timetable {
 		int nSlots = 42;
 		slots = new Array<Slot>(nSlots);
 		for (int i = 0; i < nSlots; i++) {
-			slots.add(new Slot(true));
+			slots.add(new Slot());
 		}
 	}
 

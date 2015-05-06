@@ -10,13 +10,17 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.screens.AbstractScreen;
 import com.project.terminkalender.screens.CalendarScreen;
+import com.project.terminkalender.screens.ChatScreen;
 
 public class Main extends Game {
 	public static final int WIDTH = 1000;
 	public static final int HEIGHT = 600;
 	public static final AssetManager assets = new AssetManager();
 	
-	public static AbstractScreen calendarScreen;
+	public static final int PORT = 8080;
+	public static final String IP = "192.168.1.133";
+	
+	public static AbstractScreen calendarScreen, chatScreen;
 	
 	public static SpriteBatch batch;
 	public static Viewport viewport;
@@ -32,7 +36,8 @@ public class Main extends Game {
 		loadAssets();
 		
 		calendarScreen = new CalendarScreen(this);
-		setScreen(calendarScreen);
+		chatScreen = new ChatScreen(this);
+		setScreen(chatScreen);
 	}
 	
 	private void loadAssets() {

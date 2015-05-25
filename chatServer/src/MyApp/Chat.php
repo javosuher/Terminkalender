@@ -5,6 +5,10 @@ use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
 class Chat implements MessageComponentInterface {
+	const POINTSPLIT = ":";
+	const MESSAGE = "Message";
+	const USERSROOM = "UsersRoom";
+
     protected $clients;
 
     public function __construct() {
@@ -19,7 +23,20 @@ class Chat implements MessageComponentInterface {
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {
-        $numRecv = count($this->clients) - 1;
+        $action = explode(Chat::POINTSPLIT, $msg)[0];
+
+        if(strcmp($action, Chat::MESSAGE) == 0) {
+        	$this->sendMessage($from, $msg);
+        }
+        else if(strcmp($action, Chat::USERSROOM) == 0) {
+        	$this->sendUsers($from);
+        }
+
+        //storeInDataBase($msg);
+    }
+
+    private function sendMessage(ConnectionInterface $from, $msg) {
+    	$numRecv = count($this->clients) - 1;
         echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
             , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
 
@@ -28,15 +45,22 @@ class Chat implements MessageComponentInterface {
                 $client->send($msg); // The sender is not the receiver, send to each client connected
             }
         }
+    }
+    private function sendUsers(ConnectionInterface $from) {
+    	echo sprintf('Connection %d need users' . "\n", $from->resourceId);
 
-        // Insert into the database
-        include("config.php"); // Load Database
+    	$msg = Chat::USERSROOM . Chat::POINTSPLIT;
+    	foreach ($this->clients as $client) {
+    		if ($from !== $client) {
+            	$msg = $msg . $client->resourceId . Chat::POINTSPLIT;
+            }
+        }
+        $from->send($msg);
+    }
+
+    private function storeInDataBase($msg) {
+    	include("config.php"); // Load Database
         try {
-        	//$sql = "INSERT INTO messages(msg) VALUES(:msg)";
-        	//$q = $dbh->prepare($sql);
-        	//$q->execute($msg);
-        	//$stmt = $dbh->prepare("INSERT INTO table(msg) VALUES(:msg)");
-			//$stmt->execute(array(':msg' => $msg));
 			$sql = $dbh -> prepare("INSERT INTO messages (msg) VALUES (?)");
 			$sql -> execute(array($msg));
     	} catch(PDOException $e) {

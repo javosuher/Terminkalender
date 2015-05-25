@@ -7,11 +7,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.project.terminkalender.Background;
 import com.project.terminkalender.Main;
-import com.project.terminkalender.chat.Chat;
 import com.project.terminkalender.chat.ChatActor;
+import com.project.terminkalender.chat.RoomActor;
 
 public class ChatScreen extends AbstractScreen {
 	private Background background;
+	private RoomActor roomActor;
 	private ChatActor chatActor;
 	
 	public ChatScreen(Main main) {
@@ -25,9 +26,11 @@ public class ChatScreen extends AbstractScreen {
 		TextureRegion backgroundTexture = new TextureRegion(Main.assets.get("background.png", Texture.class));
 		Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
 		background = new Background(backgroundTexture);
-		chatActor = new ChatActor(new Chat(), skin);
+		roomActor = new RoomActor(skin);
+		//chatActor = new ChatActor(skin);
 		stage.addActor(background);
-		stage.addActor(chatActor);
+		stage.addActor(roomActor);
+		//stage.addActor(chatActor);
 	}
 	
 	@Override

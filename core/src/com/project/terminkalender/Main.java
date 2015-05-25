@@ -18,7 +18,8 @@ public class Main extends Game {
 	public static final AssetManager assets = new AssetManager();
 	
 	public static final int PORT = 8080;
-	public static final String IP = "localhost";
+	public static final String IP = "192.168.1.131";
+	public static WebSockets webSockets;
 	
 	public static AbstractScreen calendarScreen, chatScreen;
 	
@@ -32,6 +33,7 @@ public class Main extends Game {
 		camera = new OrthographicCamera();
 		viewport = new FitViewport(WIDTH, HEIGHT, camera);
 		viewport.update(WIDTH, HEIGHT, true);
+		webSockets = new WebSockets("ws://"+ Main.IP +":"+ Main.PORT);
 		
 		loadAssets();
 		

@@ -11,8 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class ChatActor extends Table {
+	private final Chat chat = new Chat();
 
-	public ChatActor(final Chat chat, final Skin skin) {
+	public ChatActor(final Skin skin) {
 		super(skin);
 		
 		Window messagesWindow = new Window("Chat", skin);

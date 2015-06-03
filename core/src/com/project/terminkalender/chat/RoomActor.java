@@ -9,9 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Main;
+import com.project.terminkalender.screens.ChatScreen;
+import com.project.terminkalender.screens.RoomScreen;
 
 public class RoomActor extends Table {
-	final Room room = new Room();
+	private final Room room = new Room();
 	
 	public RoomActor(Skin skin) {
 		super(skin);
@@ -27,7 +29,9 @@ public class RoomActor extends Table {
 		
 		usersWindow.add(scrolluserWindow).width(800).height(Main.HEIGHT - 16);
 		add(usersWindow).width(800).height(Main.HEIGHT - 16).expand().left().pad(8);
-		add(refreshButton).width(100).height(50).expand().top().right().pad(8);
+		add(refreshButton).width(150).height(75).expand().right().pad(8);
+		
+		room.refreshUsers();
 		
 		refreshButton.addListener(new ClickListener() {
 
@@ -44,19 +48,36 @@ public class RoomActor extends Table {
 		
 		if(room.update()) {
 			Table usersTable = room.getUsersTable();
-			Array<String> users = room.getUsers();
+			Array<Chat> chats = room.getChats();
 			Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
+			final RoomScreen roomScreen = ((RoomScreen) Main.roomScreen);
 			
 			usersTable.clear();
+			
 			int column = 0;
-			for(String user : users) {
-				usersTable.add(new TextButton(user, skin)).width(200).height(100).pad(30);
+			for(Chat chat : chats) {
+				ChatActor chatActor = new ChatActor(skin, chat);
+				roomScreen.addChatScreen(chatActor);
+				
+				TextButton userButton = new TextButton(chat.getUser(), skin);
+				usersTable.add(userButton).width(200).height(100).pad(30);
 				
 				++column;
 				if(column % 3 == 0) {
 					usersTable.row();
 				}
+				
+				userButton.addListener(new ClickListener() {
+
+					@Override 
+					public void clicked(InputEvent event, float x, float y){
+						Array<ChatScreen> chatScreens = roomScreen.getChatScreens();
+						ChatScreen lastChatScreen = chatScreens.peek();
+						Main.main.setScreen(lastChatScreen);
+					}
+				});
 			}
+			
 			room.finishUpdate();
 		}
 	}

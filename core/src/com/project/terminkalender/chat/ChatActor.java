@@ -11,16 +11,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class ChatActor extends Table {
-	private final Chat chat = new Chat();
+	private final Chat chat;
 
-	public ChatActor(final Skin skin) {
+	public ChatActor(final Skin skin, final Chat chat) {
 		super(skin);
+		this.chat = chat;
 		
-		Window messagesWindow = new Window("Chat", skin);
+		Window messagesWindow = new Window(chat.getUser(), skin);
 		Window sendWindow = new Window("Send", skin);
 		
-		final Table messageTable = Chat.getMessageTable();
-		messageTable.setSkin(skin);
+		final Table messageTable = chat.getMessageTable();
 		ScrollPane scrollTable = new ScrollPane(messageTable, skin);
 		final TextArea textMessage = new TextArea("", skin);
 		TextButton sendButton = new TextButton("Send", skin);
@@ -41,7 +41,7 @@ public class ChatActor extends Table {
 		sendButton.addListener(new ClickListener() {
 
 			@Override 
-			public void clicked(InputEvent event, float x, float y){
+			public void clicked(InputEvent event, float x, float y) {
 				String message = textMessage.getText();
 				if(message.length() != 0) {
 					Label newMessage = new Label(message, skin);

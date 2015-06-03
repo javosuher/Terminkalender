@@ -1,15 +1,21 @@
 package com.project.terminkalender.chat;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Main;
 
 public class Chat {
-	private final static Table messageTable = new Table();
-	private static Array<Label> messages;
+	private String user;
+	private Table messageTable;
+	private Array<Label> messages;
 	
-	public Chat() {
+	public Chat(String user) {
+		Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
+		
+		this.user = user;
+		messageTable = new Table(skin);
 		messages = new Array<Label>();
 	}
 	
@@ -17,15 +23,17 @@ public class Chat {
 		messages.add(labelMessage);
 		Main.webSockets.sendMessageChat(message);
 	}
-	public static void addMessageServer(Label labelMessage, String message) {
+	public void addMessageServer(Label labelMessage, String message) {
 		messageTable.add(labelMessage).expandX().left().padLeft(20);
 		messages.add(labelMessage);
 	}
 	
-	public static Table getMessageTable() {
+	public String getUser() {
+		return user;
+	}
+	public Table getMessageTable() {
 		return messageTable;
 	}
-	
 	public Array<Label> getMessages() {
 		return messages;
 	}

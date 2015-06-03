@@ -7,20 +7,27 @@ import com.project.terminkalender.Main;
 
 public class Room {
 	private Table usersTable;
-	private Array<String> users;
+	private Array<Chat> chats;
 	private boolean update;
 
 	public Room() {
 		Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
+		
 		usersTable = new Table(skin);
-		users = new Array<String>();
+		chats = new Array<Chat>();
 		update = false;
 		Main.webSockets.setRoom(this);
 	}
 	
-	public void updateUsers(Array<String> newUsers) {
-		users = newUsers;
+	public void updateUsers(Array<String> users) {
+		chats.clear();
+		for(String user : users) {
+			chats.add(new Chat(user));
+		}
 		update = true;
+	}
+	public void noUsers() {
+		usersTable.clear();
 	}
 	
 	public void refreshUsers() {
@@ -30,10 +37,10 @@ public class Room {
 	public Table getUsersTable() {
 		return usersTable;
 	}
-	public Array<String> getUsers() {
-		return users;
+	public Array<Chat> getChats() {
+		return chats;
 	}
-	
+
 	public boolean update() {
 		return update;
 	}

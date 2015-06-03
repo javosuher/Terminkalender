@@ -6,8 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.project.terminkalender.Main;
 
 public class TimetableActor extends Window {
+	private final Timetable timetable = new Timetable();
 
-	public TimetableActor(Timetable timetable, DragAndDrop dragAndDrop, Skin skin) {
+	public TimetableActor(DragAndDrop dragAndDrop, Skin skin) {
 		super("Timetable", skin);
 		
 		setPosition(0, Main.HEIGHT);

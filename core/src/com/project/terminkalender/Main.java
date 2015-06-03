@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.screens.AbstractScreen;
 import com.project.terminkalender.screens.CalendarScreen;
-import com.project.terminkalender.screens.ChatScreen;
+import com.project.terminkalender.screens.RoomScreen;
 
 public class Main extends Game {
 	public static final int WIDTH = 1000;
@@ -21,11 +21,13 @@ public class Main extends Game {
 	public static final String IP = "192.168.1.131";
 	public static WebSockets webSockets;
 	
-	public static AbstractScreen calendarScreen, chatScreen;
+	public static AbstractScreen calendarScreen, roomScreen;
 	
 	public static SpriteBatch batch;
 	public static Viewport viewport;
 	public static OrthographicCamera camera;
+	
+	public static Main main;
 	
 	@Override
 	public void create() {
@@ -34,12 +36,13 @@ public class Main extends Game {
 		viewport = new FitViewport(WIDTH, HEIGHT, camera);
 		viewport.update(WIDTH, HEIGHT, true);
 		webSockets = new WebSockets("ws://"+ Main.IP +":"+ Main.PORT);
+		main = this;
 		
 		loadAssets();
 		
-		calendarScreen = new CalendarScreen(this);
-		chatScreen = new ChatScreen(this);
-		setScreen(chatScreen);
+		calendarScreen = new CalendarScreen();
+		roomScreen = new RoomScreen();
+		setScreen(roomScreen);
 	}
 	
 	private void loadAssets() {
@@ -48,6 +51,10 @@ public class Main extends Game {
 		assets.load("EmptySlot.png", Texture.class);
 		assets.load("background.png", Texture.class);
 		assets.finishLoading();
+	}
+	
+	public static void setNewScreen(AbstractScreen newScreen) {
+		main.setScreen(newScreen);
 	}
 	
 	@Override

@@ -8,8 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.project.terminkalender.Main;
 
 public class TasktableActor extends Window {
+	private final Tasktable tasktable = new Tasktable();
 	
-	public TasktableActor(Tasktable tasktable, DragAndDrop dragAndDrop, Skin skin) {
+	public TasktableActor(DragAndDrop dragAndDrop, Skin skin) {
 		super("Tasktable", skin);
 		
 		Table table = new Table();
@@ -23,7 +24,7 @@ public class TasktableActor extends Window {
 
 			i++;
 			if (i % 1 == 0) {
-				table.row();
+				table.row().padTop(2);
 			}
 		}
 		
@@ -36,7 +37,5 @@ public class TasktableActor extends Window {
 		setPosition(Main.WIDTH, Main.HEIGHT);
 		setBounds(Main.WIDTH, Main.HEIGHT, 100, Main.HEIGHT);
 		setMovable(false);
-		defaults().space(8);
-		row().fill().expandX();
 	}
 }

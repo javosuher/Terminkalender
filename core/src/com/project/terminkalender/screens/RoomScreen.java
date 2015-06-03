@@ -8,50 +8,57 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Background;
 import com.project.terminkalender.Main;
-import com.project.terminkalender.calendar.TasktableActor;
-import com.project.terminkalender.calendar.TimetableActor;
+import com.project.terminkalender.chat.ChatActor;
+import com.project.terminkalender.chat.RoomActor;
 
-public class CalendarScreen extends AbstractScreen {
+public class RoomScreen extends AbstractScreen {
 	private Background background;
-	private TimetableActor timetableActor;
-	private TasktableActor tasktableActor;
-	private TextButton changeToChatButton;
-
-	public CalendarScreen() {
+	private RoomActor roomActor;
+	private TextButton changeToCalendarButton;
+	
+	private Array<ChatScreen> chatScreens;
+	
+	public RoomScreen() {
 		super();
 		
 		TextureRegion backgroundTexture = new TextureRegion(Main.assets.get("background.png", Texture.class));
 		Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
-		DragAndDrop dragAndDrop = new DragAndDrop();
 		
 		background = new Background(backgroundTexture);
-		timetableActor = new TimetableActor(dragAndDrop, skin);
-		tasktableActor = new TasktableActor(dragAndDrop, skin);
-		changeToChatButton = new TextButton("Chat", skin);
+		roomActor = new RoomActor(skin);
+		changeToCalendarButton = new TextButton("Calendar", skin);
+		chatScreens = new Array<ChatScreen>();
 		
 		stage.addActor(background);
-		stage.addActor(timetableActor);
-		stage.addActor(tasktableActor);
-		stage.addActor(changeToChatButton);
+		stage.addActor(roomActor);
+		stage.addActor(changeToCalendarButton);
 		
-		changeToChatButton.setBounds(8, 8, 100, 50);
+		changeToCalendarButton.setBounds(Main.WIDTH - 108, Main.HEIGHT - 58, 100, 50);
 		
-		changeToChatButton.addListener(new ClickListener() {
+		changeToCalendarButton.addListener(new ClickListener() {
 
 			@Override 
 			public void clicked(InputEvent event, float x, float y){
-				Main.setNewScreen(Main.roomScreen);
+				Main.setNewScreen(Main.calendarScreen);
 			}
 		});
 	}
 	
+	public void addChatScreen(ChatActor chat) {
+		chatScreens.add(new ChatScreen(chat));
+	}
+	
+	public Array<ChatScreen> getChatScreens() {
+		return chatScreens;
+	}
+
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
-	} 
+	}
 	
 	@Override
 	public void hide() {

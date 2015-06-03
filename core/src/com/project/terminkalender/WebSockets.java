@@ -73,7 +73,7 @@ public class WebSockets {
 	public void addMessageToChat(String message) {
 		Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
 		Label newMessage = new Label(message, skin);
-		Chat.addMessageServer(newMessage, message);
+		//Chat.addMessageServer(newMessage, message);
 	}
 	public void refreshUsers(String message) {
 		String [] users = message.split(POINTSPLIT);
@@ -81,16 +81,19 @@ public class WebSockets {
 			Array<String> newUsers = new Array<String>(users);
 			room.updateUsers(newUsers);
 		}
+		else room.noUsers();
 	}
 	
 	public boolean sendMessageChat(String message) {
-		return sendMessage(MESSAGE + POINTSPLIT + message);
+		if(message.length() != 0)
+			return sendMessage(MESSAGE + POINTSPLIT + message);
+		else return false;
 	}
 	public boolean askUsers() {
 		return sendMessage(USERSROOM + POINTSPLIT);
 	}
 	private boolean sendMessage(String message) {
-		if (connected && message.length() != 0) {
+		if (connected) {
 			Gdx.app.log("WebSocket", "WSClient send message: " + message);
 			wsc.send(message);
 			return true;

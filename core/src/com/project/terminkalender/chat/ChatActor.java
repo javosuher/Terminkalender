@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
+import com.project.terminkalender.Main;
 
 public class ChatActor extends Table {
 	private final Chat chat;
@@ -46,9 +48,29 @@ public class ChatActor extends Table {
 				if(message.length() != 0) {
 					Label newMessage = new Label(message, skin);
 					messageTable.add(newMessage).expandX().right().padRight(20);
-					chat.addMessage(newMessage, message);
+					chat.addMessage(message);
 				}
 			}
 		});
+	}
+	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		
+		if(chat.update()) {
+			Table messageTable = chat.getMessageTable();
+			Array<String> messages = chat.getMessages();
+			Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
+			
+			Label newMessage = new Label(messages.peek(), skin);
+			messageTable.add(newMessage).expandX().left().padRight(20);
+			
+			chat.finishUpdate();
+		}
+	}
+	
+	public Chat getChat() {
+		return chat;
 	}
 }

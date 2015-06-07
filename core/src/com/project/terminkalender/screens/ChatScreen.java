@@ -42,6 +42,10 @@ public class ChatScreen extends AbstractScreen {
 		});
 	}
 	
+	public String getChatUser() {
+		return chatActor.getChat().getUser();
+	}
+	
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);

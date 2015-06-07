@@ -36,13 +36,16 @@ class Chat implements MessageComponentInterface {
     }
 
     private function sendMessage(ConnectionInterface $from, $msg) {
-    	$numRecv = count($this->clients) - 1;
-        echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
-            , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
+    	$action = explode(Chat::POINTSPLIT, $msg)[0];
+    	$user = explode(Chat::POINTSPLIT, $msg)[1];
+    	$message = substr($msg, strlen($action) + strlen($user) + 2);
+        echo sprintf('Connection %d sending message "%s" to %d' . "\n", $from->resourceId, $message, $user);
 
-        foreach ($this->clients as $client) {
-            if ($from !== $client) {
-                $client->send($msg); // The sender is not the receiver, send to each client connected
+        foreach($this->clients as $client) {
+            if ($user == $client->resourceId) {
+            	$trueMessage = $action . Chat::POINTSPLIT . $from->resourceId . Chat::POINTSPLIT . $message;
+                $client->send($trueMessage);
+                break;
             }
         }
     }

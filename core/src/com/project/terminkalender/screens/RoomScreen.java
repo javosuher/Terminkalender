@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Background;
 import com.project.terminkalender.Main;
+import com.project.terminkalender.chat.Chat;
 import com.project.terminkalender.chat.ChatActor;
 import com.project.terminkalender.chat.RoomActor;
 
@@ -51,8 +52,19 @@ public class RoomScreen extends AbstractScreen {
 		chatScreens.add(new ChatScreen(chat));
 	}
 	
+	public void chatScreensClear() {
+		chatScreens.clear();
+	}
+	
 	public Array<ChatScreen> getChatScreens() {
 		return chatScreens;
+	}
+	public ChatScreen getChatScreen(String chatUser) {
+		for(ChatScreen chatScreen : chatScreens) {
+			if(chatUser.equals(chatScreen.getChatUser()))
+				return chatScreen;
+		}
+		return new ChatScreen(new ChatActor(new Skin(), new Chat("Usuario no encontrado")));
 	}
 
 	@Override

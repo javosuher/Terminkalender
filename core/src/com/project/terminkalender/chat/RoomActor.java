@@ -53,13 +53,14 @@ public class RoomActor extends Table {
 			final RoomScreen roomScreen = ((RoomScreen) Main.roomScreen);
 			
 			usersTable.clear();
+			roomScreen.chatScreensClear();
 			
 			int column = 0;
 			for(Chat chat : chats) {
 				ChatActor chatActor = new ChatActor(skin, chat);
 				roomScreen.addChatScreen(chatActor);
 				
-				TextButton userButton = new TextButton(chat.getUser(), skin);
+				final TextButton userButton = new TextButton(chat.getUser(), skin);
 				usersTable.add(userButton).width(200).height(100).pad(30);
 				
 				++column;
@@ -70,10 +71,10 @@ public class RoomActor extends Table {
 				userButton.addListener(new ClickListener() {
 
 					@Override 
-					public void clicked(InputEvent event, float x, float y){
-						Array<ChatScreen> chatScreens = roomScreen.getChatScreens();
-						ChatScreen lastChatScreen = chatScreens.peek();
-						Main.main.setScreen(lastChatScreen);
+					public void clicked(InputEvent event, float x, float y) {
+						String user = userButton.getText().toString();
+						ChatScreen chatScreen = roomScreen.getChatScreen(user);
+						Main.main.setScreen(chatScreen);
 					}
 				});
 			}

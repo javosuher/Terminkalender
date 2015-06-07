@@ -9,10 +9,7 @@ import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
-import com.project.terminkalender.chat.Chat;
 import com.project.terminkalender.chat.Room;
 
 public class WebSockets {
@@ -71,9 +68,10 @@ public class WebSockets {
 	}
 	
 	public void addMessageToChat(String message) {
-		Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
-		Label newMessage = new Label(message, skin);
-		//Chat.addMessageServer(newMessage, message);
+		String user = message.split(POINTSPLIT)[0];
+		String trueMessage = message.substring(user.length() + 1);
+		
+		room.updateMessageUser(user, trueMessage);
 	}
 	public void refreshUsers(String message) {
 		String [] users = message.split(POINTSPLIT);
@@ -84,9 +82,9 @@ public class WebSockets {
 		else room.noUsers();
 	}
 	
-	public boolean sendMessageChat(String message) {
+	public boolean sendMessageChat(String message, String user) {
 		if(message.length() != 0)
-			return sendMessage(MESSAGE + POINTSPLIT + message);
+			return sendMessage(MESSAGE + POINTSPLIT + user + POINTSPLIT + message);
 		else return false;
 	}
 	public boolean askUsers() {

@@ -1,31 +1,35 @@
 package com.project.terminkalender.chat;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Main;
 
 public class Chat {
+	public final static String POINTSPLIT = ":";
+	public final static String ME = "Me";
+	
 	private String user;
 	private Table messageTable;
-	private Array<Label> messages;
+	private Array<String> messages;
+	private boolean update;
 	
 	public Chat(String user) {
 		Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
 		
 		this.user = user;
 		messageTable = new Table(skin);
-		messages = new Array<Label>();
+		messages = new Array<String>();
+		update = false;
 	}
 	
-	public void addMessage(Label labelMessage, String message) {
-		messages.add(labelMessage);
-		Main.webSockets.sendMessageChat(message);
+	public void addMessage(String message) {
+		messages.add(ME + POINTSPLIT + message);
+		Main.webSockets.sendMessageChat(message, user);
 	}
-	public void addMessageServer(Label labelMessage, String message) {
-		messageTable.add(labelMessage).expandX().left().padLeft(20);
-		messages.add(labelMessage);
+	public void addMessageServer(String message) {
+		messages.add(message);
+		update = true;
 	}
 	
 	public String getUser() {
@@ -34,7 +38,14 @@ public class Chat {
 	public Table getMessageTable() {
 		return messageTable;
 	}
-	public Array<Label> getMessages() {
+	public Array<String> getMessages() {
 		return messages;
+	}
+	
+	public boolean update() {
+		return update;
+	}
+	public void finishUpdate() {
+		update = false;
 	}
 }

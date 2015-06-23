@@ -1,4 +1,8 @@
--- Table structure for table `messages`
-CREATE TABLE IF NOT EXISTS `messages` (
-	`msg` text NOT NULL
-) ENGINE = MyISAM DEFAULT CHARSET = latin1;
+/* -- Delete Tables -- */
+DROP TABLE teacher;
+
+/* -- Create Tables -- */
+CREATE TABLE teachers(
+	username varchar(50) not null,
+	password varchar(50) not null
+);

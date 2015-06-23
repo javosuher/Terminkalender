@@ -8,11 +8,16 @@ class Chat implements MessageComponentInterface {
 	const POINTSPLIT = ":";
 	const MESSAGE = "Message";
 	const USERSROOM = "UsersRoom";
-
-    protected $clients;
+	const LOGINTEACHER = "LoginTeacher";
+	const REGISTERTEACHER = "RegisterTeacher";
+	
+    protected $clients, $dataBase;
 
     public function __construct() {
+    	include_once("config.php"); // Include database config file
+
         $this->clients = new \SplObjectStorage;
+        $this->dataBase = $dbh;
         echo "Init Chat Server!\n";
     }
 
@@ -31,9 +36,26 @@ class Chat implements MessageComponentInterface {
         else if(strcmp($action, Chat::USERSROOM) == 0) {
         	$this->sendUsers($from);
         }
-
-        //storeInDataBase($msg);
+        else if(strcmp($action, Chat::LOGINTEACHER) == 0) {
+        	$this->loginTeacher($from, $msg);
+        }
+        else if(strcmp($action, Chat::REGISTERTEACHER) == 0) {
+        	$this->registerTeacher($from, $msg);
+        }
     }
+
+    public function onClose(ConnectionInterface $conn) {
+        // The connection is closed, remove it, as we can no longer send it messages
+        $this->clients->detach($conn);
+        echo "Connection {$conn->resourceId} has disconnected\n";
+    }
+
+    public function onError(ConnectionInterface $conn, \Exception $e) {
+        echo "An error has occurred: {$e->getMessage()}\n";
+        $conn->close();
+    }
+
+    // ------------------------------- Conections Functions ------------------------------- 
 
     private function sendMessage(ConnectionInterface $from, $msg) {
     	$action = explode(Chat::POINTSPLIT, $msg)[0];
@@ -60,25 +82,62 @@ class Chat implements MessageComponentInterface {
         }
         $from->send($msg);
     }
+    private function loginTeacher(ConnectionInterface $from, $msg) {
+    	$userTeacher = explode(Chat::POINTSPLIT, $msg)[1];
+    	$passwordTeacher = explode(Chat::POINTSPLIT, $msg)[2];
 
-    private function storeInDataBase($msg) {
-    	include("config.php"); // Load Database
-        try {
-			$sql = $dbh -> prepare("INSERT INTO messages (msg) VALUES (?)");
-			$sql -> execute(array($msg));
+    	$search = $this->searchTeacherInDataBase($userTeacher);
+    	if(empty($search)) {
+    		$trueMessage = CHAT::LOGINTEACHER . CHAT::POINTSPLIT . $userTeacher . CHAT::POINTSPLIT . "NoExist";
+    		$from->send($trueMessage);
+    	}
+    	else if(strcmp($userTeacher, $search[0]["username"]) == 0) {
+    		if(strcmp($passwordTeacher, $search[0]["password"]) == 0) {
+    			$trueMessage = CHAT::LOGINTEACHER . CHAT::POINTSPLIT . $userTeacher . CHAT::POINTSPLIT . "Success";
+    			$from->send($trueMessage);
+    		}
+    		else {
+    			$trueMessage = CHAT::LOGINTEACHER . CHAT::POINTSPLIT . $userTeacher . CHAT::POINTSPLIT . "WrongPassword";
+    			$from->send($trueMessage);
+    		}
+    	}
+    }
+    private function registerTeacher(ConnectionInterface $from, $msg) {
+    	$userTeacher = explode(Chat::POINTSPLIT, $msg)[1];
+    	$passwordTeacher = explode(Chat::POINTSPLIT, $msg)[2];
+
+    	$search = $this->searchTeacherInDataBase($userTeacher);
+    	if(empty($search)) {
+    		$this->storeTeacherInDataBase($userTeacher, $passwordTeacher);
+    		$trueMessage = CHAT::REGISTERTEACHER . CHAT::POINTSPLIT . $userTeacher . CHAT::POINTSPLIT . "Success";
+    		$from->send($trueMessage);
+    	}
+    	else {
+    		$trueMessage = CHAT::REGISTERTEACHER . CHAT::POINTSPLIT . $userTeacher . CHAT::POINTSPLIT . "Failure";
+    		$from->send($trueMessage);
+    	}
+    }
+
+    // ------------------------------- Data Base Functions -------------------------------
+
+    private function searchTeacherInDataBase($userTeacher) {
+    	try {
+    		$sql = $this->dataBase->prepare("SELECT * FROM teachers WHERE username =:username");
+    		$sql->bindValue(":username", $userTeacher);
+    		$sql->execute();
+ 			$result = $sql->fetchAll();
+ 			//print_r($result);
+ 			return $result;
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
     	}
     }
-
-    public function onClose(ConnectionInterface $conn) {
-        // The connection is closed, remove it, as we can no longer send it messages
-        $this->clients->detach($conn);
-        echo "Connection {$conn->resourceId} has disconnected\n";
-    }
-
-    public function onError(ConnectionInterface $conn, \Exception $e) {
-        echo "An error has occurred: {$e->getMessage()}\n";
-        $conn->close();
+    private function storeTeacherInDataBase($userTeacher, $passwordTeacher) {
+        try {
+			$sql = $this->dataBase->prepare("INSERT INTO teachers (username, password) VALUES (?, ?)");
+ 			$sql -> execute(array($userTeacher, $passwordTeacher));
+    	} catch(PDOException $e) {
+    		echo $sql . "<br>" . $e->getMessage();
+    	}
     }
 }

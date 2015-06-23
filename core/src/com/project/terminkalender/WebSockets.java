@@ -16,6 +16,8 @@ public class WebSockets {
 	public final static String POINTSPLIT = ":";
 	public final static String MESSAGE = "Message";
 	public final static String USERSROOM = "UsersRoom";
+	public final static String LOGINTEACHER = "LoginTeacher";
+	public final static String REGISTERTEACHER = "RegisterTeacher";
 	
 	private WebSocketClient wsc;
 	private boolean connected;
@@ -50,6 +52,11 @@ public class WebSockets {
 					addMessageToChat(trueMessage);
 				else if(action.equals(USERSROOM))
 					refreshUsers(trueMessage);
+				else if(action.equals(LOGINTEACHER))
+					loginTeacherCheck(trueMessage);
+				else if(action.equals(REGISTERTEACHER))
+					registerTeacherCheck(trueMessage);
+					
 			}
 
 			@Override
@@ -81,6 +88,31 @@ public class WebSockets {
 		}
 		else room.noUsers();
 	}
+	public void loginTeacherCheck(String message) {
+		String userTeacher = message.split(POINTSPLIT)[0];
+		String check = message.split(POINTSPLIT)[1];
+		
+		if(check.equals("NoExist")) {
+			Main.warningDialog.show(userTeacher + " not exists", Main.teacherFirstScreen.getStage());
+		}
+		else if(check.equals("WrongPassword")) {
+			Main.warningDialog.show(userTeacher + " has another password", Main.teacherFirstScreen.getStage());
+		}
+		else {
+			Main.warningDialog.show(userTeacher + " connected", Main.teacherFirstScreen.getStage());
+		}
+	}
+	public void registerTeacherCheck(String message) {
+		String userTeacher = message.split(POINTSPLIT)[0];
+		String check = message.split(POINTSPLIT)[1];
+		
+		if(check.equals("Failure")) {
+			Main.warningDialog.show(userTeacher + " already exists", Main.teacherFirstScreen.getStage());
+		}
+		else {
+			Main.warningDialog.show(userTeacher + " registered", Main.teacherFirstScreen.getStage());
+		}
+	}
 	
 	public boolean sendMessageChat(String message, String user) {
 		if(message.length() != 0)
@@ -89,6 +121,12 @@ public class WebSockets {
 	}
 	public boolean askUsers() {
 		return sendMessage(USERSROOM + POINTSPLIT);
+	}
+	public boolean loginTeacher(String teacherUser, String password) {
+		return sendMessage(LOGINTEACHER + POINTSPLIT + teacherUser + POINTSPLIT + password);
+	}
+	public boolean registerTeacher(String teacherUser, String password) {
+		return sendMessage(REGISTERTEACHER + POINTSPLIT + teacherUser + POINTSPLIT + password);
 	}
 	private boolean sendMessage(String message) {
 		if (connected) {

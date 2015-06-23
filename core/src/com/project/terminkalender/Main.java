@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.screens.AbstractScreen;
 import com.project.terminkalender.screens.CalendarScreen;
 import com.project.terminkalender.screens.RoomScreen;
+import com.project.terminkalender.screens.TeacherLoginRegisterScreen;
 
 public class Main extends Game {
 	public static final int WIDTH = 1000;
@@ -18,10 +19,11 @@ public class Main extends Game {
 	public static final AssetManager assets = new AssetManager();
 	
 	public static final int PORT = 8080;
-	public static final String IP = "192.168.1.131";
+	public static final String IP = "192.168.1.133";
 	public static WebSockets webSockets;
 	
-	public static AbstractScreen calendarScreen, roomScreen;
+	public static AbstractScreen calendarScreen, roomScreen, teacherFirstScreen;
+	public static WarningDialogActor warningDialog;
 	
 	public static SpriteBatch batch;
 	public static Viewport viewport;
@@ -40,9 +42,11 @@ public class Main extends Game {
 		
 		loadAssets();
 		
+		warningDialog = new WarningDialogActor(assets.get("skins/uiskin.json", Skin.class));
 		calendarScreen = new CalendarScreen();
 		roomScreen = new RoomScreen();
-		setScreen(roomScreen);
+		teacherFirstScreen = new TeacherLoginRegisterScreen();
+		setScreen(teacherFirstScreen);
 	}
 	
 	private void loadAssets() {

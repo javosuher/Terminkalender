@@ -7,7 +7,7 @@ $pass = "1475"; //Password Here
 $db   = "Chat"; // Database Name
 
 try {
-	$dbh  = new PDO('mysql:dbname=' . $db . ';host=' . $host . ';port=' . $port, $user, $pass);
+	$dbh = new PDO('mysql:dbname=' . $db . ';host=' . $host . ';port=' . $port, $user, $pass);
 	//echo "Connected successfully\n";
 
 } catch (PDOException $e) { 

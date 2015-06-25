@@ -3,12 +3,14 @@ package com.project.terminkalender.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.Background;
 import com.project.terminkalender.Main;
 import com.project.terminkalender.calendar.TasktableActor;
@@ -20,8 +22,8 @@ public class CalendarScreen extends AbstractScreen {
 	private TasktableActor tasktableActor;
 	private TextButton changeToChatButton;
 
-	public CalendarScreen() {
-		super();
+	public CalendarScreen(Viewport viewport, SpriteBatch batch) {
+		super(viewport, batch);
 		
 		TextureRegion backgroundTexture = new TextureRegion(Main.assets.get("background.png", Texture.class));
 		Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);

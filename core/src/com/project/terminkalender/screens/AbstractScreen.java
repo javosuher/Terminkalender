@@ -3,15 +3,18 @@ package com.project.terminkalender.screens;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.Main;
 
 public class AbstractScreen implements Screen {
+	protected Viewport viewport;
 	protected SpriteBatch batch;
 	protected Stage stage;
 	
-	public AbstractScreen() {
-		stage = new Stage(Main.viewport, Main.batch);
-		this.batch = Main.batch;
+	public AbstractScreen(Viewport viewport, SpriteBatch batch) {
+		stage = new Stage(viewport, batch);
+		this.viewport = viewport;
+		this.batch = batch;
 	}
 	
 	@Override

@@ -85,36 +85,44 @@ class Chat implements MessageComponentInterface {
     private function loginTeacher(ConnectionInterface $from, $msg) {
     	$userTeacher = explode(Chat::POINTSPLIT, $msg)[1];
     	$passwordTeacher = explode(Chat::POINTSPLIT, $msg)[2];
+    	echo sprintf('Connection %d want to login with user: "%s" and password: "%s"' . "\n", $from->resourceId, $userTeacher, $passwordTeacher);
 
     	$search = $this->searchTeacherInDataBase($userTeacher);
     	if(empty($search)) {
     		$trueMessage = CHAT::LOGINTEACHER . CHAT::POINTSPLIT . $userTeacher . CHAT::POINTSPLIT . "NoExist";
     		$from->send($trueMessage);
+    		echo "Login: No exist" . "\n";
     	}
     	else if(strcmp($userTeacher, $search[0]["username"]) == 0) {
     		if(strcmp($passwordTeacher, $search[0]["password"]) == 0) {
     			$trueMessage = CHAT::LOGINTEACHER . CHAT::POINTSPLIT . $userTeacher . CHAT::POINTSPLIT . "Success";
     			$from->send($trueMessage);
+    			echo "Login: Success" . "\n";
     		}
     		else {
     			$trueMessage = CHAT::LOGINTEACHER . CHAT::POINTSPLIT . $userTeacher . CHAT::POINTSPLIT . "WrongPassword";
     			$from->send($trueMessage);
+    			echo "Login: Wrong Password" . "\n";
     		}
     	}
+    	else echo "hello";
     }
     private function registerTeacher(ConnectionInterface $from, $msg) {
     	$userTeacher = explode(Chat::POINTSPLIT, $msg)[1];
     	$passwordTeacher = explode(Chat::POINTSPLIT, $msg)[2];
+    	echo sprintf('Connection %d want to register with user: "%s" and password: "%s"' . "\n", $from->resourceId, $userTeacher, $passwordTeacher);
 
     	$search = $this->searchTeacherInDataBase($userTeacher);
     	if(empty($search)) {
     		$this->storeTeacherInDataBase($userTeacher, $passwordTeacher);
     		$trueMessage = CHAT::REGISTERTEACHER . CHAT::POINTSPLIT . $userTeacher . CHAT::POINTSPLIT . "Success";
     		$from->send($trueMessage);
+    		echo "Register: Success" . "\n";
     	}
     	else {
     		$trueMessage = CHAT::REGISTERTEACHER . CHAT::POINTSPLIT . $userTeacher . CHAT::POINTSPLIT . "Failure";
     		$from->send($trueMessage);
+    		echo "Register: Failure" . "\n";
     	}
     }
 

@@ -2,26 +2,40 @@ package com.project.terminkalender.loginandregister;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.TeacherMain;
 
 public class TeacherLoginDialog {
 	private TextField userText, passwordText;
+	private boolean update;
 	
 
 	public TeacherLoginDialog() {
-		Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
+		Skin skin = TeacherMain.assets.get("skins/uiskin.json", Skin.class);
 		
 		userText = new TextField("", skin);
 		passwordText = new TextField("", skin);
+		TeacherMain.teacherWebSockets.setTeacherLoginDialog(this);
+		update = false;
 	}
 	
 	public void loginTeacher() {
 		if(userText.getText().equals("") || passwordText.getText().equals("")) {
-			Main.warningDialog.show("You must fill the gaps", Main.teacherFirstScreen.getStage());
+			TeacherMain.warningDialog.show("You must fill the gaps", TeacherMain.teacherLoginRegisterScreen.getStage());
 		}
 		else {
-			Main.webSockets.loginTeacher(userText.getText(), passwordText.getText());
+			TeacherMain.teacherWebSockets.loginTeacher(userText.getText(), passwordText.getText());
 		}
+	}
+	
+	public void loginSuccess() {
+		update = true;
+	}
+	
+	public boolean update() {
+		return update;
+	}
+	public void finishUpdate() {
+		update = false;
 	}
 	
 	public void setEmpty() {

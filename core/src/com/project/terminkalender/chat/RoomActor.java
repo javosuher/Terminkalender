@@ -74,7 +74,7 @@ public class RoomActor extends Table {
 					public void clicked(InputEvent event, float x, float y) {
 						String user = userButton.getText().toString();
 						ChatScreen chatScreen = roomScreen.getChatScreen(user);
-						Main.main.setScreen(chatScreen);
+						Main.setNewScreen(chatScreen);
 					}
 				});
 			}

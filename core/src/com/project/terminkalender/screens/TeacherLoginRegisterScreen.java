@@ -3,21 +3,23 @@ package com.project.terminkalender.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.Background;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.TeacherMain;
 import com.project.terminkalender.loginandregister.TeacherLoginRegisterActor;
 
 public class TeacherLoginRegisterScreen extends AbstractScreen {
 	private Background background;
 	private TeacherLoginRegisterActor teacherLoginRegisterActor;
 
-	public TeacherLoginRegisterScreen() {
-		super();
+	public TeacherLoginRegisterScreen(Viewport viewport, SpriteBatch batch) {
+		super(viewport, batch);
 		
-		TextureRegion backgroundTexture = new TextureRegion(Main.assets.get("background.png", Texture.class));
-		Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
+		TextureRegion backgroundTexture = new TextureRegion(TeacherMain.assets.get("background.png", Texture.class));
+		Skin skin = TeacherMain.assets.get("skins/uiskin.json", Skin.class);
 		
 		background = new Background(backgroundTexture);
 		teacherLoginRegisterActor = new TeacherLoginRegisterActor(skin);

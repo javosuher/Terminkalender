@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.project.terminkalender.DialogActor;
+import com.project.terminkalender.TeacherMain;
 
 public class TeacherLoginDialogActor extends DialogActor {
 	private TeacherLoginDialog teacherLoginDialog;
@@ -49,5 +50,15 @@ public class TeacherLoginDialogActor extends DialogActor {
 	protected void result(Object object) {
 		teacherLoginDialog.loginTeacher();
 		teacherLoginDialog.setEmpty();
+	}
+	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		
+		if(teacherLoginDialog.update()) {
+			TeacherMain.setNewScreen(TeacherMain.teacherGamesScreen);
+			teacherLoginDialog.finishUpdate();
+		}
 	}
 }

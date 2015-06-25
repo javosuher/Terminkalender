@@ -3,12 +3,14 @@ package com.project.terminkalender.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.Background;
 import com.project.terminkalender.Main;
 import com.project.terminkalender.chat.Chat;
@@ -22,8 +24,8 @@ public class RoomScreen extends AbstractScreen {
 	
 	private Array<ChatScreen> chatScreens;
 	
-	public RoomScreen() {
-		super();
+	public RoomScreen(Viewport viewport, SpriteBatch batch) {
+		super(viewport, batch);
 		
 		TextureRegion backgroundTexture = new TextureRegion(Main.assets.get("background.png", Texture.class));
 		Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
@@ -49,7 +51,7 @@ public class RoomScreen extends AbstractScreen {
 	}
 	
 	public void addChatScreen(ChatActor chat) {
-		chatScreens.add(new ChatScreen(chat));
+		chatScreens.add(new ChatScreen(viewport, batch, chat));
 	}
 	
 	public void chatScreensClear() {
@@ -64,7 +66,7 @@ public class RoomScreen extends AbstractScreen {
 			if(chatUser.equals(chatScreen.getChatUser()))
 				return chatScreen;
 		}
-		return new ChatScreen(new ChatActor(new Skin(), new Chat("Usuario no encontrado")));
+		return new ChatScreen(viewport, batch, new ChatActor(new Skin(), new Chat("Usuario no encontrado")));
 	}
 
 	@Override

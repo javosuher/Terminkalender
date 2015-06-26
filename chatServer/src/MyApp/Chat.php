@@ -18,7 +18,7 @@ class Chat implements MessageComponentInterface {
 
         $this->clients = new \SplObjectStorage;
         $this->dataBase = $dbh;
-        echo "Init Chat Server!\n";
+        echo "Init Server!\n";
     }
 
     public function onOpen(ConnectionInterface $conn) {

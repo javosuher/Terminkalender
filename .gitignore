@@ -1,8 +1,14 @@
 ## Ubuntu
 *~
 
-## Java
+##PHP Rachet Server
+phpunit.xml
+reports
+sandbox
+vendor
+composer.lock
 
+## Java
 *.class
 *.war
 *.ear

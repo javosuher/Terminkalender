@@ -24,7 +24,7 @@ public class TeacherRegisterDialog {
 			TeacherMain.warningDialog.show("Passwords must be the same", TeacherMain.teacherLoginRegisterScreen.getStage());
 		}
 		else {
-			TeacherMain.teacherWebSockets.registerTeacher(userText.getText(), passwordText.getText());
+			TeacherMain.teacherWebSockets.registerTeacher(userText.getText().toLowerCase(), passwordText.getText().toLowerCase());
 		}
 	}
 	

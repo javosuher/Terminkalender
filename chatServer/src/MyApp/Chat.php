@@ -105,7 +105,6 @@ class Chat implements MessageComponentInterface {
     			echo "Login: Wrong Password" . "\n";
     		}
     	}
-    	else echo "hello";
     }
     private function registerTeacher(ConnectionInterface $from, $msg) {
     	$userTeacher = explode(Chat::POINTSPLIT, $msg)[1];

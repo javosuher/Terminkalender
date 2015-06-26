@@ -23,7 +23,7 @@ public class TeacherLoginDialog {
 			TeacherMain.warningDialog.show("You must fill the gaps", TeacherMain.teacherLoginRegisterScreen.getStage());
 		}
 		else {
-			TeacherMain.teacherWebSockets.loginTeacher(userText.getText(), passwordText.getText());
+			TeacherMain.teacherWebSockets.loginTeacher(userText.getText().toLowerCase(), passwordText.getText().toLowerCase());
 		}
 	}
 	

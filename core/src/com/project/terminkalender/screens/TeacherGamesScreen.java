@@ -5,13 +5,20 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.Background;
+import com.project.terminkalender.Main;
 import com.project.terminkalender.TeacherMain;
+import com.project.terminkalender.games.GamesActor;
 
 public class TeacherGamesScreen extends AbstractScreen {
 	private Background background;
+	private GamesActor gamesActor;
+	private TextButton changeToLoginRegisterButton;
 
 	public TeacherGamesScreen(Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
@@ -20,8 +27,22 @@ public class TeacherGamesScreen extends AbstractScreen {
 		Skin skin = TeacherMain.assets.get("skins/uiskin.json", Skin.class);
 		
 		background = new Background(backgroundTexture);
+		gamesActor = new GamesActor(skin);
+		changeToLoginRegisterButton = new TextButton("Log out", skin);
 		
 		stage.addActor(background);
+		stage.addActor(gamesActor);
+		stage.addActor(changeToLoginRegisterButton);
+		
+		changeToLoginRegisterButton.setBounds(Main.WIDTH - 108, Main.HEIGHT - 58, 100, 50);
+		
+		changeToLoginRegisterButton.addListener(new ClickListener() {
+
+			@Override 
+			public void clicked(InputEvent event, float x, float y){
+				TeacherMain.setNewScreen(TeacherMain.teacherLoginRegisterScreen);
+			}
+		});
 	}
 	
 	@Override

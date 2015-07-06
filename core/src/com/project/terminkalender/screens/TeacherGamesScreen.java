@@ -17,6 +17,7 @@ import com.project.terminkalender.games.GamesActor;
 
 public class TeacherGamesScreen extends AbstractScreen {
 	private Background background;
+	private String teacher;
 	private GamesActor gamesActor;
 	private TextButton changeToLoginRegisterButton;
 
@@ -45,6 +46,13 @@ public class TeacherGamesScreen extends AbstractScreen {
 		});
 	}
 	
+	public String getTeacher() {
+		return teacher;
+	}
+	public void setTeacher(String teacher) {
+		this.teacher = teacher;
+	}
+
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);

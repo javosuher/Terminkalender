@@ -10,6 +10,7 @@ class Chat implements MessageComponentInterface {
 	const USERSROOM = "UsersRoom";
 	const LOGINTEACHER = "LoginTeacher";
 	const REGISTERTEACHER = "RegisterTeacher";
+	const CREATEGAME = "CreateGame";
 	
     protected $clients, $dataBase;
 
@@ -41,6 +42,9 @@ class Chat implements MessageComponentInterface {
         }
         else if(strcmp($action, Chat::REGISTERTEACHER) == 0) {
         	$this->registerTeacher($from, $msg);
+        }
+        else if(strcmp($action, Chat::CREATEGAME) == 0) {
+        	$this->createGame($from, $msg);
         }
     }
 
@@ -124,6 +128,25 @@ class Chat implements MessageComponentInterface {
     		echo "Register: Failure" . "\n";
     	}
     }
+    private function createGame(ConnectionInterface $from, $msg) {
+    	$gameName = explode(Chat::POINTSPLIT, $msg)[1];
+    	$teacher = explode(Chat::POINTSPLIT, $msg)[2];
+    	$password = explode(Chat::POINTSPLIT, $msg)[3];
+    	echo sprintf('Connection %d want to a game: "%s" from teacher: "%s" and password: "%s"' . "\n", $from->resourceId, $gameName, $teacher, $password);
+
+    	$search = $this->searchGameInDataBase($gameName, $teacher);
+    	if(empty($search)) {
+    		$this->storeNewGameInDataBase($gameName, $teacher, $password);
+    		$trueMessage = CHAT::CREATEGAME . CHAT::POINTSPLIT . $gameName . CHAT::POINTSPLIT . "Success";
+    		$from->send($trueMessage);
+    		echo "Create Game: Success" . "\n";
+    	}
+    	else {
+    		$trueMessage = CHAT::CREATEGAME . CHAT::POINTSPLIT . $gameName . CHAT::POINTSPLIT . "Failure";
+    		$from->send($trueMessage);
+    		echo "Create Game: Failure" . "\n";
+    	}
+    }
 
     // ------------------------------- Data Base Functions -------------------------------
 
@@ -139,10 +162,29 @@ class Chat implements MessageComponentInterface {
     		echo $sql . "<br>" . $e->getMessage();
     	}
     }
+    private function searchGameInDataBase($gameName, $teacher) {
+    	try {
+    		$sql = $this->dataBase->prepare("SELECT * FROM games WHERE name =:gameName AND teacher =:teacher");
+    		$sql->execute(array(":gameName" => $gameName, ":teacher" => $teacher));
+ 			$result = $sql->fetchAll();
+ 			//print_r($result);
+ 			return $result;
+    	} catch(PDOException $e) {
+    		echo $sql . "<br>" . $e->getMessage();
+    	}
+    }
     private function storeTeacherInDataBase($userTeacher, $passwordTeacher) {
         try {
 			$sql = $this->dataBase->prepare("INSERT INTO teachers (username, password) VALUES (?, ?)");
  			$sql -> execute(array($userTeacher, $passwordTeacher));
+    	} catch(PDOException $e) {
+    		echo $sql . "<br>" . $e->getMessage();
+    	}
+    }
+    private function storeNewGameInDataBase($gameName, $teacher, $password) {
+        try {
+			$sql = $this->dataBase->prepare("INSERT INTO games (name, teacher, password) VALUES (?, ?, ?)");
+ 			$sql -> execute(array($gameName, $teacher, $password));
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
     	}

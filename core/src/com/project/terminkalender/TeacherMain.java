@@ -18,7 +18,7 @@ public class TeacherMain extends Game {
 	public static final AssetManager assets = new AssetManager();
 	
 	public static final int PORT = 8080;
-	public static final String IP = "192.168.1.133";
+	public static final String IP = "192.168.1.132";
 	public static TeacherWebSockets teacherWebSockets;
 	
 	public static AbstractScreen teacherLoginRegisterScreen, teacherGamesScreen;

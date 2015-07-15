@@ -9,18 +9,24 @@ import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Array;
+import com.project.terminkalender.games.Games;
 import com.project.terminkalender.loginandregister.TeacherLoginDialog;
 
 public class TeacherWebSockets {
 	public final static String POINTSPLIT = ":";
+	public final static String DATASPLIT = ";";
 	public final static String LOGINTEACHER = "LoginTeacher";
 	public final static String REGISTERTEACHER = "RegisterTeacher";
 	public final static String CREATEGAME = "CreateGame";
+	public final static String UPDATEGAME = "UpdateGame";
+	public final static String GAMES = "Games";
 	
 	private WebSocketClient wsc;
 	private boolean connected;
 	
 	private TeacherLoginDialog teacherLoginDialog;
+	private Games games;
 	
 	public TeacherWebSockets(String serverDirection) {
 		URI url = null;
@@ -50,6 +56,10 @@ public class TeacherWebSockets {
 					loginTeacherCheck(trueMessage);
 				else if(action.equals(REGISTERTEACHER))
 					registerTeacherCheck(trueMessage);
+				else if(action.equals(CREATEGAME))
+					createGameCheck(trueMessage);
+				else if(action.equals(GAMES))
+					createGamesinScreen(trueMessage);
 					
 			}
 
@@ -93,6 +103,25 @@ public class TeacherWebSockets {
 			TeacherMain.warningDialog.show(userTeacher + " registered", TeacherMain.teacherLoginRegisterScreen.getStage());
 		}
 	}
+	public void createGameCheck(String message) {
+		String gameName = message.split(POINTSPLIT)[0];
+		String check = message.split(POINTSPLIT)[1];
+		
+		if(check.equals("Failure")) {
+			TeacherMain.warningDialog.show(gameName + " already exists", TeacherMain.teacherGamesScreen.getStage());
+		}
+		else {
+			TeacherMain.warningDialog.show(gameName + " registered", TeacherMain.teacherGamesScreen.getStage());
+		}
+	}
+	public void createGamesinScreen(String message) {
+		String [] games = message.split(POINTSPLIT);
+		if(!games[0].equals("")) {
+			Array<String> newGames = new Array<String>(games);
+			this.games.updateGames(newGames);
+		}
+		else this.games.noGames();
+	}
 	
 	public boolean loginTeacher(String teacherUser, String password) {
 		return sendMessage(LOGINTEACHER + POINTSPLIT + teacherUser + POINTSPLIT + password);
@@ -102,6 +131,12 @@ public class TeacherWebSockets {
 	}
 	public boolean createGame(String gameName, String teacher, String password) {
 		return sendMessage(CREATEGAME + POINTSPLIT + gameName + POINTSPLIT + teacher + POINTSPLIT + password);
+	}
+	public boolean updateGame(String gameName, String teacher, String password, String tasks) {
+		return sendMessage(UPDATEGAME + POINTSPLIT + gameName + POINTSPLIT + teacher + POINTSPLIT + password + POINTSPLIT + tasks);
+	}
+	public boolean askGamesTeacher(String teacher) {
+		return sendMessage(GAMES + POINTSPLIT + teacher);
 	}
 	private boolean sendMessage(String message) {
 		if (connected) {
@@ -118,5 +153,8 @@ public class TeacherWebSockets {
 
 	public void setTeacherLoginDialog(TeacherLoginDialog teacherLoginDialog) {
 		this.teacherLoginDialog = teacherLoginDialog;
+	}
+	public void setGames(Games games) {
+		this.games = games;
 	}
 }

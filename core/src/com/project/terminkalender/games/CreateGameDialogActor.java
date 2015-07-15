@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.project.terminkalender.DialogActor;
+import com.project.terminkalender.TeacherMain;
+import com.project.terminkalender.screens.TeacherGamesScreen;
 
 public class CreateGameDialogActor extends DialogActor {
 	private CreateGameDialog createGameDialog;
@@ -54,5 +56,7 @@ public class CreateGameDialogActor extends DialogActor {
 	protected void result(Object object) {
 		createGameDialog.createGame();
 		createGameDialog.setEmpty();
+		TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;
+		TeacherMain.teacherWebSockets.askGamesTeacher(teacherGamesScreen.getTeacher());
 	}
 }

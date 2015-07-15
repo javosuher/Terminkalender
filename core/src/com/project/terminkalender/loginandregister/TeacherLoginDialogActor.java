@@ -58,6 +58,7 @@ public class TeacherLoginDialogActor extends DialogActor {
 		
 		if(teacherLoginDialog.update()) {
 			TeacherMain.setNewScreen(TeacherMain.teacherGamesScreen);
+			TeacherMain.teacherWebSockets.askGamesTeacher(teacherLoginDialog.getUserText().getText());
 			TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;
 			teacherGamesScreen.setTeacher(teacherLoginDialog.getUserText().getText());
 			teacherLoginDialog.setEmpty();

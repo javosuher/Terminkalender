@@ -6,11 +6,14 @@ use Ratchet\ConnectionInterface;
 
 class Chat implements MessageComponentInterface {
 	const POINTSPLIT = ":";
+	const DATASPLIT = ";";
 	const MESSAGE = "Message";
 	const USERSROOM = "UsersRoom";
 	const LOGINTEACHER = "LoginTeacher";
 	const REGISTERTEACHER = "RegisterTeacher";
 	const CREATEGAME = "CreateGame";
+	const UPDATEGAME = "UpdateGame";
+	const GAMES = "Games";
 	
     protected $clients, $dataBase;
 
@@ -45,6 +48,12 @@ class Chat implements MessageComponentInterface {
         }
         else if(strcmp($action, Chat::CREATEGAME) == 0) {
         	$this->createGame($from, $msg);
+        }
+        else if(strcmp($action, Chat::UPDATEGAME) == 0) {
+        	$this->updateGame($from, $msg);
+        }
+        else if(strcmp($action, Chat::GAMES) == 0) {
+        	$this->sendGamesTeacher($from, $msg);
         }
     }
 
@@ -132,7 +141,7 @@ class Chat implements MessageComponentInterface {
     	$gameName = explode(Chat::POINTSPLIT, $msg)[1];
     	$teacher = explode(Chat::POINTSPLIT, $msg)[2];
     	$password = explode(Chat::POINTSPLIT, $msg)[3];
-    	echo sprintf('Connection %d want to a game: "%s" from teacher: "%s" and password: "%s"' . "\n", $from->resourceId, $gameName, $teacher, $password);
+    	echo sprintf('Connection %d want to create a game: "%s" from teacher: "%s" and password: "%s"' . "\n", $from->resourceId, $gameName, $teacher, $password);
 
     	$search = $this->searchGameInDataBase($gameName, $teacher);
     	if(empty($search)) {
@@ -146,6 +155,27 @@ class Chat implements MessageComponentInterface {
     		$from->send($trueMessage);
     		echo "Create Game: Failure" . "\n";
     	}
+    }
+    private function updateGame(ConnectionInterface $from, $msg) {
+    	$gameName = explode(Chat::POINTSPLIT, $msg)[1];
+    	$teacher = explode(Chat::POINTSPLIT, $msg)[2];
+    	$password = explode(Chat::POINTSPLIT, $msg)[3];
+    	$tasks = explode(Chat::POINTSPLIT, $msg)[4];
+    	echo sprintf('Connection %d want to update a game: "%s" from teacher: "%s" password: "%s" and tasks: %s' . "\n", $from->resourceId, $gameName, $teacher, $password, $tasks);
+
+    	$this->updateGameInDataBase($gameName, $teacher, $password, $tasks);
+    	echo "update Game: Success" . "\n";
+    }
+    private function sendGamesTeacher(ConnectionInterface $from, $msg) {
+    	$teacher = explode(Chat::POINTSPLIT, $msg)[1];
+    	echo sprintf('Connection %d from teacher: "%s" need games' . "\n", $from->resourceId, $teacher);
+
+    	$games = $this->searchGamesInDataBase($teacher);
+    	$msg = CHAT::GAMES . CHAT::POINTSPLIT;
+    	foreach ($games as $game) {
+            $msg = $msg . $game["name"] . CHAT::DATASPLIT . $game["password"] . CHAT::POINTSPLIT;
+        }
+    	$from->send($msg);
     }
 
     // ------------------------------- Data Base Functions -------------------------------
@@ -173,6 +203,17 @@ class Chat implements MessageComponentInterface {
     		echo $sql . "<br>" . $e->getMessage();
     	}
     }
+    private function searchGamesInDataBase($teacher) {
+    	try {
+    		$sql = $this->dataBase->prepare("SELECT * FROM games WHERE teacher =:teacher");
+    		$sql->execute(array(":teacher" => $teacher));
+ 			$result = $sql->fetchAll();
+ 			//print_r($result);
+ 			return $result;
+    	} catch(PDOException $e) {
+    		echo $sql . "<br>" . $e->getMessage();
+    	}
+    }
     private function storeTeacherInDataBase($userTeacher, $passwordTeacher) {
         try {
 			$sql = $this->dataBase->prepare("INSERT INTO teachers (username, password) VALUES (?, ?)");
@@ -185,6 +226,16 @@ class Chat implements MessageComponentInterface {
         try {
 			$sql = $this->dataBase->prepare("INSERT INTO games (name, teacher, password) VALUES (?, ?, ?)");
  			$sql -> execute(array($gameName, $teacher, $password));
+    	} catch(PDOException $e) {
+    		echo $sql . "<br>" . $e->getMessage();
+    	}
+    }
+    private function updateGameInDataBase($gameName, $teacher, $password, $tasks) {
+        try {
+			$sql = $this->dataBase->prepare("UPDATE games 
+				SET name =:gameName, teacher =:teacher, password =:password, tasks =:tasks 
+				WHERE name =:gameName AND teacher =:teacher");
+ 			$sql -> execute(array(":gameName" => $gameName, ":teacher" => $teacher, ":password" => $password, ":tasks" => $tasks));
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
     	}

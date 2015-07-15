@@ -2,18 +2,47 @@ package com.project.terminkalender.games;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.TeacherMain;
 
 public class Games {
 	private Table gamesTable;
+	private Array<Game> games;
+	private boolean update;
 	
 	public Games() {
 		Skin skin = TeacherMain.assets.get("skins/uiskin.json", Skin.class);
 		
 		gamesTable = new Table(skin);
+		TeacherMain.teacherWebSockets.setGames(this);
+		games = new Array<Game>();
+		update = false;
+	}
+	
+	public void updateGames(Array<String> games) {
+		this.games.clear();
+		for(String game : games) {
+			String [] gameData = game.split(TeacherMain.teacherWebSockets.DATASPLIT);
+			this.games.add(new Game(gameData[0], gameData[1]));
+		}
+		update = true;
+	}
+	public void noGames() {
+		gamesTable.clear();
 	}
 
 	public Table getGamesTable() {
 		return gamesTable;
+	}
+	
+	public Array<Game> getGames() {
+		return games;
+	}
+
+	public boolean update() {
+		return update;
+	}
+	public void finishUpdate() {
+		update = false;
 	}
 }

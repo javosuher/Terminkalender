@@ -16,6 +16,7 @@ import com.project.terminkalender.loginandregister.TeacherLoginDialog;
 public class TeacherWebSockets {
 	public final static String POINTSPLIT = ":";
 	public final static String DATASPLIT = ";";
+	public final static String TASKSPLIT = ",";
 	public final static String LOGINTEACHER = "LoginTeacher";
 	public final static String REGISTERTEACHER = "RegisterTeacher";
 	public final static String CREATEGAME = "CreateGame";
@@ -29,6 +30,10 @@ public class TeacherWebSockets {
 	private Games games;
 	
 	public TeacherWebSockets(String serverDirection) {
+		connect(serverDirection);
+	}
+	
+	public void connect(String serverDirection) {
 		URI url = null;
 		try {
 			url = new URI(serverDirection);
@@ -59,7 +64,7 @@ public class TeacherWebSockets {
 				else if(action.equals(CREATEGAME))
 					createGameCheck(trueMessage);
 				else if(action.equals(GAMES))
-					createGamesinScreen(trueMessage);
+					askGamesCheck(trueMessage);
 					
 			}
 
@@ -114,7 +119,7 @@ public class TeacherWebSockets {
 			TeacherMain.warningDialog.show(gameName + " registered", TeacherMain.teacherGamesScreen.getStage());
 		}
 	}
-	public void createGamesinScreen(String message) {
+	public void askGamesCheck(String message) {
 		String [] games = message.split(POINTSPLIT);
 		if(!games[0].equals("")) {
 			Array<String> newGames = new Array<String>(games);
@@ -139,7 +144,7 @@ public class TeacherWebSockets {
 		return sendMessage(GAMES + POINTSPLIT + teacher);
 	}
 	private boolean sendMessage(String message) {
-		if (connected) {
+		if(connected) {
 			Gdx.app.log("WebSocket", "WSClient send message: " + message);
 			wsc.send(message);
 			return true;

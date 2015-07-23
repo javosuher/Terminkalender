@@ -2,6 +2,7 @@ package com.project.terminkalender.games;
 
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.TeacherMain;
+import com.project.terminkalender.TeacherWebSockets;
 import com.project.terminkalender.screens.TeacherGamesScreen;
 
 public class Game {
@@ -12,6 +13,11 @@ public class Game {
 		this.name = name;
 		this.password = password;
 		this.tasks = new Array<String>();
+	}
+	public Game(String name, String password, Array<String> tasks) {
+		this.name = name;
+		this.password = password;
+		this.tasks = tasks;
 	}
 	
 	public void update() {
@@ -39,10 +45,13 @@ public class Game {
 		return tasks;
 	}
 	public String tasksString() {
-		String tasksString = "";
-		for(String task : tasks) {
-			tasksString += task + ",";
+		if(tasks.size > 0) {
+			String tasksString = "";
+			for(String task : tasks) {
+				tasksString += task + TeacherWebSockets.TASKSPLIT;
+			}
+			return tasksString.substring(0, tasksString.length() - 1);
 		}
-		return tasksString.substring(0, tasksString.length() - 1);
+		else return "";
 	}
 }

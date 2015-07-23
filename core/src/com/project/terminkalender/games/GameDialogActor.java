@@ -17,7 +17,7 @@ public class GameDialogActor extends DialogActor {
 		super("", skin);
 		this.game = game;
 		
-		TextButton exitButton = new TextButton("Apply Changes", skin);
+		TextButton applyChangesButton = new TextButton("Apply Changes", skin);
 		Label nameLabel = new Label("Game name: ", skin);
 		Label nameGameLabel = new Label(game.getName(), skin);
 		Label passwordLabel = new Label("Password: ", skin);
@@ -32,6 +32,7 @@ public class GameDialogActor extends DialogActor {
 		final List<String> tasksBox = new List<String>(skin);
 		ScrollPane taskBoxscroll = new ScrollPane(tasksBox, skin);
 		tasksBox.setItems(game.getTasks());
+		TextButton openGame = new TextButton("Open Game", skin);
 		
 		getButtonTable().defaults().width(150).height(50);
 		taskBoxscroll.setFlickScroll(false);
@@ -50,8 +51,9 @@ public class GameDialogActor extends DialogActor {
 		getContentTable().add(tasksText).row();
 		getContentTable().add(addTaskButton).width(75).height(30).padTop(5).padBottom(5);
 		getContentTable().add(deleteTaskButton).width(75).height(30).padTop(5).padBottom(5).row();
-		getContentTable().add(taskBoxscroll).width(300).height(100).colspan(2).padTop(10);
-		button(exitButton, "OK");
+		getContentTable().add(taskBoxscroll).width(300).height(100).colspan(2).padTop(10).row();
+		getContentTable().add(applyChangesButton).width(150).height(35).colspan(2);
+		button(openGame, "open");
 		
 		newPasswordButton.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
@@ -74,9 +76,14 @@ public class GameDialogActor extends DialogActor {
 				tasksBox.setItems(game.getTasks());
 			}
 		});
+		applyChangesButton.addListener(new ChangeListener() {
+			public void changed (ChangeEvent event, Actor actor) {
+				game.update();
+			}
+		});
 	}
 	
 	protected void result(Object object) {
-		game.update();
+		
 	}
 }

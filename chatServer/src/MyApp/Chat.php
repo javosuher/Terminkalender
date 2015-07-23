@@ -173,7 +173,7 @@ class Chat implements MessageComponentInterface {
     	$games = $this->searchGamesInDataBase($teacher);
     	$msg = CHAT::GAMES . CHAT::POINTSPLIT;
     	foreach ($games as $game) {
-            $msg = $msg . $game["name"] . CHAT::DATASPLIT . $game["password"] . CHAT::POINTSPLIT;
+            $msg = $msg . $game["name"] . CHAT::DATASPLIT . $game["password"] . CHAT::DATASPLIT . $game["tasks"] . CHAT::POINTSPLIT;
         }
     	$from->send($msg);
     }
@@ -224,8 +224,8 @@ class Chat implements MessageComponentInterface {
     }
     private function storeNewGameInDataBase($gameName, $teacher, $password) {
         try {
-			$sql = $this->dataBase->prepare("INSERT INTO games (name, teacher, password) VALUES (?, ?, ?)");
- 			$sql -> execute(array($gameName, $teacher, $password));
+			$sql = $this->dataBase->prepare("INSERT INTO games (name, teacher, password, tasks) VALUES (?, ?, ?, ?)");
+ 			$sql -> execute(array($gameName, $teacher, $password, ""));
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
     	}

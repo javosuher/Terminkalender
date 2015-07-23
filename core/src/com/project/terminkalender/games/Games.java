@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.TeacherMain;
+import com.project.terminkalender.TeacherWebSockets;
 
 public class Games {
 	private Table gamesTable;
@@ -22,8 +23,14 @@ public class Games {
 	public void updateGames(Array<String> games) {
 		this.games.clear();
 		for(String game : games) {
-			String [] gameData = game.split(TeacherMain.teacherWebSockets.DATASPLIT);
-			this.games.add(new Game(gameData[0], gameData[1]));
+			String [] gameData = game.split(TeacherWebSockets.DATASPLIT);
+			if(gameData.length < 3) {
+				this.games.add(new Game(gameData[0], gameData[1]));
+			}
+			else {
+				Array<String> tasks = new Array<String>(gameData[2].split(TeacherWebSockets.TASKSPLIT));
+				this.games.add(new Game(gameData[0], gameData[1], tasks));
+			}
 		}
 		update = true;
 	}

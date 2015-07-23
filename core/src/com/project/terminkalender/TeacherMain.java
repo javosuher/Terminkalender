@@ -19,6 +19,7 @@ public class TeacherMain extends Game {
 	
 	public static final int PORT = 8080;
 	public static final String IP = "192.168.1.132";
+	public static final String serverDirection = "ws://"+ IP +":"+ PORT;
 	public static TeacherWebSockets teacherWebSockets;
 	
 	public static AbstractScreen teacherLoginRegisterScreen, teacherGamesScreen;
@@ -36,7 +37,7 @@ public class TeacherMain extends Game {
 		camera = new OrthographicCamera();
 		viewport = new FitViewport(WIDTH, HEIGHT, camera);
 		viewport.update(WIDTH, HEIGHT, true);
-		teacherWebSockets = new TeacherWebSockets("ws://"+ TeacherMain.IP +":"+ TeacherMain.PORT);
+		teacherWebSockets = new TeacherWebSockets(serverDirection);
 		main = this;
 		
 		loadAssets();
@@ -49,14 +50,16 @@ public class TeacherMain extends Game {
 	
 	private void loadAssets() {
 		assets.load("skins/uiskin.json", Skin.class);
-		assets.load("Slot.png", Texture.class);
-		assets.load("EmptySlot.png", Texture.class);
 		assets.load("background.png", Texture.class);
 		assets.finishLoading();
 	}
 	
 	public static void setNewScreen(AbstractScreen newScreen) {
 		main.setScreen(newScreen);
+	}
+	
+	public static void reconnect() {
+		teacherWebSockets.connect(serverDirection);
 	}
 	
 	@Override

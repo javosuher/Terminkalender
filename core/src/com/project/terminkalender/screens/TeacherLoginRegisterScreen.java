@@ -8,12 +8,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.Background;
+import com.project.terminkalender.ReconnectButton;
 import com.project.terminkalender.TeacherMain;
 import com.project.terminkalender.loginandregister.TeacherLoginRegisterActor;
 
 public class TeacherLoginRegisterScreen extends AbstractScreen {
 	private Background background;
 	private TeacherLoginRegisterActor teacherLoginRegisterActor;
+	private ReconnectButton reconnectButton;
 
 	public TeacherLoginRegisterScreen(Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
@@ -23,9 +25,11 @@ public class TeacherLoginRegisterScreen extends AbstractScreen {
 		
 		background = new Background(backgroundTexture);
 		teacherLoginRegisterActor = new TeacherLoginRegisterActor(skin);
+		reconnectButton = new ReconnectButton(skin);
 		
 		stage.addActor(background);
 		stage.addActor(teacherLoginRegisterActor);
+		stage.addActor(reconnectButton);
 	}
 	
 	@Override

@@ -14,6 +14,7 @@ class Chat implements MessageComponentInterface {
 	const CREATEGAME = "CreateGame";
 	const UPDATEGAME = "UpdateGame";
 	const GAMES = "Games";
+	const OPENGAME = "OpenGame";
 	
     protected $clients, $dataBase;
 
@@ -176,6 +177,10 @@ class Chat implements MessageComponentInterface {
             $msg = $msg . $game["name"] . CHAT::DATASPLIT . $game["password"] . CHAT::DATASPLIT . $game["tasks"] . CHAT::POINTSPLIT;
         }
     	$from->send($msg);
+    }
+
+    private function openGame(ConnectionInterface $from, $msg) {
+    	
     }
 
     // ------------------------------- Data Base Functions -------------------------------

@@ -56,7 +56,7 @@ public class GamesActor extends Table {
 			for(Game game : gamesArray) {
 				final TextButton gameButton = new TextButton(game.getName(), skin);
 				gamesTable.add(gameButton).width(200).height(100).pad(30);
-				final GameDialogActor gameDialogActor = new GameDialogActor(skin, game);
+				final GameDialogActor gameDialogActor = new GameDialogActor(skin, game, gameButton);
 				
 				++column;
 				if(column % 3 == 0) {

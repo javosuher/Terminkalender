@@ -24,6 +24,11 @@ public class Game {
 		TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;
 		TeacherMain.teacherWebSockets.updateGame(name, teacherGamesScreen.getTeacher(), password, tasksString());
 	}
+	
+	public void openGame() {
+		TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;
+		TeacherMain.teacherWebSockets.openGame(name, teacherGamesScreen.getTeacher(), password, tasksString());
+	}
 
 	public String getName() {
 		return name;

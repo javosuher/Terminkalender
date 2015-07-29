@@ -22,6 +22,7 @@ public class TeacherWebSockets {
 	public final static String CREATEGAME = "CreateGame";
 	public final static String UPDATEGAME = "UpdateGame";
 	public final static String GAMES = "Games";
+	public final static String OPENGAME = "OpenGame";
 	
 	private WebSocketClient wsc;
 	private boolean connected;
@@ -142,6 +143,9 @@ public class TeacherWebSockets {
 	}
 	public boolean askGamesTeacher(String teacher) {
 		return sendMessage(GAMES + POINTSPLIT + teacher);
+	}
+	public boolean openGame(String gameName, String teacher, String password, String tasks) {
+		return sendMessage(OPENGAME + POINTSPLIT + gameName + POINTSPLIT + teacher + POINTSPLIT + password + POINTSPLIT + tasks);
 	}
 	private boolean sendMessage(String message) {
 		if(connected) {

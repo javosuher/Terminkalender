@@ -23,6 +23,7 @@ class Chat implements MessageComponentInterface {
 
         $this->clients = new \SplObjectStorage;
         $this->dataBase = $dbh;
+        $this->token = sem_get(0);
         echo "Init Server!\n";
     }
 

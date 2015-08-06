@@ -1,0 +1,123 @@
+package com.project.terminkalender;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.List.ListStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.SplitPane.SplitPaneStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Tree.TreeStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
+
+public class kennySkin extends Skin {
+
+	public kennySkin() {
+		TextureAtlas blueAtlas = new TextureAtlas("skins/ui-blue.atlas");
+		TextureAtlas redAtlas = new TextureAtlas("skins/ui-red.atlas");
+		BitmapFont font12 = new BitmapFont(Gdx.files.internal("skins/kenpixel_mini_square-12.fnt"));
+		BitmapFont font18 = new BitmapFont(Gdx.files.internal("skins/kenpixel_mini_square-18.fnt"));
+		BitmapFont font32 = new BitmapFont(Gdx.files.internal("skins/kenpixel_mini_square-32.fnt"));
+		
+		addRegions(blueAtlas);
+		add("KenPixelFont12", font12);
+		add("KenPixelFont18", font18);
+		add("KenPixelFont32", font32);
+		
+		final ButtonStyle buttonStyle = new ButtonStyle(getDrawable("button_04"), 
+														getDrawable("button_02"), 
+														getDrawable("button_04"));
+		
+		final TextButtonStyle textButtonStyle = new TextButtonStyle(getDrawable("button_04"), 
+																	getDrawable("button_02"), 
+																	getDrawable("button_04"), 
+																	getFont("KenPixelFont18"));
+		
+		final ScrollPaneStyle scrollPaneStyle = new ScrollPaneStyle(getDrawable("color_widgettext"), 
+																	getDrawable("scroll_back_hor"), 
+																	getDrawable("knob_06"), 
+																	getDrawable("scroll_back_ver"), 
+																	getDrawable("knob_05"));
+		final ScrollPaneStyle scrollPaneWindowStyle = new ScrollPaneStyle(getDrawable("color_window"), 
+																	getDrawable("scroll_back_hor"), 
+																	getDrawable("knob_06"), 
+																	getDrawable("scroll_back_ver"), 
+																	getDrawable("knob_05"));
+		
+		final SplitPaneStyle splitPaneStyle = new SplitPaneStyle(getDrawable("slider_back_hor"));
+		
+		final WindowStyle windowStyle = new WindowStyle(getFont("KenPixelFont18"), 
+														Color.BLACK, 
+														getDrawable("window_03"));
+		
+		final ProgressBarStyle progressBarStyle = new ProgressBarStyle(getDrawable("slider_back_hor"), 
+																	   getDrawable("knob_01"));
+		
+		final SliderStyle sliderStyle = new SliderStyle(getDrawable("slider_back_hor"), 
+														getDrawable("knob_02"));
+		
+		final LabelStyle labelStyle = new LabelStyle(getFont("KenPixelFont18"), 
+													 Color.BLACK);
+		
+		final TextFieldStyle textFieldStyle = new TextFieldStyle(getFont("KenPixelFont18"), 
+													 			 Color.BLACK, 
+													 			 getDrawable("textbox_cursor_02"), 
+													 			 getDrawable("color_basetext"), 
+													 			 getDrawable("textbox_02"));
+		
+		final CheckBoxStyle checkBoxStyle = new CheckBoxStyle(getDrawable("checkbox_off"), 
+															  getDrawable("checkbox_on"), 
+															  getFont("KenPixelFont18"), 
+															  Color.BLACK);
+		
+		final ListStyle listStyle = new ListStyle(getFont("KenPixelFont18"), 
+												  Color.BLACK, 
+												  Color.BLACK, 
+												  getDrawable("button_01"));
+		
+		final TouchpadStyle touchpadStyle = new TouchpadStyle(getDrawable("window_02"), 
+															  getDrawable("knob_04"));
+		
+		final TreeStyle treeStyle = new TreeStyle(getDrawable("icon_arrow_right"), 
+												  getDrawable("icon_arrow_down"), 
+												  getDrawable("window_03"));
+		
+		add("default", buttonStyle);
+		add("default", textButtonStyle);
+		add("default", scrollPaneStyle);
+		add("window", scrollPaneWindowStyle);
+		add("default", splitPaneStyle);
+		add("default", windowStyle);
+		add("default", progressBarStyle);
+		add("default", sliderStyle);
+		add("default", labelStyle);
+		add("default", textFieldStyle);
+        add("default", checkBoxStyle);
+        add("default", listStyle);
+        add("default", touchpadStyle);
+        add("default", treeStyle);
+        
+        addRegions(redAtlas);
+        
+        final ButtonStyle closeRedButtonStyle = new ButtonStyle(getDrawable("button_cross"), 
+				 											 getDrawable("icon_circle"), 
+				 											 getDrawable("button_cross"));
+        
+        final TextButtonStyle redTextButtonStyle = new TextButtonStyle(getDrawable("button_04"), 
+																	getDrawable("button_02"), 
+																	getDrawable("button_04"), 
+																	getFont("KenPixelFont18"));
+        
+        add("closeRedButton", closeRedButtonStyle);
+        add("redTextButton", redTextButtonStyle);
+	}	
+}

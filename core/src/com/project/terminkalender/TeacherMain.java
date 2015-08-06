@@ -18,7 +18,7 @@ public class TeacherMain extends Game {
 	public static final AssetManager assets = new AssetManager();
 	
 	public static final int PORT = 8080;
-	public static final String IP = "192.168.1.132";
+	public static final String IP = "192.168.1.131";
 	public static final String serverDirection = "ws://"+ IP +":"+ PORT;
 	public static TeacherWebSockets teacherWebSockets;
 	
@@ -30,6 +30,8 @@ public class TeacherMain extends Game {
 	public static OrthographicCamera camera;
 	
 	public static TeacherMain main;
+
+	public static Skin skin;
 	
 	@Override
 	public void create() {
@@ -42,14 +44,14 @@ public class TeacherMain extends Game {
 		
 		loadAssets();
 		
-		warningDialog = new WarningDialogActor(assets.get("skins/uiskin.json", Skin.class));
+		warningDialog = new WarningDialogActor(skin);
 		teacherLoginRegisterScreen = new TeacherLoginRegisterScreen(viewport, batch);
 		teacherGamesScreen = new TeacherGamesScreen(viewport, batch);
 		setScreen(teacherLoginRegisterScreen);
 	}
 	
 	private void loadAssets() {
-		assets.load("skins/uiskin.json", Skin.class);
+		skin = new kennySkin();
 		assets.load("background.png", Texture.class);
 		assets.finishLoading();
 	}

@@ -12,7 +12,7 @@ public class Games {
 	private boolean update;
 	
 	public Games() {
-		Skin skin = TeacherMain.assets.get("skins/uiskin.json", Skin.class);
+		Skin skin = TeacherMain.skin;
 		
 		gamesTable = new Table(skin);
 		TeacherMain.teacherWebSockets.setGames(this);

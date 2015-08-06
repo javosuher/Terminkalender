@@ -10,7 +10,7 @@ public class TeacherLoginDialog {
 	
 
 	public TeacherLoginDialog() {
-		Skin skin = TeacherMain.assets.get("skins/uiskin.json", Skin.class);
+		Skin skin = TeacherMain.skin;
 		
 		userText = new TextField("", skin);
 		passwordText = new TextField("", skin);

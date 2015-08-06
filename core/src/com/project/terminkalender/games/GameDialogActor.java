@@ -7,9 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.project.terminkalender.DialogActor;
+import com.project.terminkalender.TeacherMain;
 
 public class GameDialogActor extends DialogActor {
 	public final static String OPEN = "Open Game";
@@ -93,6 +95,7 @@ public class GameDialogActor extends DialogActor {
 		String action = actionButton.getText().toString();
 		
 		if(action.equals(OPEN)) {
+			thisButton.setStyle(TeacherMain.skin.get("redTextButton", TextButtonStyle.class));
 			thisButton.setColor(Color.RED);
 			game.openGame();
 			actionButton.setText(CLOSE);

@@ -1,18 +1,18 @@
 package com.project.terminkalender;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class DialogActor extends Dialog {
 
 	public DialogActor(String title, Skin skin) {
-		super("", skin, "dialog");
+		super("", skin);
 		
-		TextButton closeButton = new TextButton("X", skin, "default");
+		Button closeButton = new Button(TeacherMain.skin.get("closeRedButton", ButtonStyle.class));
 		
 		center();
 		setMovable(false);
@@ -20,8 +20,7 @@ public class DialogActor extends Dialog {
 		setModal(true);
 		pad(20);
 		
-		closeButton.setColor(Color.RED);
-		getTitleTable().add(closeButton).width(30);
+		getTitleTable().add(closeButton);
 		
 		closeButton.addListener(new ClickListener() {
 

@@ -1,35 +1,30 @@
 package com.project.terminkalender.games;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.ScrollWindow;
 import com.project.terminkalender.TeacherMain;
 
 public class GamesActor extends Table {
 	private Games games;
-	private Window gamesWindow;
+	private ScrollWindow gamesWindow;
 
 	public GamesActor(Skin skin) {
 		super(skin);
 		games = new Games();
 		
-		gamesWindow = new Window("Games", skin);
+		gamesWindow = new ScrollWindow("Games", skin, games.getGamesTable());
 		TextButton newGameButton = new TextButton("New Game", skin);
-		Table gamesTable = games.getGamesTable();
-		ScrollPane scrollGamesWindow = new ScrollPane(gamesTable, skin);
+		
 		final CreateGameDialogActor createGameDialogActor = new CreateGameDialogActor(skin);
 		
-		gamesWindow.setMovable(false);
 		setFillParent(true);
 		
-		gamesWindow.add(scrollGamesWindow).width(800).height(Main.HEIGHT - 16);
-		add(gamesWindow).width(800).height(Main.HEIGHT - 16).expand().left().pad(8);
+		add(gamesWindow).width(800).height(TeacherMain.HEIGHT - 16).expand().left().pad(8);
 		add(newGameButton).width(150).height(75).expand().right().pad(8);
 		
 		newGameButton.addListener(new ClickListener() {
@@ -48,7 +43,7 @@ public class GamesActor extends Table {
 		if(games.update()) {
 			Table gamesTable = games.getGamesTable();
 			Array<Game> gamesArray = games.getGames();
-			Skin skin = TeacherMain.assets.get("skins/uiskin.json", Skin.class);
+			Skin skin = TeacherMain.skin;
 			
 			gamesTable.clear();
 			

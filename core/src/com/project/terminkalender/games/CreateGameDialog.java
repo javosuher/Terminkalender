@@ -9,7 +9,7 @@ public class CreateGameDialog {
 	private TextField gameNameText, gamePasswordText, gamePasswordRepeatText;
 	
 	public CreateGameDialog() {
-		Skin skin = TeacherMain.assets.get("skins/uiskin.json", Skin.class);
+		Skin skin = TeacherMain.skin;
 		
 		gameNameText = new TextField("", skin);
 		gamePasswordText = new TextField("", skin);

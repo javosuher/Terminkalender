@@ -21,7 +21,7 @@ public class TeacherLoginRegisterScreen extends AbstractScreen {
 		super(viewport, batch);
 		
 		TextureRegion backgroundTexture = new TextureRegion(TeacherMain.assets.get("background.png", Texture.class));
-		Skin skin = TeacherMain.assets.get("skins/uiskin.json", Skin.class);
+		Skin skin = TeacherMain.skin;
 		
 		background = new Background(backgroundTexture);
 		teacherLoginRegisterActor = new TeacherLoginRegisterActor(skin);

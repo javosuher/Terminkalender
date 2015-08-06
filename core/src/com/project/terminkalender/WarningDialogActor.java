@@ -10,7 +10,7 @@ public class WarningDialogActor extends Dialog {
 	private Label messageLabel;
 
 	public WarningDialogActor(Skin skin) {
-		super("", skin, "dialog");
+		super("", skin);
 		
 		messageLabel = new Label("", skin);
 		TextButton closeButton = new TextButton("OK", skin);

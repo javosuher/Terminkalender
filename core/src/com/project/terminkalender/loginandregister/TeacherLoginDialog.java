@@ -3,6 +3,7 @@ package com.project.terminkalender.loginandregister;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.project.terminkalender.TeacherMain;
+import com.project.terminkalender.TeacherWebSockets;
 
 public class TeacherLoginDialog {
 	private TextField userText, passwordText;
@@ -21,6 +22,11 @@ public class TeacherLoginDialog {
 	public void loginTeacher() {
 		if(userText.getText().equals("") || passwordText.getText().equals("")) {
 			TeacherMain.warningDialog.show("You must fill the gaps", TeacherMain.teacherLoginRegisterScreen.getStage());
+		}
+		else if(userText.getText().contains(TeacherWebSockets.DATASPLIT) || userText.getText().contains(TeacherWebSockets.POINTSPLIT) || 
+				userText.getText().contains(TeacherWebSockets.TASKSPLIT) || passwordText.getText().contains(TeacherWebSockets.DATASPLIT) || 
+				passwordText.getText().contains(TeacherWebSockets.POINTSPLIT) || passwordText.getText().contains(TeacherWebSockets.TASKSPLIT)) {
+			TeacherMain.warningDialog.show("you musn't use ',', ';' or ':'", TeacherMain.teacherLoginRegisterScreen.getStage());
 		}
 		else {
 			TeacherMain.teacherWebSockets.loginTeacher(userText.getText().toLowerCase(), passwordText.getText().toLowerCase());

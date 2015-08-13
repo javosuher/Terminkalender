@@ -1,29 +1,18 @@
 package com.project.terminkalender.games;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.project.terminkalender.DialogActor;
-import com.project.terminkalender.TeacherMain;
 
-public class GameDialogActor extends DialogActor {
-	public final static String OPEN = "Open Game";
-	public final static String CLOSE = "Close Game";
-	
-	private Game game;
-	private TextButton thisButton, actionButton;
+public class GameDialogActor extends GameDialog {
 	
 	public GameDialogActor(Skin skin, final Game game, TextButton thisButton) {
-		super("", skin);
-		this.game = game;
-		this.thisButton = thisButton;
+		super(skin, game, thisButton);
 		
 		TextButton applyChangesButton = new TextButton("Apply Changes", skin);
 		Label nameLabel = new Label("Game name: ", skin);
@@ -40,7 +29,7 @@ public class GameDialogActor extends DialogActor {
 		final List<String> tasksBox = new List<String>(skin);
 		ScrollPane taskBoxscroll = new ScrollPane(tasksBox, skin);
 		tasksBox.setItems(game.getTasks());
-		actionButton = new TextButton(OPEN, skin);
+		actionButton = new TextButton("Open", skin);
 		
 		getButtonTable().defaults().width(150).height(50);
 		taskBoxscroll.setFlickScroll(false);
@@ -61,7 +50,7 @@ public class GameDialogActor extends DialogActor {
 		getContentTable().add(deleteTaskButton).width(75).height(30).padTop(5).padBottom(5).row();
 		getContentTable().add(taskBoxscroll).width(300).height(100).colspan(2).padTop(10).row();
 		getContentTable().add(applyChangesButton).width(150).height(35).colspan(2);
-		button(actionButton, OPEN);
+		button(actionButton, "Open");
 		
 		newPasswordButton.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
@@ -92,19 +81,6 @@ public class GameDialogActor extends DialogActor {
 	}
 	
 	protected void result(Object object) {
-		String action = actionButton.getText().toString();
-		
-		if(action.equals(OPEN)) {
-			thisButton.setStyle(TeacherMain.skin.get("redTextButton", TextButtonStyle.class));
-			thisButton.setColor(Color.RED);
-			game.openGame();
-			actionButton.setText(CLOSE);
-			actionButton.setColor(Color.RED);
-		}
-		if(action.equals(CLOSE)) {
-			thisButton.setColor(getColor());
-			actionButton.setColor(getColor());
-			actionButton.setText(OPEN);
-		}
+		game.openGamePetition();
 	}
 }

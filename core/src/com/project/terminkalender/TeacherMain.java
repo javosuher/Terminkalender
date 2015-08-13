@@ -1,6 +1,7 @@
 package com.project.terminkalender;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,7 +19,7 @@ public class TeacherMain extends Game {
 	public static final AssetManager assets = new AssetManager();
 	
 	public static final int PORT = 8080;
-	public static final String IP = "192.168.1.131";
+	public static final String IP = "192.168.1.133";
 	public static final String serverDirection = "ws://"+ IP +":"+ PORT;
 	public static TeacherWebSockets teacherWebSockets;
 	
@@ -41,6 +42,7 @@ public class TeacherMain extends Game {
 		viewport.update(WIDTH, HEIGHT, true);
 		teacherWebSockets = new TeacherWebSockets(serverDirection);
 		main = this;
+		Gdx.input.setCatchBackKey(true);
 		
 		loadAssets();
 		

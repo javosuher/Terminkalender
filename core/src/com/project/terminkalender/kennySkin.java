@@ -108,13 +108,13 @@ public class kennySkin extends Skin {
         
         addRegions(redAtlas);
         
-        final ButtonStyle closeRedButtonStyle = new ButtonStyle(getDrawable("button_cross"), 
-				 											 getDrawable("icon_circle"), 
-				 											 getDrawable("button_cross"));
+        final ButtonStyle closeRedButtonStyle = new ButtonStyle(getDrawable("button_cross_red"), 
+				 											 getDrawable("icon_circle_red"), 
+				 											 getDrawable("button_cross_red"));
         
-        final TextButtonStyle redTextButtonStyle = new TextButtonStyle(getDrawable("button_04"), 
-																	getDrawable("button_02"), 
-																	getDrawable("button_04"), 
+        final TextButtonStyle redTextButtonStyle = new TextButtonStyle(getDrawable("button_04_red"), 
+																	getDrawable("button_02_red"), 
+																	getDrawable("button_04_red"), 
 																	getFont("KenPixelFont18"));
         
         add("closeRedButton", closeRedButtonStyle);

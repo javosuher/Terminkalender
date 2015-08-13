@@ -22,7 +22,7 @@ public class TeacherWebSockets {
 	public final static String CREATEGAME = "CreateGame";
 	public final static String UPDATEGAME = "UpdateGame";
 	public final static String GAMES = "Games";
-	public final static String OPENGAME = "OpenGame";
+	public final static String OPENGAMES = "OpenGames";
 	
 	private WebSocketClient wsc;
 	private boolean connected;
@@ -66,6 +66,10 @@ public class TeacherWebSockets {
 					createGameCheck(trueMessage);
 				else if(action.equals(GAMES))
 					askGamesCheck(trueMessage);
+				else if(action.equals(UPDATEGAME))
+					updateGameCheck(trueMessage);
+				else if(action.equals(OPENGAMES))
+					openGameProcess(trueMessage);
 					
 			}
 
@@ -121,12 +125,26 @@ public class TeacherWebSockets {
 		}
 	}
 	public void askGamesCheck(String message) {
-		String [] games = message.split(POINTSPLIT);
-		if(!games[0].equals("")) {
-			Array<String> newGames = new Array<String>(games);
-			this.games.updateGames(newGames);
+		String [] games = message.split(OPENGAMES);
+		Array<String> normalGames = constructArrayGames(games[0]);
+		Array<String> openGames = constructArrayGames(games[1].substring(1));
+		if(normalGames.size != 0 || openGames.size != 0) {
+			this.games.updateGames(normalGames, openGames);
 		}
 		else this.games.noGames();
+	}
+	private Array<String> constructArrayGames(String gamesData) {
+		String [] games = gamesData.split(POINTSPLIT);
+		if(!games[0].equals("")) {
+			return new Array<String>(games);
+		}
+		else return new Array<String>();
+	}
+	public void updateGameCheck(String message) {
+		TeacherMain.warningDialog.show("updated successfully", TeacherMain.teacherGamesScreen.getStage());
+	}
+	public void openGameProcess(String message) {
+		TeacherMain.warningDialog.show(message + " Opened", TeacherMain.teacherGamesScreen.getStage());
 	}
 	
 	public boolean loginTeacher(String teacherUser, String password) {
@@ -145,7 +163,7 @@ public class TeacherWebSockets {
 		return sendMessage(GAMES + POINTSPLIT + teacher);
 	}
 	public boolean openGame(String gameName, String teacher, String password, String tasks) {
-		return sendMessage(OPENGAME + POINTSPLIT + gameName + POINTSPLIT + teacher + POINTSPLIT + password + POINTSPLIT + tasks);
+		return sendMessage(OPENGAMES + POINTSPLIT + gameName + POINTSPLIT + teacher + POINTSPLIT + password + POINTSPLIT + tasks);
 	}
 	private boolean sendMessage(String message) {
 		if(connected) {

@@ -21,11 +21,20 @@ public class Game {
 	}
 	
 	public void update() {
-		TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;
-		TeacherMain.teacherWebSockets.updateGame(name, teacherGamesScreen.getTeacher(), password, tasksString());
+		if(password.equals("")) {
+			TeacherMain.warningDialog.show("You must fill the password", TeacherMain.teacherGamesScreen.getStage());
+		}
+		else if(password.contains(TeacherWebSockets.DATASPLIT) || password.contains(TeacherWebSockets.POINTSPLIT) || 
+				password.contains(TeacherWebSockets.TASKSPLIT)) {
+			TeacherMain.warningDialog.show("you musn't use ',', ';' or ':'", TeacherMain.teacherLoginRegisterScreen.getStage());
+		}
+		else {
+			TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;
+			TeacherMain.teacherWebSockets.updateGame(name, teacherGamesScreen.getTeacher(), password, tasksString());
+		}
 	}
 	
-	public void openGame() {
+	public void openGamePetition() {
 		TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;
 		TeacherMain.teacherWebSockets.openGame(name, teacherGamesScreen.getTeacher(), password, tasksString());
 	}
@@ -41,7 +50,10 @@ public class Game {
 	}
 
 	public void addTask(String task) {
-		tasks.add(task);
+		if(task.equals("")) {
+			TeacherMain.warningDialog.show("You must fill the task", TeacherMain.teacherGamesScreen.getStage());
+		}
+		else tasks.add(task);
 	}
 	public void eraseTask(String task) {
 		tasks.removeValue(task, false);

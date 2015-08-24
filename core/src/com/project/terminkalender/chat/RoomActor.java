@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Main;
 import com.project.terminkalender.screens.ChatScreen;
 import com.project.terminkalender.screens.RoomScreen;
+import com.project.terminkalender.tools.ScrollWindow;
 
 public class RoomActor extends Table {
 	private final Room room = new Room();
@@ -18,16 +19,12 @@ public class RoomActor extends Table {
 	public RoomActor(Skin skin) {
 		super(skin);
 		
-		Window usersWindow = new Window("Users", skin);
+		ScrollWindow usersWindow = new ScrollWindow("Users", skin, room.getUsersTable());
 		TextButton refreshButton = new TextButton("Refresh", skin);
-		
-		Table usersTable = room.getUsersTable();
-		ScrollPane scrolluserWindow = new ScrollPane(usersTable, skin);
 		
 		usersWindow.setMovable(false);
 		setFillParent(true);
 		
-		usersWindow.add(scrolluserWindow).width(800).height(Main.HEIGHT - 16);
 		add(usersWindow).width(800).height(Main.HEIGHT - 16).expand().left().pad(8);
 		add(refreshButton).width(150).height(75).expand().right().pad(8);
 		

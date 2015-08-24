@@ -8,21 +8,27 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.project.terminkalender.login.User;
 import com.project.terminkalender.screens.AbstractScreen;
 import com.project.terminkalender.screens.CalendarScreen;
+import com.project.terminkalender.screens.LoginGamesScreen;
+import com.project.terminkalender.screens.LoginScreen;
 import com.project.terminkalender.screens.RoomScreen;
+import com.project.terminkalender.tools.WarningDialogActor;
+import com.project.terminkalender.tools.kennySkin;
+import com.project.terminkalender.websockets.ServerDirection;
+import com.project.terminkalender.websockets.WebSockets;
 
 public class Main extends Game {
 	public static final int WIDTH = 1000;
 	public static final int HEIGHT = 600;
 	public static final AssetManager assets = new AssetManager();
+	public static Skin skin;
 	
-	public static final int PORT = 8080;
-	public static final String IP = "192.168.1.132";
 	public static WebSockets webSockets;
-	
-	public static AbstractScreen calendarScreen, roomScreen;
+	public static AbstractScreen loginScreen, loginGamesScreen, calendarScreen, roomScreen;
 	public static WarningDialogActor warningDialog;
+	public static User user;
 	
 	public static SpriteBatch batch;
 	public static Viewport viewport;
@@ -36,19 +42,22 @@ public class Main extends Game {
 		camera = new OrthographicCamera();
 		viewport = new FitViewport(WIDTH, HEIGHT, camera);
 		viewport.update(WIDTH, HEIGHT, true);
-		webSockets = new WebSockets("ws://"+ Main.IP +":"+ Main.PORT);
+		webSockets = new WebSockets(ServerDirection.serverDirection);
 		main = this;
+		user = new User();
 		
 		loadAssets();
 		
-		warningDialog = new WarningDialogActor(assets.get("skins/uiskin.json", Skin.class));
-		calendarScreen = new CalendarScreen(viewport, batch);
-		roomScreen = new RoomScreen(viewport, batch);
-		setScreen(roomScreen);
+		loginScreen = new LoginScreen(viewport, batch);
+		loginGamesScreen = new LoginGamesScreen(viewport, batch);
+		warningDialog = new WarningDialogActor(skin);
+		//calendarScreen = new CalendarScreen(viewport, batch);
+		//roomScreen = new RoomScreen(viewport, batch);
+		setScreen(loginScreen);
 	}
 	
 	private void loadAssets() {
-		assets.load("skins/uiskin.json", Skin.class);
+		skin = new kennySkin();
 		assets.load("Slot.png", Texture.class);
 		assets.load("EmptySlot.png", Texture.class);
 		assets.load("background.png", Texture.class);
@@ -59,9 +68,13 @@ public class Main extends Game {
 		main.setScreen(newScreen);
 	}
 	
+	public static void reconnect() {
+		webSockets.connect(ServerDirection.serverDirection);
+	}
+	
 	@Override
 	public void dispose() {
-		calendarScreen.dispose();
+		//calendarScreen.dispose();
 		batch.dispose();
 		assets.dispose();
 	}

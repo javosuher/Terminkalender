@@ -28,11 +28,10 @@ public class RoomScreen extends AbstractScreen {
 		super(viewport, batch);
 		
 		TextureRegion backgroundTexture = new TextureRegion(Main.assets.get("background.png", Texture.class));
-		Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
 		
 		background = new Background(backgroundTexture);
-		roomActor = new RoomActor(skin);
-		changeToCalendarButton = new TextButton("Calendar", skin);
+		roomActor = new RoomActor(Main.skin);
+		changeToCalendarButton = new TextButton("Calendar", Main.skin);
 		chatScreens = new Array<ChatScreen>();
 		
 		stage.addActor(background);

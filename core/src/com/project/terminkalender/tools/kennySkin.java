@@ -1,4 +1,4 @@
-package com.project.terminkalender;
+package com.project.terminkalender.tools;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -37,6 +37,10 @@ public class kennySkin extends Skin {
 														getDrawable("button_02"), 
 														getDrawable("button_04"));
 		
+		final ButtonStyle calenderButtonStyle = new ButtonStyle(getDrawable("button_01"), 
+																getDrawable("button_01"), 
+																getDrawable("button_01"));
+		
 		final TextButtonStyle textButtonStyle = new TextButtonStyle(getDrawable("button_04"), 
 																	getDrawable("button_02"), 
 																	getDrawable("button_04"), 
@@ -58,6 +62,10 @@ public class kennySkin extends Skin {
 		final WindowStyle windowStyle = new WindowStyle(getFont("KenPixelFont18"), 
 														Color.BLACK, 
 														getDrawable("window_03"));
+		
+		final WindowStyle window2Style = new WindowStyle(getFont("KenPixelFont18"), 
+														Color.BLACK, 
+														getDrawable("window_02"));
 		
 		final ProgressBarStyle progressBarStyle = new ProgressBarStyle(getDrawable("slider_back_hor"), 
 																	   getDrawable("knob_01"));
@@ -92,11 +100,13 @@ public class kennySkin extends Skin {
 												  getDrawable("window_03"));
 		
 		add("default", buttonStyle);
+		add("calender", calenderButtonStyle);
 		add("default", textButtonStyle);
 		add("default", scrollPaneStyle);
 		add("window", scrollPaneWindowStyle);
 		add("default", splitPaneStyle);
 		add("default", windowStyle);
+		add("window2", window2Style);
 		add("default", progressBarStyle);
 		add("default", sliderStyle);
 		add("default", labelStyle);

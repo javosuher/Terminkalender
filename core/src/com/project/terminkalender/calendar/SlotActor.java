@@ -19,7 +19,7 @@ public class SlotActor extends ImageButton implements SlotListener {
 
 	private static ImageButtonStyle createStyle(Skin skin, Slot slot) {
 		TextureRegion image = slot.getImage();
-		ImageButtonStyle style = new ImageButtonStyle(skin.get(ButtonStyle.class));
+		ImageButtonStyle style = new ImageButtonStyle(skin.get("calender", ButtonStyle.class));
 		style.imageUp = new TextureRegionDrawable(image);
 		style.imageDown = new TextureRegionDrawable(image);
 

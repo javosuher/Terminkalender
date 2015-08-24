@@ -3,8 +3,8 @@ package com.project.terminkalender.games;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.project.terminkalender.TeacherMain;
-import com.project.terminkalender.TeacherWebSockets;
 import com.project.terminkalender.screens.TeacherGamesScreen;
+import com.project.terminkalender.websockets.TeacherWebSockets;
 
 public class CreateGameDialog {
 	private TextField gameNameText, gamePasswordText, gamePasswordRepeatText;

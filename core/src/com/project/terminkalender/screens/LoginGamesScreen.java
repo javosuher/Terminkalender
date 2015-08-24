@@ -5,31 +5,35 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.Background;
-import com.project.terminkalender.TeacherMain;
-import com.project.terminkalender.loginandregister.TeacherLoginRegisterActor;
+import com.project.terminkalender.Main;
+import com.project.terminkalender.login.TeacherGamesActor;
 import com.project.terminkalender.tools.ReconnectButton;
 
-public class TeacherLoginRegisterScreen extends AbstractScreen {
+public class LoginGamesScreen extends AbstractScreen {
 	private Background background;
-	private TeacherLoginRegisterActor teacherLoginRegisterActor;
 	private ReconnectButton reconnectButton;
+	private TeacherGamesActor teacherGames;
 
-	public TeacherLoginRegisterScreen(Viewport viewport, SpriteBatch batch) {
+	public LoginGamesScreen(Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
 		
-		TextureRegion backgroundTexture = new TextureRegion(TeacherMain.assets.get("background.png", Texture.class));
+		TextureRegion backgroundTexture = new TextureRegion(Main.assets.get("background.png", Texture.class));
 		
 		background = new Background(backgroundTexture);
-		teacherLoginRegisterActor = new TeacherLoginRegisterActor(TeacherMain.skin);
-		reconnectButton = new ReconnectButton(TeacherMain.skin);
+		reconnectButton = new ReconnectButton(Main.skin);
+		teacherGames = new TeacherGamesActor(Main.skin);
 		
 		stage.addActor(background);
-		stage.addActor(teacherLoginRegisterActor);
 		stage.addActor(reconnectButton);
+		stage.addActor(teacherGames);	
+	}  
+	public void updateGames(Array<String> games) {
+		teacherGames.updateGames(games);
 	}
-	
+
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);

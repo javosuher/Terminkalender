@@ -1,4 +1,4 @@
-package com.project.terminkalender;
+package com.project.terminkalender.tools;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -12,10 +12,10 @@ public class ScrollWindow extends Window {
 		
 		ScrollPane scrollTable = new ScrollPane(table, skin, "window");
 		
-		add(scrollTable).padTop(50);
-		
 		getTitleTable().padTop(20);
-		scrollTable.setFadeScrollBars(false);
 		setMovable(false);
-	}
+		
+		add(scrollTable).padTop(50);
+		scrollTable.setFadeScrollBars(false);
+	}	
 }

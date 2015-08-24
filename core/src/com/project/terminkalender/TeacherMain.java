@@ -12,17 +12,18 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.screens.AbstractScreen;
 import com.project.terminkalender.screens.TeacherGamesScreen;
 import com.project.terminkalender.screens.TeacherLoginRegisterScreen;
+import com.project.terminkalender.tools.WarningDialogActor;
+import com.project.terminkalender.tools.kennySkin;
+import com.project.terminkalender.websockets.ServerDirection;
+import com.project.terminkalender.websockets.TeacherWebSockets;
 
 public class TeacherMain extends Game {
 	public static final int WIDTH = 1000;
 	public static final int HEIGHT = 600;
 	public static final AssetManager assets = new AssetManager();
+	public static Skin skin;
 	
-	public static final int PORT = 8080;
-	public static final String IP = "192.168.1.133";
-	public static final String serverDirection = "ws://"+ IP +":"+ PORT;
 	public static TeacherWebSockets teacherWebSockets;
-	
 	public static AbstractScreen teacherLoginRegisterScreen, teacherGamesScreen;
 	public static WarningDialogActor warningDialog;
 	
@@ -31,8 +32,6 @@ public class TeacherMain extends Game {
 	public static OrthographicCamera camera;
 	
 	public static TeacherMain main;
-
-	public static Skin skin;
 	
 	@Override
 	public void create() {
@@ -40,7 +39,7 @@ public class TeacherMain extends Game {
 		camera = new OrthographicCamera();
 		viewport = new FitViewport(WIDTH, HEIGHT, camera);
 		viewport.update(WIDTH, HEIGHT, true);
-		teacherWebSockets = new TeacherWebSockets(serverDirection);
+		teacherWebSockets = new TeacherWebSockets(ServerDirection.serverDirection);
 		main = this;
 		Gdx.input.setCatchBackKey(true);
 		
@@ -63,7 +62,7 @@ public class TeacherMain extends Game {
 	}
 	
 	public static void reconnect() {
-		teacherWebSockets.connect(serverDirection);
+		teacherWebSockets.connect(ServerDirection.serverDirection);
 	}
 	
 	@Override

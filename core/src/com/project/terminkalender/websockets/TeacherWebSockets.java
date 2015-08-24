@@ -1,4 +1,4 @@
-package com.project.terminkalender;
+package com.project.terminkalender.websockets;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -10,6 +10,7 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
+import com.project.terminkalender.TeacherMain;
 import com.project.terminkalender.games.Games;
 import com.project.terminkalender.loginandregister.TeacherLoginDialog;
 

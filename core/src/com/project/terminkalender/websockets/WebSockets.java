@@ -1,4 +1,4 @@
-package com.project.terminkalender;
+package com.project.terminkalender.websockets;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -10,10 +10,16 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
+import com.project.terminkalender.Main;
 import com.project.terminkalender.chat.Room;
+import com.project.terminkalender.screens.LoginGamesScreen;
+import com.project.terminkalender.screens.LoginScreen;
 
 public class WebSockets {
 	public final static String POINTSPLIT = ":";
+	public final static String DATASPLIT = ";";
+	public final static String TASKSPLIT = ",";
+	public final static String LOGIN = "Login";
 	public final static String MESSAGE = "Message";
 	public final static String USERSROOM = "UsersRoom";
 	
@@ -23,6 +29,10 @@ public class WebSockets {
 	private Room room;
 	
 	public WebSockets(String serverDirection) {
+		connect(serverDirection);
+	}
+	
+	public void connect(String serverDirection) {
 		URI url = null;
 		try {
 			url = new URI(serverDirection);
@@ -46,7 +56,9 @@ public class WebSockets {
 				String action = message.split(POINTSPLIT)[0];
 				String trueMessage = message.substring(action.length() + 1);
 				
-				if(action.equals(MESSAGE))
+				if(action.equals(LOGIN))
+					teacherGamesActive(trueMessage);
+				else if(action.equals(MESSAGE))
 					addMessageToChat(trueMessage);
 				else if(action.equals(USERSROOM))
 					refreshUsers(trueMessage);
@@ -68,6 +80,13 @@ public class WebSockets {
 		wsc.connect();
 	}
 	
+	public void teacherGamesActive(String message) {
+		Array<String> games = constructArrayGames(message);
+		LoginScreen loginScreen = (LoginScreen) Main.loginScreen;
+		LoginGamesScreen loginGamesScreen = (LoginGamesScreen) Main.loginGamesScreen;
+		loginScreen.login();
+		loginGamesScreen.updateGames(games);
+	}
 	public void addMessageToChat(String message) {
 		String user = message.split(POINTSPLIT)[0];
 		String trueMessage = message.substring(user.length() + 1);
@@ -82,7 +101,17 @@ public class WebSockets {
 		}
 		else room.noUsers();
 	}
+	private Array<String> constructArrayGames(String gamesData) {
+		String [] games = gamesData.split(POINTSPLIT);
+		if(!games[0].equals("")) {
+			return new Array<String>(games);
+		}
+		else return new Array<String>();
+	}
 	
+	public boolean login(String teacher) {
+		return sendMessage(LOGIN + POINTSPLIT + teacher);
+	}
 	public boolean sendMessageChat(String message, String user) {
 		if(message.length() != 0)
 			return sendMessage(MESSAGE + POINTSPLIT + user + POINTSPLIT + message);

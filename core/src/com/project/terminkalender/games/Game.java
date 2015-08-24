@@ -2,8 +2,8 @@ package com.project.terminkalender.games;
 
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.TeacherMain;
-import com.project.terminkalender.TeacherWebSockets;
 import com.project.terminkalender.screens.TeacherGamesScreen;
+import com.project.terminkalender.websockets.TeacherWebSockets;
 
 public class Game {
 	private String name, password;

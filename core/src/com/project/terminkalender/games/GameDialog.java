@@ -2,7 +2,7 @@ package com.project.terminkalender.games;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.project.terminkalender.DialogActor;
+import com.project.terminkalender.tools.DialogActor;
 
 public class GameDialog extends DialogActor {
 	protected Game game;

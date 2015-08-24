@@ -8,6 +8,7 @@ use Game;
 class Chat implements MessageComponentInterface {
 	const POINTSPLIT = ":";
 	const DATASPLIT = ";";
+	const LOGIN = "Login";
 	const MESSAGE = "Message";
 	const USERSROOM = "UsersRoom";
 	const LOGINTEACHER = "LoginTeacher";
@@ -38,7 +39,10 @@ class Chat implements MessageComponentInterface {
     public function onMessage(ConnectionInterface $from, $msg) {
         $action = explode(Chat::POINTSPLIT, $msg)[0];
 
-        if(strcmp($action, Chat::MESSAGE) == 0) {
+        if(strcmp($action, Chat::LOGIN) == 0) {
+            $this->login($from, $msg);
+        }
+        else if(strcmp($action, Chat::MESSAGE) == 0) {
         	$this->sendMessage($from, $msg);
         }
         else if(strcmp($action, Chat::USERSROOM) == 0) {
@@ -77,6 +81,18 @@ class Chat implements MessageComponentInterface {
 
     // ------------------------------- Conections Functions ------------------------------- 
 
+    private function login(ConnectionInterface $from, $msg) {
+    	$teacher = explode(Chat::POINTSPLIT, $msg)[1];
+        echo sprintf('Connection %d want Games from teacher: "%s"' . "\n", $from->resourceId, $teacher);
+
+
+        $openGames = $this->searchOpenGames($teacher);
+        $msg = CHAT::LOGIN . CHAT::POINTSPLIT;
+        foreach ($openGames as $game) {
+            $msg = $msg . $game["name"] . CHAT::DATASPLIT . $game["password"] . CHAT::DATASPLIT . $game["tasks"] . CHAT::POINTSPLIT;
+        }
+        $from->send($msg);
+    }
     private function sendMessage(ConnectionInterface $from, $msg) {
     	$action = explode(Chat::POINTSPLIT, $msg)[0];
     	$user = explode(Chat::POINTSPLIT, $msg)[1];

@@ -7,27 +7,33 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.Background;
-import com.project.terminkalender.TeacherMain;
-import com.project.terminkalender.loginandregister.TeacherLoginRegisterActor;
+import com.project.terminkalender.Main;
+import com.project.terminkalender.login.LoginActor;
 import com.project.terminkalender.tools.ReconnectButton;
 
-public class TeacherLoginRegisterScreen extends AbstractScreen {
+public class LoginScreen extends AbstractScreen {
 	private Background background;
-	private TeacherLoginRegisterActor teacherLoginRegisterActor;
 	private ReconnectButton reconnectButton;
-
-	public TeacherLoginRegisterScreen(Viewport viewport, SpriteBatch batch) {
+	private LoginActor loginActor;
+	private boolean changeScreen;
+	
+	public LoginScreen(Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
 		
-		TextureRegion backgroundTexture = new TextureRegion(TeacherMain.assets.get("background.png", Texture.class));
+		TextureRegion backgroundTexture = new TextureRegion(Main.assets.get("background.png", Texture.class));
 		
+		changeScreen = false;
 		background = new Background(backgroundTexture);
-		teacherLoginRegisterActor = new TeacherLoginRegisterActor(TeacherMain.skin);
-		reconnectButton = new ReconnectButton(TeacherMain.skin);
+		reconnectButton = new ReconnectButton(Main.skin);
+		loginActor = new LoginActor(Main.skin);
 		
 		stage.addActor(background);
-		stage.addActor(teacherLoginRegisterActor);
 		stage.addActor(reconnectButton);
+		stage.addActor(loginActor);
+	}
+	
+	public void login() {
+		changeScreen = true;
 	}
 	
 	@Override
@@ -44,6 +50,11 @@ public class TeacherLoginRegisterScreen extends AbstractScreen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		if(changeScreen) {
+			Main.setNewScreen(Main.loginGamesScreen);
+			changeScreen = false;
+		}
 		
 		stage.act(delta);
 		stage.draw();

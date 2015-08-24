@@ -12,9 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.Background;
 import com.project.terminkalender.Main;
-import com.project.terminkalender.ReconnectButton;
 import com.project.terminkalender.TeacherMain;
 import com.project.terminkalender.games.GamesActor;
+import com.project.terminkalender.tools.ReconnectButton;
 
 public class TeacherGamesScreen extends AbstractScreen {
 	private Background background;

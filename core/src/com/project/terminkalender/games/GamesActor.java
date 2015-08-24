@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.project.terminkalender.ScrollWindow;
 import com.project.terminkalender.TeacherMain;
+import com.project.terminkalender.tools.ScrollWindow;
 
 public class GamesActor extends Table {
 	private Games games;

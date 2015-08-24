@@ -3,7 +3,7 @@ package com.project.terminkalender.loginandregister;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.project.terminkalender.TeacherMain;
-import com.project.terminkalender.TeacherWebSockets;
+import com.project.terminkalender.websockets.TeacherWebSockets;
 
 public class TeacherLoginDialog {
 	private TextField userText, passwordText;

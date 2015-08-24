@@ -1,32 +1,28 @@
-package com.project.terminkalender.games;
+package com.project.terminkalender.login;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.TeacherMain;
-import com.project.terminkalender.screens.TeacherGamesScreen;
+import com.project.terminkalender.games.Game;
 import com.project.terminkalender.websockets.TeacherWebSockets;
 
-public class Games {
+public class GamesTeacher {
 	private Table gamesTable;
-	private Array<Game> games, openGames;
+	private Array<Game> games;
 	private boolean update;
 	
-	public Games() {
+	public GamesTeacher() {
 		Skin skin = TeacherMain.skin;
 		
 		gamesTable = new Table(skin);
-		TeacherMain.teacherWebSockets.setGames(this);
 		games = new Array<Game>();
-		openGames = new Array<Game>();
 		update = false;
 	}
 	
-	public void updateGames(Array<String> games, Array<String> openGames) {
+	public void updateGames(Array<String> games) {
 		this.games.clear();
-		this.openGames.clear();
 		this.games.addAll(gameStringToGameArray(games));
-		this.openGames.addAll(gameStringToGameArray(openGames));
 		update = true;
 	}
 	private Array<Game> gameStringToGameArray(Array<String> gamesString) {
@@ -46,11 +42,6 @@ public class Games {
 	public void noGames() {
 		gamesTable.clear();
 	}
-	
-	public void askGames() {
-		TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;
-		TeacherMain.teacherWebSockets.askGamesTeacher(teacherGamesScreen.getTeacher());
-	}
 
 	public Table getGamesTable() {
 		return gamesTable;
@@ -61,9 +52,6 @@ public class Games {
 	}
 	public Game findGame(String gameName) {
 		return findGame(gameName, this.games);
-	}
-	public Game findOpenGame(String gameName) {
-		return findGame(gameName, this.openGames);
 	}
 	private Game findGame(String gameName, Array<Game> games) {
 		for(Game game : games) {
@@ -76,13 +64,6 @@ public class Games {
 	public boolean deleteGame(String gameName) {
 		Game game = findGame(gameName);
 		return games.removeValue(game, true);
-	}
-	public boolean deleteOpenGame(String gameName) {
-		Game game = findOpenGame(gameName);
-		return openGames.removeValue(game, true);
-	}
-	public Array<Game> getOpenGames() {
-		return openGames;
 	}
 
 	public boolean update() {

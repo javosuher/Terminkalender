@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.project.terminkalender.DialogActor;
+import com.project.terminkalender.tools.DialogActor;
 
 public class TeacherRegisterDialogActor extends DialogActor {
 	private TeacherRegisterDialog teacherRegisterDialog;

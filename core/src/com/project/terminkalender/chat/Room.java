@@ -1,6 +1,5 @@
 package com.project.terminkalender.chat;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Main;
@@ -11,9 +10,7 @@ public class Room {
 	private boolean update;
 
 	public Room() {
-		Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
-		
-		usersTable = new Table(skin);
+		usersTable = new Table(Main.skin);
 		chats = new Array<Chat>();
 		update = false;
 		Main.webSockets.setRoom(this);

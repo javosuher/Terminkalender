@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
@@ -26,13 +25,12 @@ public class CalendarScreen extends AbstractScreen {
 		super(viewport, batch);
 		
 		TextureRegion backgroundTexture = new TextureRegion(Main.assets.get("background.png", Texture.class));
-		Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
 		DragAndDrop dragAndDrop = new DragAndDrop();
 		
 		background = new Background(backgroundTexture);
-		timetableActor = new TimetableActor(dragAndDrop, skin);
-		tasktableActor = new TasktableActor(dragAndDrop, skin);
-		changeToChatButton = new TextButton("Chat", skin);
+		timetableActor = new TimetableActor(dragAndDrop, Main.skin);
+		tasktableActor = new TasktableActor(dragAndDrop, Main.skin);
+		changeToChatButton = new TextButton("Chat", Main.skin);
 		
 		stage.addActor(background);
 		stage.addActor(timetableActor);

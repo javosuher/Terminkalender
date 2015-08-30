@@ -10,17 +10,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Main;
 import com.project.terminkalender.TeacherMain;
-import com.project.terminkalender.games.Game;
 import com.project.terminkalender.tools.ScrollWindow;
 
-public class TeacherGamesActor extends Table {
-	private GamesTeacher games;
+public class GamesOpenActor extends Table {
+	private GamesOpen games;
 	private ScrollWindow gamesWindow;
 
-	public TeacherGamesActor(Skin skin) {
+	public GamesOpenActor(Skin skin) {
 		super(skin);
 		
-		games = new GamesTeacher();
+		games = new GamesOpen();
 		gamesWindow = new ScrollWindow("Games", skin, games.getGamesTable());
 		TextButton backButton = new TextButton("Back", Main.skin);
 		
@@ -41,14 +40,14 @@ public class TeacherGamesActor extends Table {
 		super.act(delta);
 		
 		if(games.update()) {
-			Array<Game> gamesArray = games.getGames();
+			Array<GameOpen> gamesArray = games.getGames();
 			Table gamesTable = this.games.getGamesTable();
 			
 			int actualColumn = 0;
 			games.getGamesTable().clear();
-			for(final Game game : gamesArray) {
+			for(final GameOpen game : gamesArray) {
 				final TextButton gameButton = new TextButton(game.getName(), Main.skin);
-				final GameSelectionDialog gameSelectionDialog = new GameSelectionDialog("Hola", Main.skin);
+				final GameSelectionDialog gameSelectionDialog = new GameSelectionDialog("Hola", game, Main.skin);
 				gamesTable.add(gameButton).width(200).height(100).pad(30);
 				
 				++actualColumn;
@@ -70,5 +69,9 @@ public class TeacherGamesActor extends Table {
 	
 	public void updateGames(Array<String> games) {
 		this.games.updateGames(games);
+	}
+	
+	public GamesOpen getGames() {
+		return games;
 	}
 }

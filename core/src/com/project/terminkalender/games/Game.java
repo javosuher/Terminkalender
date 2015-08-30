@@ -46,7 +46,7 @@ public class Game {
 		return password;
 	}
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = password.toLowerCase();
 	}
 
 	public void addTask(String task) {

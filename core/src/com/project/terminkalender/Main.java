@@ -51,9 +51,12 @@ public class Main extends Game {
 		loginScreen = new LoginScreen(viewport, batch);
 		loginGamesScreen = new LoginGamesScreen(viewport, batch);
 		warningDialog = new WarningDialogActor(skin);
-		//calendarScreen = new CalendarScreen(viewport, batch);
-		//roomScreen = new RoomScreen(viewport, batch);
 		setScreen(loginScreen);
+	}
+	
+	public static void createGameScreens() {
+		calendarScreen = new CalendarScreen(viewport, batch);
+		roomScreen = new RoomScreen(viewport, batch);
 	}
 	
 	private void loadAssets() {

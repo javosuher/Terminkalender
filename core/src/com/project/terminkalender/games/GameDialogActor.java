@@ -60,7 +60,7 @@ public class GameDialogActor extends GameDialog {
 		});
 		addTaskButton.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				String task = tasksText.getText();
+				String task = tasksText.getText().toLowerCase();
 				tasksText.setText("");
 				game.addTask(task);
 				tasksBox.setItems(game.getTasks());

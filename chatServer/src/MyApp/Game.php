@@ -9,7 +9,19 @@ class Game {
         $this->teacher = $teacher;
         $this->password = $password;
         $this->tasks = $tasks;
-        $this->users = new \SplObjectStorage;
+        $this->users = array();
+    }
+
+    public function isUserInGame($userName) {
+        foreach($this->users as $user) {
+            if ($user == $userName) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public function addUser($user) {
+        array_push($this->users, $user);
     }
 
     public function getGameName() {

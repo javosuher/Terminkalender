@@ -5,10 +5,13 @@ use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 use Game;
 
+include_once("Game.php");
+
 class Chat implements MessageComponentInterface {
 	const POINTSPLIT = ":";
 	const DATASPLIT = ";";
 	const LOGIN = "Login";
+    const ENTERGAME = "EnterGame";
 	const MESSAGE = "Message";
 	const USERSROOM = "UsersRoom";
 	const LOGINTEACHER = "LoginTeacher";
@@ -21,13 +24,15 @@ class Chat implements MessageComponentInterface {
     protected $clients, $dataBase, $games;
 
     public function __construct() {
-    	include_once("config.php"); // Include database config file
+    	include_once("Config.php"); // Include database config file
 
         $this->clients = new \SplObjectStorage;
         $this->dataBase = $dbh;
         $this->games = new \SplObjectStorage;
         $this->token = sem_get(0);
         echo "Init Server!\n";
+
+        $this->games->attach(new Game("dodo", "sandra", "f", "zoo,beber,aletear")); // Example OpenGame
     }
 
     public function onOpen(ConnectionInterface $conn) {
@@ -41,6 +46,9 @@ class Chat implements MessageComponentInterface {
 
         if(strcmp($action, Chat::LOGIN) == 0) {
             $this->login($from, $msg);
+        }
+        else if(strcmp($action, Chat::ENTERGAME) == 0) {
+            $this->enterGame($from, $msg);
         }
         else if(strcmp($action, Chat::MESSAGE) == 0) {
         	$this->sendMessage($from, $msg);
@@ -83,15 +91,38 @@ class Chat implements MessageComponentInterface {
 
     private function login(ConnectionInterface $from, $msg) {
     	$teacher = explode(Chat::POINTSPLIT, $msg)[1];
-        echo sprintf('Connection %d want Games from teacher: "%s"' . "\n", $from->resourceId, $teacher);
-
+        echo sprintf('Connection %d want Open Games from teacher: "%s"' . "\n", $from->resourceId, $teacher);
 
         $openGames = $this->searchOpenGames($teacher);
-        $msg = CHAT::LOGIN . CHAT::POINTSPLIT;
+        $trueMessage = CHAT::LOGIN . CHAT::POINTSPLIT;
         foreach ($openGames as $game) {
-            $msg = $msg . $game["name"] . CHAT::DATASPLIT . $game["password"] . CHAT::DATASPLIT . $game["tasks"] . CHAT::POINTSPLIT;
+            $trueMessage = $trueMessage . $game["name"] . CHAT::DATASPLIT . $game["password"] . CHAT::DATASPLIT . $game["tasks"] . CHAT::POINTSPLIT;
         }
-        $from->send($msg);
+        $from->send($trueMessage);
+    }
+    private function enterGame(ConnectionInterface $from, $msg) {
+        $userName = explode(Chat::POINTSPLIT, $msg)[1];
+        $teacher = explode(Chat::POINTSPLIT, $msg)[2];
+        $gameName = explode(Chat::POINTSPLIT, $msg)[3];
+        $password = explode(Chat::POINTSPLIT, $msg)[4];
+        echo sprintf('Connection %d want enter the "%s" game "%s" with password "%s" and name "%s"' . "\n", $from->resourceId, $teacher, $gameName, $password, $userName);
+
+        $game = $this->getOpenGame($teacher, $gameName);
+
+        if(!$game->isUserInGame($userName)) {
+            if($game->getPassword() == $password) {
+                $game->addUser($userName);
+
+                echo "Enter Game: Success" . "\n";
+                $message = CHAT::ENTERGAME . CHAT::POINTSPLIT . $gameName;
+                $from->send($message);
+            }
+            else {
+                echo "Enter Game: Wrong password" . "\n";
+                $message = CHAT::ENTERGAME . CHAT::POINTSPLIT . "WrongPassword";
+                $from->send($message);
+            }
+        }
     }
     private function sendMessage(ConnectionInterface $from, $msg) {
     	$action = explode(Chat::POINTSPLIT, $msg)[0];
@@ -215,8 +246,6 @@ class Chat implements MessageComponentInterface {
     	$password = explode(Chat::POINTSPLIT, $msg)[3];
     	$tasks = explode(Chat::POINTSPLIT, $msg)[4];
 
-    	include_once("Game.php");
-
     	$this->games->attach(new Game($gameName, $teacher, $password, $tasks));
     	$this->deleteGameInDataBase($gameName, $teacher);
     	$message = CHAT::GAMES . CHAT::POINTSPLIT . $teacher;
@@ -225,6 +254,8 @@ class Chat implements MessageComponentInterface {
     	echo "Open Game: Success" . "\n";
     	$from->send($message);
     }
+
+    // ------------------------------- Open Games Functions -------------------------------
 
     private function searchOpenGames($teacher) {
     	$openGames = array();
@@ -238,6 +269,14 @@ class Chat implements MessageComponentInterface {
         }
         //print_r($openGames);
         return $openGames;
+    }
+    private function getOpenGame($teacher, $gameName) {
+        foreach($this->games as $game) {
+            if ($game->getTeacher() == $teacher && $game->getGameName() == $gameName) {
+                return $game;
+            }
+        }
+        return "Empty";
     }
 
     // ------------------------------- Data Base Functions -------------------------------

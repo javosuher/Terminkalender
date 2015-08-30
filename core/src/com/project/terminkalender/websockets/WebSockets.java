@@ -20,6 +20,7 @@ public class WebSockets {
 	public final static String DATASPLIT = ";";
 	public final static String TASKSPLIT = ",";
 	public final static String LOGIN = "Login";
+	public final static String ENTERGAME = "EnterGame";
 	public final static String MESSAGE = "Message";
 	public final static String USERSROOM = "UsersRoom";
 	
@@ -58,6 +59,8 @@ public class WebSockets {
 				
 				if(action.equals(LOGIN))
 					teacherGamesActive(trueMessage);
+				else if(action.equals(ENTERGAME))
+					enterGame(trueMessage);
 				else if(action.equals(MESSAGE))
 					addMessageToChat(trueMessage);
 				else if(action.equals(USERSROOM))
@@ -87,6 +90,14 @@ public class WebSockets {
 		loginScreen.login();
 		loginGamesScreen.updateGames(games);
 	}
+	public void enterGame(String message) {
+		if(message.equals("WrongPassword")) {
+			Main.warningDialog.show("Wrong Password", Main.loginGamesScreen.getStage());
+		}
+		else {
+			Main.user.startGame(message);
+		}
+	}
 	public void addMessageToChat(String message) {
 		String user = message.split(POINTSPLIT)[0];
 		String trueMessage = message.substring(user.length() + 1);
@@ -111,6 +122,9 @@ public class WebSockets {
 	
 	public boolean login(String teacher) {
 		return sendMessage(LOGIN + POINTSPLIT + teacher);
+	}
+	public boolean enterGame(String name, String teacher, String gameName, String password) {
+		return sendMessage(ENTERGAME + POINTSPLIT + name + POINTSPLIT + teacher + POINTSPLIT + gameName + POINTSPLIT + password);
 	}
 	public boolean sendMessageChat(String message, String user) {
 		if(message.length() != 0)

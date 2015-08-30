@@ -17,16 +17,12 @@ public class LoginActor extends Table {
 		super(skin);
 		
 		Window loginWindow = new TWindow("", skin, "window2");
-		Label userName = new Label("Name", skin);
 		Label teacherName = new Label("Teacher", skin);
-		final TextField userNameText = new TextField("", skin);
 		final TextField teacherNameText = new TextField("", skin);
 		TextButton loginButton = new TextButton("Enter", skin);
 		
 		setFillParent(true);
 		
-		loginWindow.add(userName).row();
-		loginWindow.add(userNameText).padBottom(10).row();
 		loginWindow.add(teacherName).row();
 		loginWindow.add(teacherNameText).row();
 		loginWindow.add(loginButton).width(100).height(50).colspan(2).padTop(40);
@@ -34,7 +30,7 @@ public class LoginActor extends Table {
 		
 		loginButton.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				Main.user.login(userNameText.getText(), teacherNameText.getText());
+				Main.user.login(teacherNameText.getText());
 			}
 		});
 	}

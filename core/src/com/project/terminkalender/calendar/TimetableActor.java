@@ -1,11 +1,11 @@
 package com.project.terminkalender.calendar;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.project.terminkalender.Main;
+import com.project.terminkalender.tools.TWindow;
 
-public class TimetableActor extends Window {
+public class TimetableActor extends TWindow {
 	private final Timetable timetable = new Timetable();
 
 	public TimetableActor(DragAndDrop dragAndDrop, Skin skin) {

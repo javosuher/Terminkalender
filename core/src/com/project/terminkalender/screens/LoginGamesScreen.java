@@ -9,13 +9,15 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.Background;
 import com.project.terminkalender.Main;
-import com.project.terminkalender.login.TeacherGamesActor;
+import com.project.terminkalender.login.GamesOpen;
+import com.project.terminkalender.login.GamesOpenActor;
 import com.project.terminkalender.tools.ReconnectButton;
 
 public class LoginGamesScreen extends AbstractScreen {
 	private Background background;
 	private ReconnectButton reconnectButton;
-	private TeacherGamesActor teacherGames;
+	private GamesOpenActor teacherGames;
+	private boolean enterGame;
 
 	public LoginGamesScreen(Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
@@ -24,7 +26,8 @@ public class LoginGamesScreen extends AbstractScreen {
 		
 		background = new Background(backgroundTexture);
 		reconnectButton = new ReconnectButton(Main.skin);
-		teacherGames = new TeacherGamesActor(Main.skin);
+		teacherGames = new GamesOpenActor(Main.skin);
+		enterGame = false;
 		
 		stage.addActor(background);
 		stage.addActor(reconnectButton);
@@ -32,6 +35,13 @@ public class LoginGamesScreen extends AbstractScreen {
 	}  
 	public void updateGames(Array<String> games) {
 		teacherGames.updateGames(games);
+	}
+	public GamesOpen getGames() {
+		return teacherGames.getGames();
+	}
+	
+	public void enterGame() {
+		enterGame = true;
 	}
 
 	@Override
@@ -48,6 +58,12 @@ public class LoginGamesScreen extends AbstractScreen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		if(enterGame) {
+			Main.createGameScreens();
+			Main.setNewScreen(Main.calendarScreen);
+			enterGame = false;
+		}
 		
 		stage.act(delta);
 		stage.draw();

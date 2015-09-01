@@ -12,6 +12,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Main;
 import com.project.terminkalender.chat.Room;
+import com.project.terminkalender.login.User;
 import com.project.terminkalender.screens.LoginGamesScreen;
 import com.project.terminkalender.screens.LoginScreen;
 
@@ -126,13 +127,16 @@ public class WebSockets {
 	public boolean enterGame(String name, String teacher, String gameName, String password) {
 		return sendMessage(ENTERGAME + POINTSPLIT + name + POINTSPLIT + teacher + POINTSPLIT + gameName + POINTSPLIT + password);
 	}
-	public boolean sendMessageChat(String message, String user) {
-		if(message.length() != 0)
-			return sendMessage(MESSAGE + POINTSPLIT + user + POINTSPLIT + message);
+	public boolean sendMessageChat(String message, String userDestination) {
+		if(message.length() != 0) {
+			User user = Main.user;
+			return sendMessage(MESSAGE + POINTSPLIT + user.getName() + POINTSPLIT + user.getGame().getName() + POINTSPLIT + user.getTeacher() + POINTSPLIT + userDestination + POINTSPLIT + message);
+		}
 		else return false;
 	}
-	public boolean askUsers() {
-		return sendMessage(USERSROOM + POINTSPLIT);
+	public boolean askUsersChat() {
+		User user = Main.user;
+		return sendMessage(USERSROOM + POINTSPLIT + user.getName() + POINTSPLIT + user.getGame().getName() + POINTSPLIT + user.getTeacher());
 	}
 	private boolean sendMessage(String message) {
 		if (connected) {

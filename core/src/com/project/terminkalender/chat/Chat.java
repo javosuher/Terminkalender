@@ -1,6 +1,5 @@
 package com.project.terminkalender.chat;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Main;
@@ -15,10 +14,8 @@ public class Chat {
 	private boolean update;
 	
 	public Chat(String user) {
-		Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
-		
 		this.user = user;
-		messageTable = new Table(skin);
+		messageTable = new Table(Main.skin);
 		messages = new Array<String>();
 		update = false;
 	}

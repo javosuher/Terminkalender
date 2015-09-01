@@ -23,11 +23,10 @@ public class ChatScreen extends AbstractScreen {
 		super(viewport, batch);
 		
 		TextureRegion backgroundTexture = new TextureRegion(Main.assets.get("background.png", Texture.class));
-		Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
 		
 		background = new Background(backgroundTexture);
 		this.chatActor = chatActor;
-		changeToRoomButton = new TextButton("ChatRoom", skin);
+		changeToRoomButton = new TextButton("ChatRoom", Main.skin);
 		
 		stage.addActor(background);
 		stage.addActor(chatActor);

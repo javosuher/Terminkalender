@@ -1,11 +1,9 @@
 package com.project.terminkalender.chat;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Main;
@@ -46,7 +44,6 @@ public class RoomActor extends Table {
 		if(room.update()) {
 			Table usersTable = room.getUsersTable();
 			Array<Chat> chats = room.getChats();
-			Skin skin = Main.assets.get("skins/uiskin.json", Skin.class);
 			final RoomScreen roomScreen = ((RoomScreen) Main.roomScreen);
 			
 			usersTable.clear();
@@ -54,10 +51,10 @@ public class RoomActor extends Table {
 			
 			int column = 0;
 			for(Chat chat : chats) {
-				ChatActor chatActor = new ChatActor(skin, chat);
+				ChatActor chatActor = new ChatActor(Main.skin, chat);
 				roomScreen.addChatScreen(chatActor);
 				
-				final TextButton userButton = new TextButton(chat.getUser(), skin);
+				final TextButton userButton = new TextButton(chat.getUser(), Main.skin);
 				usersTable.add(userButton).width(200).height(100).pad(30);
 				
 				++column;

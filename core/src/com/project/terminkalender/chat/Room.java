@@ -50,7 +50,7 @@ public class Room {
 	}
 	
 	public void refreshUsers() {
-		Main.webSockets.askUsers();
+		Main.webSockets.askUsersChat();
 	}
 	
 	public Table getUsersTable() {

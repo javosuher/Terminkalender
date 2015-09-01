@@ -30,5 +30,5 @@ php ~/composer.phar install
 Por último, para ejecutar el servidor en nuestro PC, estando de nuevo en la carpeta raíz del servidor, se introduce el siguiente comando:
 
 ```
-php server.php
+php Server.php
 ```

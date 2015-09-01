@@ -16,6 +16,11 @@ public class ScrollWindow extends Window {
 		
 		setTable(skin, table);
 	}
+	public ScrollWindow(Skin skin, Table table) {
+		super("", skin);
+		
+		setTable(skin, table);
+	}
 	
 	public void setTable(Skin skin, Table table) {
 		scrollTable = new ScrollPane(table, skin, "window");
@@ -25,11 +30,10 @@ public class ScrollWindow extends Window {
 		getTitleTable().padTop(20);
 		setMovable(false);
 		
-		add(scrollTable).padTop(50);
+		add(scrollTable).expand().fill().padTop(50);
 		scrollTable.setFadeScrollBars(false);
 	}
 	
-
 	public ScrollPane getScrollTable() {
 		return scrollTable;
 	}

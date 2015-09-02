@@ -52,21 +52,6 @@ class Game {
         return false;
     }
 
-    public function getGameName() {
-        return $this->gameName;
-    }
-    public function getTeacher() {
-        return $this->teacher;
-    }
-    public function getPassword() {
-        return $this->password;
-    }
-    public function getTasks() {
-        return $this->tasks;
-    }
-    public function getUsers() {
-        return $this->users;
-    }
     public function getUserNames() {
         $userNames = Array();
         foreach($this->users as $user) {
@@ -81,6 +66,26 @@ class Game {
             }
         }
         return "NoUser";
+    }
+
+    public function getChatsFromUser($user) {
+        
+    }
+
+    public function getGameName() {
+        return $this->gameName;
+    }
+    public function getTeacher() {
+        return $this->teacher;
+    }
+    public function getPassword() {
+        return $this->password;
+    }
+    public function getTasks() {
+        return $this->tasks;
+    }
+    public function getUsers() {
+        return $this->users;
     }
     public function getChats() {
         return $this->chats;

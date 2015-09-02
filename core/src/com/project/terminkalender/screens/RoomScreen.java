@@ -65,7 +65,7 @@ public class RoomScreen extends AbstractScreen {
 			if(chatUser.equals(chatScreen.getChatUser()))
 				return chatScreen;
 		}
-		return new ChatScreen(viewport, batch, new ChatActor(new Skin(), new Chat("Usuario no encontrado")));
+		return new ChatScreen(viewport, batch, new ChatActor(new Skin(), new Chat("Usuario no encontrado", new Array<String>())));
 	}
 
 	@Override

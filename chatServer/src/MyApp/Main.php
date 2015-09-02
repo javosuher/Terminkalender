@@ -153,7 +153,7 @@ class Main implements MessageComponentInterface {
     	$message = Main::USERSROOM . Main::POINTSPLIT;
     	foreach ($users as $user) {
     		if ($user !== $name) {
-            	$message = $message . $user . Main::POINTSPLIT;
+            	$message = $message . $user . Main::DATASPLIT . $game->getChatsFromUsers($name, $user) . Main::POINTSPLIT;
             }
         }
         $from->send($message);

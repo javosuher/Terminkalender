@@ -3,24 +3,45 @@
 namespace MyApp;
 
 class Chat {
-    const DATASPLIT = ";";
+    const CHATSPLIT = "=";
+    const MESSAGESPLIT = ";";
 
     protected $user1, $user2, $messages;
 
     public function __construct($userOne, $userTwo) {
         $this->user1 = $userOne;
         $this->user2 = $userTwo;
-        $this->messages = Array();
+        $this->messages = array();
     }
 
     public function addMessage($userDestination, $message) {
         if($userDestination == $this->user1) {
-            array_push($this->messages, $this->user1 . Chat::DATASPLIT . $message);
+            array_push($this->messages, $this->user2 . Chat::CHATSPLIT . $message);
         }
         else if($userDestination == $this->user2) {
-            array_push($this->messages, $this->user2 . Chat::DATASPLIT . $message);
+            array_push($this->messages, $this->user1 . Chat::CHATSPLIT . $message);
         }
         else echo sprintf('No "%s" in Chat' . "\n", $userDestination);
+        //print_r($this->messages);
+        //echo "\n";
+    }
+
+    public function getMessagesUser($user) {
+        $conversation = "";
+        if($user == $this->user1 || $user == $this->user2) {
+            foreach($this->messages as $message) {
+                $conversation = $conversation . $message . Chat::MESSAGESPLIT;
+                echo "paso por aqui " . $conversation . "\n";
+            }
+        }
+        else return $conversation;
+    }
+
+    public function isUsersInChat($userOne, $userTwo) {
+        if(($userOne == $this->user1 && $userTwo == $this->user2) || ($userOne = $this->user2 && $userTwo == $this->user1)) {
+            return true;
+        }
+        else return false;
     }
 
     public function getUser1() {

@@ -4,7 +4,6 @@ namespace MyApp;
 use MyApp\Chat;
 
 class Game {
-
     protected $gameName, $teacher, $password, $tasks, $users, $chats;
 
     public function __construct($gameName, $teacher, $password, $tasks) {
@@ -41,7 +40,7 @@ class Game {
 
     public function addMessage($userSender, $userDestination, $message) {
         foreach ($this->chats as $chat) {
-            if(($userSender == $chat->getUser1 && $userDestination == $chat->getUser2) || ($userSender == $chat->getUser2 && $userDestination == $chat->getUser1)) {
+            if(($userSender == $chat->getUser1() && $userDestination == $chat->getUser2()) || ($userSender == $chat->getUser2() && $userDestination == $chat->getUser1())) {
                 $chat->addMessage($userDestination, $message);
                 return true;
             }
@@ -68,8 +67,14 @@ class Game {
         return "NoUser";
     }
 
-    public function getChatsFromUser($user) {
-        
+    public function getChatsFromUsers($userOne, $userTwo) {
+        foreach($this->chats as $chat) {
+            if($chat->isUsersInChat($userOne, $userTwo)) {
+                echo "Cojones el mensaje: " . $chat->getMessagesUser($userTwo) . "\n";
+                return $chat->getMessagesUser($userTwo);
+            }
+        }
+        return "";
     }
 
     public function getGameName() {

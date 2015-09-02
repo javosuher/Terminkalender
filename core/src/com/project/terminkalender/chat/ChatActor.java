@@ -9,8 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Main;
+import com.project.terminkalender.tools.Pair;
 import com.project.terminkalender.tools.ScrollWindow;
 import com.project.terminkalender.tools.TWindow;
+import com.project.terminkalender.websockets.WebSockets;
 
 public class ChatActor extends Table {
 	private final Chat chat;
@@ -42,10 +44,16 @@ public class ChatActor extends Table {
 			@Override 
 			public void clicked(InputEvent event, float x, float y) {
 				String message = textMessage.getText();
-				if(message.length() != 0) {
-					Label newMessage = new Label(message, skin);
-					messageTable.add(newMessage).expandX().right().padRight(20);
-					chat.addMessage(message);
+				if(!message.equals("")) {
+					if(message.contains(WebSockets.POINTSPLIT) || message.contains(WebSockets.DATASPLIT) || 
+							message.contains(WebSockets.CHATSPLIT)) {
+						Main.warningDialog.show("you musn't use '=', ';' or ':'", getStage());
+					}
+					else {
+						Label newMessage = new Label(message, skin);
+						messageTable.add(newMessage).expandX().right().padRight(20);
+						chat.addMessage(message);
+					}
 				}
 			}
 		});
@@ -55,14 +63,26 @@ public class ChatActor extends Table {
 	public void act(float delta) {
 		super.act(delta);
 		
-		if(chat.update()) {
+		if(chat.updateMessage()) {
 			Table messageTable = chat.getMessageTable();
-			Array<String> messages = chat.getMessages();
+			Array<Pair<String>> messages = chat.getMessages();
 			
-			Label newMessage = new Label(messages.peek(), Main.skin);
-			messageTable.add(newMessage).expandX().left().padRight(20);
+			Label newMessage = new Label(messages.peek().toString(), Main.skin);
+			messageTable.add(newMessage).left().padLeft(20);
 			
-			chat.finishUpdate();
+			chat.finishUpdateMessage();
+		}
+		
+		if(chat.updateMessages()) {
+			Table messageTable = chat.getMessageTable();
+			Array<Pair<String>> messages = chat.getMessages();
+			
+			for(Pair<String> message : messages) {
+				Label newMessage = new Label(message.toString(), Main.skin);
+				messageTable.add(newMessage).left().padRight(20);
+			}
+			
+			chat.finishUpdateMessages();
 		}
 	}
 	

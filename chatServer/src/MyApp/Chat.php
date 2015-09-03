@@ -31,10 +31,9 @@ class Chat {
         if($user == $this->user1 || $user == $this->user2) {
             foreach($this->messages as $message) {
                 $conversation = $conversation . $message . Chat::MESSAGESPLIT;
-                echo "paso por aqui " . $conversation . "\n";
             }
         }
-        else return $conversation;
+        return $conversation;
     }
 
     public function isUsersInChat($userOne, $userTwo) {
@@ -52,6 +51,9 @@ class Chat {
     }
     public function getMessages() {
         return $this->messages;
+    }
+    public function getMessagesSize() {
+        return count($this->messages);
     }
 }
 

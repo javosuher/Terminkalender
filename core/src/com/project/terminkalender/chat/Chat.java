@@ -8,17 +8,21 @@ import com.project.terminkalender.websockets.WebSockets;
 
 public class Chat {
 	public final static String YOU = "You";
+	public final static String CHATSPACE = ": ";
 	
 	private String user;
 	private Table messageTable;
 	private Array<Pair<String>> messages;
 	private boolean updateMessage, updateMessages;
 	
-	public Chat(String user, Array<String> messages) {
+	public Chat(String user) {
 		this.user = user;
 		messageTable = new Table(Main.skin);
 		this.messages = new Array<Pair<String>>();
 		updateMessage = false;
+	}
+	public Chat(String user, Array<String> messages) {
+		this(user);
 		
 		addMessages(messages);
 	}
@@ -50,6 +54,9 @@ public class Chat {
 	}
 	public Array<Pair<String>> getMessages() {
 		return messages;
+	}
+	public int getMessagesSize() {
+		return messages.size;
 	}
 	
 	public boolean updateMessage() {

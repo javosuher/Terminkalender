@@ -25,6 +25,7 @@ public class WebSockets {
 	public final static String ENTERGAME = "EnterGame";
 	public final static String MESSAGE = "Message";
 	public final static String USERSROOM = "UsersRoom";
+	public final static String CHAT = "Chat";
 	
 	private WebSocketClient wsc;
 	private boolean connected;
@@ -66,7 +67,9 @@ public class WebSockets {
 				else if(action.equals(MESSAGE))
 					addMessageToChat(trueMessage);
 				else if(action.equals(USERSROOM))
-					refreshUsers(trueMessage);
+					updateUsers(trueMessage);
+				else if(action.equals(CHAT))
+					updateChat(trueMessage);
 					
 			}
 
@@ -106,13 +109,19 @@ public class WebSockets {
 		
 		room.updateMessageUser(user, trueMessage);
 	}
-	public void refreshUsers(String message) {
+	public void updateUsers(String message) {
 		String [] users = message.split(POINTSPLIT);
 		if(!users[0].equals("")) {
 			Array<String> newUsers = new Array<String>(users);
 			room.updateUsers(newUsers);
 		}
 		else room.noUsers();
+	}
+	public void updateChat(String message) {
+		String [] userWithMessages = message.split(POINTSPLIT);
+		if(userWithMessages.length == 2) {
+			room.updateChatFromUser(userWithMessages[0], userWithMessages[1]);
+		}
 	}
 	private Array<String> constructArrayGames(String gamesData) {
 		String [] games = gamesData.split(POINTSPLIT);
@@ -135,9 +144,13 @@ public class WebSockets {
 		}
 		else return false;
 	}
-	public boolean askUsersChat() {
+	public boolean askUsers() {
 		User user = Main.user;
 		return sendMessage(USERSROOM + POINTSPLIT + user.getName() + POINTSPLIT + user.getGame().getName() + POINTSPLIT + user.getTeacher());
+	}
+	public boolean askChatFromUser(String userDestination, int messagesSize) {
+		User user = Main.user;
+		return sendMessage(CHAT + POINTSPLIT + user.getName() + POINTSPLIT + user.getGame().getName() + POINTSPLIT + user.getTeacher() + POINTSPLIT + userDestination + POINTSPLIT + messagesSize);
 	}
 	private boolean sendMessage(String message) {
 		if (connected) {

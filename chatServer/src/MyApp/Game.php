@@ -24,23 +24,19 @@ class Game {
         return false;
     }
     public function addUser($userName, $id) {
-        if(!$this->updateId($userName, $id)) {
-            array_push($this->users, array("name"=>$userName, "id"=>$id));
-        }
-    }
-    public function updateId($userName, $id) {
         foreach($this->users as $user) {
             if($user == $userName) {
                 $user["id"] = $id;
-                return true;
+                return "User Update";
             }
         }
-        return false;
+        array_push($this->users, array("name"=>$userName, "id"=>$id));
+        return "New User";
     }
 
     public function addMessage($userSender, $userDestination, $message) {
         foreach ($this->chats as $chat) {
-            if(($userSender == $chat->getUser1() && $userDestination == $chat->getUser2()) || ($userSender == $chat->getUser2() && $userDestination == $chat->getUser1())) {
+            if($chat->isUsersInChat($userSender, $userDestination)) {
                 $chat->addMessage($userDestination, $message);
                 return true;
             }
@@ -67,10 +63,9 @@ class Game {
         return "NoUser";
     }
 
-    public function getChatsFromUsers($userOne, $userTwo) {
+    public function getChatFromUsers($userOne, $userTwo, $messagesSize) {
         foreach($this->chats as $chat) {
-            if($chat->isUsersInChat($userOne, $userTwo)) {
-                echo "Cojones el mensaje: " . $chat->getMessagesUser($userTwo) . "\n";
+            if($chat->isUsersInChat($userOne, $userTwo) && ($messagesSize < $chat->getMessagesSize())) {
                 return $chat->getMessagesUser($userTwo);
             }
         }

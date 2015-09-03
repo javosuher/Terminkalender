@@ -50,7 +50,7 @@ public class RoomActor extends Table {
 			roomScreen.chatScreensClear();
 			
 			int column = 0;
-			for(Chat chat : chats) {
+			for(final Chat chat : chats) {
 				ChatActor chatActor = new ChatActor(Main.skin, chat);
 				roomScreen.addChatScreen(chatActor);
 				
@@ -68,6 +68,7 @@ public class RoomActor extends Table {
 					public void clicked(InputEvent event, float x, float y) {
 						String user = userButton.getText().toString();
 						ChatScreen chatScreen = roomScreen.getChatScreen(user);
+						Main.webSockets.askChatFromUser(chat.getUser(), chat.getMessagesSize());
 						Main.setNewScreen(chatScreen);
 					}
 				});

@@ -20,15 +20,19 @@ public class Room {
 	public void updateUsers(Array<String> users) {
 		chats.clear();
 		for(String user : users) {
-			Array<String> userWithMessages = new Array<String>(user.split(WebSockets.DATASPLIT));
-			String userName = userWithMessages.get(0);
-			userWithMessages.removeIndex(0);
-			chats.add(new Chat(userName, userWithMessages));
+			chats.add(new Chat(user));
 		}
 		update = true;
 	}
 	public void noUsers() {
 		usersTable.clear();
+	}
+	
+	public void updateChatFromUser(String user, String messages) {
+		int index = indexUser(user);
+		Chat chat = chats.get(index);
+		Array<String> splitMessages = new Array<String>(messages.split(WebSockets.DATASPLIT));
+		chat.addMessages(splitMessages);
 	}
 	
 	public void updateMessageUser(String user, String message) {
@@ -56,7 +60,7 @@ public class Room {
 	}
 	
 	public void refreshUsers() {
-		Main.webSockets.askUsersChat();
+		Main.webSockets.askUsers();
 	}
 	
 	public Table getUsersTable() {

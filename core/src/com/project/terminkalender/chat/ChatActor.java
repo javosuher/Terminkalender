@@ -50,8 +50,8 @@ public class ChatActor extends Table {
 						Main.warningDialog.show("you musn't use '=', ';' or ':'", getStage());
 					}
 					else {
-						Label newMessage = new Label(message, skin);
-						messageTable.add(newMessage).expandX().right().padRight(20);
+						Label newMessage = new Label(Chat.YOU + Chat.CHATSPACE + message, skin);
+						messageTable.add(newMessage).expandX().right().padRight(20).row();
 						chat.addMessage(message);
 					}
 				}
@@ -68,7 +68,7 @@ public class ChatActor extends Table {
 			Array<Pair<String>> messages = chat.getMessages();
 			
 			Label newMessage = new Label(messages.peek().toString(), Main.skin);
-			messageTable.add(newMessage).left().padLeft(20);
+			messageTable.add(newMessage).expandX().left().padLeft(20).row();
 			
 			chat.finishUpdateMessage();
 		}
@@ -79,7 +79,11 @@ public class ChatActor extends Table {
 			
 			for(Pair<String> message : messages) {
 				Label newMessage = new Label(message.toString(), Main.skin);
-				messageTable.add(newMessage).left().padRight(20);
+				if(message.getFirst().equals(Chat.YOU)) {
+					messageTable.add(newMessage).expandX().right().padRight(20).row();
+				}
+				else messageTable.add(newMessage).expandX().left().padLeft(20).row();
+				
 			}
 			
 			chat.finishUpdateMessages();
@@ -88,5 +92,8 @@ public class ChatActor extends Table {
 	
 	public Chat getChat() {
 		return chat;
+	}
+	public String getUserName() {
+		return chat.getUser();
 	}
 }

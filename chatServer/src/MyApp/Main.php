@@ -12,6 +12,7 @@ class Main implements MessageComponentInterface {
     const ENTERGAME = "EnterGame";
 	const MESSAGE = "Message";
 	const USERSROOM = "UsersRoom";
+    const CHAT = "Chat";
 	const LOGINTEACHER = "LoginTeacher";
 	const REGISTERTEACHER = "RegisterTeacher";
 	const CREATEGAME = "CreateGame";
@@ -53,6 +54,9 @@ class Main implements MessageComponentInterface {
         }
         else if(strcmp($action, Main::USERSROOM) == 0) {
         	$this->sendUsers($from, $msg);
+        }
+        else if(strcmp($action, Main::CHAT) == 0) {
+            $this->sendChatConversation($from, $msg);
         }
         else if(strcmp($action, Main::LOGINTEACHER) == 0) {
         	$this->loginTeacher($from, $msg);
@@ -153,9 +157,23 @@ class Main implements MessageComponentInterface {
     	$message = Main::USERSROOM . Main::POINTSPLIT;
     	foreach ($users as $user) {
     		if ($user !== $name) {
-            	$message = $message . $user . Main::DATASPLIT . $game->getChatsFromUsers($name, $user) . Main::POINTSPLIT;
+            	$message = $message . $user . Main::POINTSPLIT;
             }
         }
+        $from->send($message);
+    }
+    private function sendChatConversation(ConnectionInterface $from, $msg) {
+        $name = explode(Main::POINTSPLIT, $msg)[1];
+        $gameName = explode(Main::POINTSPLIT, $msg)[2];
+        $teacher = explode(Main::POINTSPLIT, $msg)[3];
+        $name2 = explode(Main::POINTSPLIT, $msg)[4];
+        $messagesSize = explode(Main::POINTSPLIT, $msg)[5];
+        echo sprintf('"%s" search messages from "%s" chat' . "\n", $name, $name2);
+
+        $game = $this->getOpenGame($teacher, $gameName);
+        $conversation = $game->getChatFromUsers($name, $name2, $messagesSize);
+
+        $message = Main::CHAT . Main::POINTSPLIT . $name2 . Main::POINTSPLIT . $conversation;
         $from->send($message);
     }
 

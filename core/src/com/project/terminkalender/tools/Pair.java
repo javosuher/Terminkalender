@@ -1,6 +1,6 @@
 package com.project.terminkalender.tools;
 
-import com.project.terminkalender.websockets.WebSockets;
+import com.project.terminkalender.chat.Chat;
 
 public class Pair<T> {
 	private T firstElement, secondElement;
@@ -24,6 +24,6 @@ public class Pair<T> {
 
 	@Override
 	public String toString() {
-		return firstElement + WebSockets.POINTSPLIT + secondElement;
+		return firstElement + Chat.CHATSPACE + secondElement;
 	}
 }

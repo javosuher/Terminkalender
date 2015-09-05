@@ -112,7 +112,7 @@ class Main implements MessageComponentInterface {
         $game = $this->getOpenGame($teacher, $gameName);
 
         if($game->getPassword() == $password) {
-            $game->addUser($userName, $from->resourceId);
+            $game->addUser($userName, $from);
 
             echo "Enter Game: Success" . "\n";
             $message = Main::ENTERGAME . Main::POINTSPLIT . $gameName;
@@ -137,13 +137,8 @@ class Main implements MessageComponentInterface {
         $game->addMessage($userSender, $userDestination, $message);
         $userID = $game->getUserID($userDestination);
 
-        foreach($this->clients as $client) {
-            if ($userID == $client->resourceId) {
-            	$trueMessage = Main::MESSAGE . Main::POINTSPLIT . $userSender . Main::POINTSPLIT . $message;
-                $client->send($trueMessage);
-                return true;
-            }
-        }
+        $trueMessage = Main::MESSAGE . Main::POINTSPLIT . $userSender . Main::POINTSPLIT . $message;
+        $userID->send($trueMessage);
     }
     private function sendUsers(ConnectionInterface $from, $msg) {
         $name = explode(Main::POINTSPLIT, $msg)[1];
@@ -173,8 +168,10 @@ class Main implements MessageComponentInterface {
         $game = $this->getOpenGame($teacher, $gameName);
         $conversation = $game->getChatFromUsers($name, $name2, $messagesSize);
 
-        $message = Main::CHAT . Main::POINTSPLIT . $name2 . Main::POINTSPLIT . $conversation;
-        $from->send($message);
+        if($conversation !== "") {
+            $message = Main::CHAT . Main::POINTSPLIT . $name2 . Main::POINTSPLIT . $conversation;
+            $from->send($message);
+        }
     }
 
     // ------------------------------- Teacher Functions ------------------------------- 

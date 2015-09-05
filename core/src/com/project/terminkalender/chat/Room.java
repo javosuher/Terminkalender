@@ -40,7 +40,9 @@ public class Room {
 		if(indexUser == chats.size) {
 			Array<String> messages = new Array<String>();
 			messages.add(message);
-			chats.add(new Chat(user, messages));
+			Chat chat = new Chat(user);
+			chat.addMessageServer(message);
+			chats.add(chat);
 			update = true;
 		}
 		chats.get(indexUser).addMessageServer(message);

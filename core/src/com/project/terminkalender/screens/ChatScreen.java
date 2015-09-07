@@ -6,38 +6,48 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.Background;
 import com.project.terminkalender.Main;
 import com.project.terminkalender.chat.ChatActor;
+import com.project.terminkalender.chat.RoomActor;
 
 public class ChatScreen extends AbstractScreen {
 	private Background background;
+	private RoomActor roomActor;
 	private ChatActor chatActor;
-	private TextButton changeToRoomButton;
+	private TextButton changeToCalendarButton;
 	
-	public ChatScreen(Viewport viewport, SpriteBatch batch, ChatActor chatActor) {
+	public ChatScreen(Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
 		
 		TextureRegion backgroundTexture = new TextureRegion(Main.assets.get("background.png", Texture.class));
 		
 		background = new Background(backgroundTexture);
-		this.chatActor = chatActor;
-		changeToRoomButton = new TextButton("ChatRoom", Main.skin);
+		Table table = new Table(Main.skin);
+		roomActor = new RoomActor(Main.skin);
+		chatActor = new ChatActor(Main.skin);
+		changeToCalendarButton = new TextButton("Calendar", Main.skin);
+		
+		table.add(roomActor);
+		table.add(chatActor);
+		
+		table.setFillParent(true);
 		
 		stage.addActor(background);
-		stage.addActor(chatActor);
-		stage.addActor(changeToRoomButton);
+		stage.addActor(table);
+		stage.addActor(changeToCalendarButton);
 		
-		changeToRoomButton.setBounds(Main.WIDTH - 108, 8, 100, 50);
+		changeToCalendarButton.setBounds(Main.WIDTH - 108, 8, 100, 50);
 		
-		changeToRoomButton.addListener(new ClickListener() {
+		changeToCalendarButton.addListener(new ClickListener() {
 
 			@Override 
 			public void clicked(InputEvent event, float x, float y){
-				Main.setNewScreen(Main.roomScreen);
+				Main.setNewScreen(Main.calendarScreen);
 			}
 		});
 	}

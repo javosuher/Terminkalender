@@ -38,14 +38,12 @@ public class Room {
 	public void updateMessageUser(String user, String message) {
 		int indexUser = indexUser(user);
 		if(indexUser == chats.size) {
-			Array<String> messages = new Array<String>();
-			messages.add(message);
 			Chat chat = new Chat(user);
 			chat.addMessageServer(message);
 			chats.add(chat);
 			update = true;
 		}
-		chats.get(indexUser).addMessageServer(message);
+		else chats.get(indexUser).addMessageServer(message);
 	}
 	private int indexUser(String user) {
 		boolean find = false;

@@ -43,7 +43,7 @@ public class CalendarScreen extends AbstractScreen {
 
 			@Override 
 			public void clicked(InputEvent event, float x, float y){
-				Main.setNewScreen(Main.roomScreen);
+				Main.setNewScreen(Main.chatScreen);
 			}
 		});
 	}

@@ -37,8 +37,7 @@ class Chat {
     }
 
     public function isUsersInChat($userOne, $userTwo) {
-        echo $userOne . " == " . $this->user1 . " && " . $userTwo . " == " . $this->user2 . " || " . $userOne . " == " . $this->user2 . " && " . $userTwo . " == " . $this->user1 . "\n";
-        return ($userOne == $this->user1 && $userTwo == $this->user2) || ($userOne = $this->user2 && $userTwo == $this->user1);
+        return ($userOne == $this->user1 && $userTwo == $this->user2) || ($userOne == $this->user2 && $userTwo == $this->user1);
     }
 
     public function getUser1() {

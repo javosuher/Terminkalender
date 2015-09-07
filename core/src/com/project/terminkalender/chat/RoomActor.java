@@ -23,7 +23,7 @@ public class RoomActor extends Table {
 		usersWindow.setMovable(false);
 		setFillParent(true);
 		
-		add(usersWindow).width(800).height(Main.HEIGHT - 16).expand().left().pad(8);
+		add(usersWindow).width(200).height(Main.HEIGHT - 91).expand().left().pad(8).row();
 		add(refreshButton).width(150).height(75).expand().right().pad(8);
 		
 		room.refreshUsers();

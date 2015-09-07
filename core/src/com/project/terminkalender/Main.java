@@ -11,9 +11,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.login.User;
 import com.project.terminkalender.screens.AbstractScreen;
 import com.project.terminkalender.screens.CalendarScreen;
+import com.project.terminkalender.screens.ChatScreen;
 import com.project.terminkalender.screens.LoginGamesScreen;
 import com.project.terminkalender.screens.LoginScreen;
-import com.project.terminkalender.screens.RoomScreen;
 import com.project.terminkalender.tools.WarningDialogActor;
 import com.project.terminkalender.tools.kennySkin;
 import com.project.terminkalender.websockets.ServerDirection;
@@ -26,7 +26,7 @@ public class Main extends Game {
 	public static Skin skin;
 	
 	public static WebSockets webSockets;
-	public static AbstractScreen loginScreen, loginGamesScreen, calendarScreen, roomScreen;
+	public static AbstractScreen loginScreen, loginGamesScreen, calendarScreen, chatScreen;
 	public static WarningDialogActor warningDialog;
 	public static User user;
 	
@@ -56,7 +56,7 @@ public class Main extends Game {
 	
 	public static void createGameScreens() {
 		calendarScreen = new CalendarScreen(viewport, batch);
-		roomScreen = new RoomScreen(viewport, batch);
+		chatScreen = new ChatScreen(viewport, batch);
 	}
 	
 	private void loadAssets() {

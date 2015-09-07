@@ -77,6 +77,8 @@ public class ChatActor extends Table {
 			Table messageTable = chat.getMessageTable();
 			Array<Pair<String>> messages = chat.getMessages();
 			
+			messageTable.clear();
+			
 			for(Pair<String> message : messages) {
 				Label newMessage = new Label(message.toString(), Main.skin);
 				if(message.getFirst().equals(Chat.YOU)) {

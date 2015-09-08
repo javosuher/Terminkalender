@@ -24,7 +24,7 @@ class Game {
         return false;
     }
     public function addUser($userName, $id) {
-        foreach($this->users as $user) {
+        foreach($this->users as &$user) {
             if($user["name"] == $userName) {
                 $user["id"] = $id;
                 return "User Update";

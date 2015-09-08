@@ -28,18 +28,18 @@ public class ChatScreen extends AbstractScreen {
 		
 		background = new Background(backgroundTexture);
 		Table table = new Table(Main.skin);
-		roomActor = new RoomActor(Main.skin);
 		chatActor = new ChatActor(Main.skin);
+		roomActor = new RoomActor(Main.skin, chatActor);
 		changeToCalendarButton = new TextButton("Calendar", Main.skin);
 		
 		table.add(roomActor);
 		table.add(chatActor);
+		table.add(changeToCalendarButton).top().width(100).height(50).pad(8);
 		
 		table.setFillParent(true);
 		
 		stage.addActor(background);
 		stage.addActor(table);
-		stage.addActor(changeToCalendarButton);
 		
 		changeToCalendarButton.setBounds(Main.WIDTH - 108, 8, 100, 50);
 		
@@ -50,10 +50,6 @@ public class ChatScreen extends AbstractScreen {
 				Main.setNewScreen(Main.calendarScreen);
 			}
 		});
-	}
-	
-	public String getChatUser() {
-		return chatActor.getChat().getUser();
 	}
 	
 	@Override

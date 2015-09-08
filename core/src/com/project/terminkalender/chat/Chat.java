@@ -1,6 +1,8 @@
 package com.project.terminkalender.chat;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Main;
 import com.project.terminkalender.tools.Pair;
@@ -15,11 +17,18 @@ public class Chat {
 	private Array<Pair<String>> messages;
 	private boolean updateMessage, updateMessages;
 	
+	private TextButton textButton;
+	private boolean inChat;
+	
 	public Chat(String user) {
 		this.user = user;
 		messageTable = new Table(Main.skin);
 		this.messages = new Array<Pair<String>>();
 		updateMessage = false;
+		messageTable.padBottom(20);
+		
+		textButton = new TextButton(user, Main.skin);
+		inChat = false;
 	}
 	public Chat(String user, Array<String> messages) {
 		this(user);
@@ -43,7 +52,14 @@ public class Chat {
 	}
 	public void addMessageServer(String message) {
 		messages.add(new Pair<String>(user, message));
+		if(!isInChat()) {
+			buttonNotification();
+		}
 		updateMessage = true;
+	}
+	
+	public boolean isEmptyChat() {
+		return user.equals("");
 	}
 	
 	public String getUser() {
@@ -70,5 +86,38 @@ public class Chat {
 	}
 	public void finishUpdateMessages() {
 		updateMessages = false;
+	}
+	public void startUpdateMessage() {
+		updateMessage = true;
+	}
+	public void startUpdateMessages() {
+		updateMessages = true;
+	}
+	
+	public TextButton getTextButton() {
+		return textButton;
+	}
+	public void setTextButton(TextButton textButton) {
+		this.textButton = textButton;
+	}
+	public void buttonNotification() {
+		if(!isEmptyChat()) {
+			textButton.setStyle(Main.skin.get("redTextButton", TextButtonStyle.class));
+		}
+	}
+	public void buttonNormal() {
+		if(!isEmptyChat()) {
+			textButton.setStyle(Main.skin.get("default", TextButtonStyle.class));
+		}
+	}
+	
+	public boolean isInChat() {
+		return inChat;
+	}
+	public void enterChat() {
+		inChat = true;
+	}
+	public void exitChat() {
+		inChat = false;
 	}
 }

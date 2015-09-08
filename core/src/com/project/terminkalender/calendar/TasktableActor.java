@@ -15,17 +15,13 @@ public class TasktableActor extends ScrollWindow {
 		Table table = new Table();
 		setTable(skin, table);
 		
-		int i = 0;
 		for (Slot slot : tasktable.getSlots()) {
 			SlotActor slotActor = new SlotActor(skin, slot);
 			dragAndDrop.addSource(new SlotSource(slotActor));
 			dragAndDrop.addTarget(new SlotTarget(slotActor));
 			table.add(slotActor);
 
-			i++;
-			if (i % 1 == 0) {
-				table.row().padTop(2);
-			}
+			table.row().padTop(2);
 		}
 
 		getScrollTable().setFlickScroll(false);

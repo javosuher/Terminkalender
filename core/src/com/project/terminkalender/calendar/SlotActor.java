@@ -4,15 +4,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.project.terminkalender.Main;
 
 public class SlotActor extends ImageButton implements SlotListener {
 	private Slot slot;
-	private Skin skin;
+	private SlotDescription tooltip;
+	private boolean setTSescription;
 
 	public SlotActor(Skin skin, Slot slot) {
 		super(createStyle(skin, slot));
 		this.slot = slot;
-		this.skin = skin;
+		setTSescription = true;
 
 		slot.addListener(this);
 	}
@@ -32,7 +34,18 @@ public class SlotActor extends ImageButton implements SlotListener {
 
 	@Override
 	public void hasChanged(Slot slot) {
-		setStyle(createStyle(skin, slot));
+		setStyle(createStyle(Main.skin, slot));
 	}
 
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		
+		if(setTSescription) {
+			tooltip = new SlotDescription(slot, Main.skin);
+			getStage().addActor(tooltip);
+			addListener(new SlotDescriptionListener(tooltip, true));
+			setTSescription = false;
+		}
+	}
 }

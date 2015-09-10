@@ -71,6 +71,10 @@ public class kennySkin extends Skin {
 														 Color.BLACK, 
 														 getDrawable("window_01"));
 		
+		final WindowStyle windowDescriptionStyle = new WindowStyle(getFont("KenPixelFont18"), 
+				 										 	  	   Color.BLACK, 
+				 										 	  	   getDrawable("color_window"));
+		
 		final ProgressBarStyle progressBarStyle = new ProgressBarStyle(getDrawable("slider_back_hor"), 
 																	   getDrawable("knob_01"));
 		
@@ -112,6 +116,7 @@ public class kennySkin extends Skin {
 		add("default", windowStyle);
 		add("window2", window2Style);
 		add("window3", window3Style);
+		add("windowDescriptionStyle", windowDescriptionStyle);
 		add("default", progressBarStyle);
 		add("default", sliderStyle);
 		add("default", labelStyle);

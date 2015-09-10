@@ -9,7 +9,7 @@ public class SlotDescription extends Window implements SlotListener {
 	private Slot slot;
 
 	public SlotDescription(Slot slot, Skin skin) {
-		super("", skin);
+		super("", skin, "windowDescriptionStyle");
 		this.slot = slot;
 		hasChanged(slot);
 		slot.addListener(this);

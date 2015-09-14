@@ -24,6 +24,10 @@ public class kennySkin extends Skin {
 	public kennySkin() {
 		TextureAtlas blueAtlas = new TextureAtlas("skins/ui-blue.atlas");
 		TextureAtlas redAtlas = new TextureAtlas("skins/ui-red.atlas");
+		TextureAtlas greenAtlas = new TextureAtlas("skins/ui-green.atlas");
+		TextureAtlas orangeAtlas = new TextureAtlas("skins/ui-orange.atlas");
+		TextureAtlas whiteAtlas = new TextureAtlas("skins/ui-white.atlas");
+		
 		BitmapFont font12 = new BitmapFont(Gdx.files.internal("skins/kenpixel_mini_square-12.fnt"));
 		BitmapFont font18 = new BitmapFont(Gdx.files.internal("skins/kenpixel_mini_square-18.fnt"));
 		BitmapFont font32 = new BitmapFont(Gdx.files.internal("skins/kenpixel_mini_square-32.fnt"));
@@ -116,7 +120,7 @@ public class kennySkin extends Skin {
 		add("default", windowStyle);
 		add("window2", window2Style);
 		add("window3", window3Style);
-		add("windowDescriptionStyle", windowDescriptionStyle);
+		add("windowDescription", windowDescriptionStyle);
 		add("default", progressBarStyle);
 		add("default", sliderStyle);
 		add("default", labelStyle);
@@ -139,5 +143,20 @@ public class kennySkin extends Skin {
         
         add("closeRedButton", closeRedButtonStyle);
         add("redTextButton", redTextButtonStyle);
+        
+        addRegions(whiteAtlas);
+        
+        final TextButtonStyle fullTextButtonDescriptionStyle = new TextButtonStyle(getDrawable("button_01_white"), 
+																		 getDrawable("button_01_white"), 
+																		 getDrawable("button_01_white"), 
+																		 getFont("KenPixelFont18"));
+        
+        final TextButtonStyle emptyTextButtonDescriptionStyle = new TextButtonStyle(getDrawable("button_hollow_white"), 
+				 														 getDrawable("button_hollow_white"), 
+				 														 getDrawable("button_hollow_white"), 
+				 														 getFont("KenPixelFont18"));
+        
+        add("fullTextButtonDescription", fullTextButtonDescriptionStyle);
+        add("emptyTextButtonDescription", emptyTextButtonDescriptionStyle);
 	}	
 }

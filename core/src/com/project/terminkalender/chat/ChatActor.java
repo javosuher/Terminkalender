@@ -72,7 +72,7 @@ public class ChatActor extends Table {
 		if(!message.equals("")) {
 			if(message.contains(WebSockets.POINTSPLIT) || message.contains(WebSockets.DATASPLIT) || 
 					message.contains(WebSockets.CHATSPLIT)) {
-				Main.warningDialog.show("you musn't use '=', ';' or ':'", getStage());
+				Main.warningDialog.show("you musn't use '=', ';', or ':'", getStage());
 			}
 			else if(!chat.isEmptyChat()) {
 				Label newMessage = new Label(Chat.YOU + Chat.CHATSPACE + message, Main.skin);

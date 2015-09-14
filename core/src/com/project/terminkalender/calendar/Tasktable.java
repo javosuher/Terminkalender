@@ -15,7 +15,7 @@ public class Tasktable {
 		int nSlots = game.getTasks().size;
 		slots = new Array<Slot>(nSlots);
 		for (int i = 0; i < nSlots; i++) {
-			slots.add(new Slot(new Task()));
+			slots.add(new Slot(new Task("Soy una MARIPOSA")));
 		}
 	}
 

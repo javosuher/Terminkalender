@@ -1,12 +1,12 @@
 package com.project.terminkalender.calendar;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
+import com.project.terminkalender.Main;
 
 public class SlotSource extends Source {
 	private Slot sourceSlot;
@@ -21,25 +21,26 @@ public class SlotSource extends Source {
 		if (sourceSlot.isEmpty()) {
 			return null;
 		}
-		
-		Payload payload = new Payload();
-		Slot payloadSlot = new Slot();
-		payloadSlot.copy(sourceSlot.isEmpty(), sourceSlot.getTask());
-		sourceSlot.setEmpty();
-		payload.setObject(payloadSlot);
+		else {
+			Payload payload = new Payload();
+			Slot payloadSlot = new Slot();
+			payloadSlot.copy(sourceSlot.isEmpty(), sourceSlot.getTask());
+			sourceSlot.setEmpty();
+			payload.setObject(payloadSlot);
+			
+			TextButton icon = new TextButton(payloadSlot.getTask().getDescription(), Main.skin, "fullTextButtonDescription");
 
-		TextureRegion icon = payloadSlot.getImage();
+			Actor dragActor = icon;
+			payload.setDragActor(dragActor);
 
-		Actor dragActor = new Image(icon);
-		payload.setDragActor(dragActor);
+			Actor validDragActor = icon;
+			payload.setValidDragActor(validDragActor);
 
-		Actor validDragActor = new Image(icon);
-		payload.setValidDragActor(validDragActor);
+			Actor invalidDragActor = icon;
+			payload.setInvalidDragActor(invalidDragActor);
 
-		Actor invalidDragActor = new Image(icon);
-		payload.setInvalidDragActor(invalidDragActor);
-
-		return payload;
+			return payload;
+		}
 	}
 
 	@Override

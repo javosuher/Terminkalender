@@ -19,7 +19,7 @@ public class TasktableActor extends ScrollWindow {
 			SlotActor slotActor = new SlotActor(skin, slot);
 			dragAndDrop.addSource(new SlotSource(slotActor));
 			dragAndDrop.addTarget(new SlotTarget(slotActor));
-			table.add(slotActor);
+			table.add(slotActor).width(150).height(65);
 
 			table.row().padTop(2);
 		}

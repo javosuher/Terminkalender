@@ -17,7 +17,7 @@ public class SlotTarget extends Target {
 	@Override
 	public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
 		Slot payloadSlot = (Slot) payload.getObject();
-		getActor().setColor(Color.WHITE);
+		//getActor().setColor(Color.BLACK);
 		return true;
 	}
 
@@ -26,7 +26,7 @@ public class SlotTarget extends Target {
 
 	@Override
 	public void reset(Source source, Payload payload) {
-		getActor().setColor(Color.LIGHT_GRAY);
+		//getActor().setColor(Color.RED);
 	}
 
 }

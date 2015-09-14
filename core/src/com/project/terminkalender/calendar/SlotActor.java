@@ -1,31 +1,32 @@
 package com.project.terminkalender.calendar;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.project.terminkalender.Main;
 
-public class SlotActor extends ImageButton implements SlotListener {
+public class SlotActor extends TextButton implements SlotListener {
 	private Slot slot;
-	private SlotDescription tooltip;
+	private SlotDescription slotDescription;
 	private boolean setTSescription;
 
 	public SlotActor(Skin skin, Slot slot) {
-		super(createStyle(skin, slot));
-		this.slot = slot;
+		super(slot.getTask().getDescription(), skin);
+		setAppearance(slot);
 		setTSescription = true;
 
 		slot.addListener(this);
 	}
-
-	private static ImageButtonStyle createStyle(Skin skin, Slot slot) {
-		TextureRegion image = slot.getImage();
-		ImageButtonStyle style = new ImageButtonStyle(skin.get("calender", ButtonStyle.class));
-		style.imageUp = new TextureRegionDrawable(image);
-		style.imageDown = new TextureRegionDrawable(image);
-
-		return style;
+	
+	private void setAppearance(Slot slot) {
+		this.slot = slot;
+		if(slot.isEmpty()) {
+			setText("");
+			setStyle(Main.skin.get("emptyTextButtonDescription", TextButtonStyle.class));
+		}
+		else {
+			setText(slot.getTask().getDescription());
+			setStyle(Main.skin.get("fullTextButtonDescription", TextButtonStyle.class));
+		}
 	}
 
 	public Slot getSlot() {
@@ -34,7 +35,7 @@ public class SlotActor extends ImageButton implements SlotListener {
 
 	@Override
 	public void hasChanged(Slot slot) {
-		setStyle(createStyle(Main.skin, slot));
+		setAppearance(slot);
 	}
 
 	@Override
@@ -42,9 +43,9 @@ public class SlotActor extends ImageButton implements SlotListener {
 		super.act(delta);
 		
 		if(setTSescription) {
-			tooltip = new SlotDescription(slot, Main.skin);
-			getStage().addActor(tooltip);
-			addListener(new SlotDescriptionListener(tooltip, true));
+			slotDescription = new SlotDescription(slot, Main.skin);
+			getStage().addActor(slotDescription);
+			addListener(new SlotDescriptionListener(slotDescription, true));
 			setTSescription = false;
 		}
 	}

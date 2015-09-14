@@ -1,13 +1,9 @@
 package com.project.terminkalender.calendar;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import com.project.terminkalender.Main;
 
 public class Slot {
 	private Array<SlotListener> slotListeners = new Array<SlotListener>();
-	private TextureRegion image;
 	private boolean empty;
 	private Task task;
 
@@ -23,13 +19,13 @@ public class Slot {
 	}
 	
 	public void setEmpty() {
-		image = new TextureRegion(Main.assets.get("EmptySlot.png", Texture.class));
-		task = null;
+		//image = new TextureRegion(Main.assets.get("EmptySlot.png", Texture.class));
+		task = new Task();
 		empty = true;
 		notifyListeners();
 	}
 	public void setTask(Task task) {
-		image = new TextureRegion(Main.assets.get("Slot.png", Texture.class));
+		//image = new TextureRegion(Main.assets.get("Slot.png", Texture.class));
 		this.task = task;
 		empty = false;
 		notifyListeners();
@@ -40,10 +36,6 @@ public class Slot {
 			setEmpty();
 		else
 			setTask(task);
-	}
-
-	public TextureRegion getImage() {
-		return image;
 	}
 	
 	public Task getTask() {

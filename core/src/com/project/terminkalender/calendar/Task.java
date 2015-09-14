@@ -1,21 +1,37 @@
 package com.project.terminkalender.calendar;
 
 public class Task {
-	private String hour, location, partner;
+	private String description, hour, location, partner;
 	
 	public Task() {
 		erase();
 	}
-	public Task(String hour, String location, String partner) {
+	public Task(String description) {
+		this.description = description;
+		this.hour = "Hollow";
+		this.location = "Hollow";
+		this.partner = "Hollow";
+	}
+	public Task(String description, String hour, String location, String partner) {
+		this.description = description;
 		this.hour = hour;
 		this.location = location;
 		this.partner = partner;
 	}
 	
 	private void erase() {
-		hour = location = partner = "Hollow";
+		description = "";
+		hour = "Hollow";
+		location = "Hollow";
+		partner = "Hollow";
 	}
 	
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	public String getHour() {
 		return hour;
 	}
@@ -35,5 +51,11 @@ public class Task {
 	}
 	public void setPartner(String partner) {
 		this.partner = partner;
+	}
+	
+	@Override
+	public String toString() {
+		return "Task [description=" + description + ", hour=" + hour
+				+ ", location=" + location + ", partner=" + partner + "]";
 	}
 }

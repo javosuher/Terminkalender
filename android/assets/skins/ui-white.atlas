@@ -1,9 +1,9 @@
 
-ui-yellow.png
+ui-white.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-button_01
+button_01_white
   rotate: false
   xy: 444, 94
   size: 64, 32
@@ -11,7 +11,15 @@ button_01
   orig: 64, 32
   offset: 0, 0
   index: -1
-button_02
+button_hollow_white
+  rotate: false
+  xy: 700, 17
+  size: 64, 32
+  split: 6, 6, 6, 6
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+button_02_white
   rotate: false
   xy: 306, 58
   size: 64, 32
@@ -19,7 +27,7 @@ button_02
   orig: 64, 32
   offset: 0, 0
   index: -1
-button_03
+button_03_white
   rotate: false
   xy: 174, 25
   size: 64, 35
@@ -27,7 +35,7 @@ button_03
   orig: 64, 35
   offset: 0, 0
   index: -1
-button_04
+button_04_white
   rotate: false
   xy: 240, 55
   size: 64, 35
@@ -35,7 +43,7 @@ button_04
   orig: 64, 35
   offset: 0, 0
   index: -1
-button_05
+button_05_white
   rotate: false
   xy: 510, 94
   size: 64, 32
@@ -43,7 +51,7 @@ button_05
   orig: 64, 32
   offset: 0, 0
   index: -1
-button_06
+button_06_white
   rotate: false
   xy: 2, 18
   size: 64, 40
@@ -52,204 +60,204 @@ button_06
   orig: 64, 40
   offset: 0, 0
   index: -1
-button_cross
+button_cross_white
   rotate: false
   xy: 68, 26
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-checkbox_cross
+checkbox_cross_white
   rotate: false
   xy: 372, 58
   size: 42, 32
   orig: 42, 32
   offset: 0, 0
   index: -1
-checkbox_off
+checkbox_on_white
+  rotate: false
+  xy: 372, 58
+  size: 42, 32
+  orig: 42, 32
+  offset: 0, 0
+  index: -1
+checkbox_off_white
+  rotate: false
+  xy: 372, 58
+  size: 42, 32
+  orig: 42, 32
+  offset: 0, 0
+  index: -1
+color_basetext_white
+  rotate: false
+  xy: 138, 2
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+color_lightwidgettext_white
+  rotate: false
+  xy: 148, 2
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+color_widgettext_white
+  rotate: false
+  xy: 158, 2
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+combobox_button_white
   rotate: false
   xy: 576, 94
-  size: 42, 32
-  orig: 42, 32
-  offset: 0, 0
-  index: -1
-checkbox_on
-  rotate: false
-  xy: 620, 94
-  size: 42, 32
-  orig: 42, 32
-  offset: 0, 0
-  index: -1
-color_basetext
-  rotate: false
-  xy: 1014, 118
-  size: 8, 8
-  orig: 8, 8
-  offset: 0, 0
-  index: -1
-color_lightwidgettext
-  rotate: false
-  xy: 1014, 108
-  size: 8, 8
-  orig: 8, 8
-  offset: 0, 0
-  index: -1
-color_widgettext
-  rotate: false
-  xy: 1014, 98
-  size: 8, 8
-  orig: 8, 8
-  offset: 0, 0
-  index: -1
-combobox_button
-  rotate: false
-  xy: 664, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_arrow_down
+icon_arrow_down_white
   rotate: false
-  xy: 698, 94
+  xy: 610, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_arrow_left
+icon_arrow_left_white
   rotate: false
-  xy: 732, 94
+  xy: 644, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_arrow_right
+icon_arrow_right_white
   rotate: false
-  xy: 766, 94
+  xy: 678, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_arrow_up
+icon_arrow_up_white
   rotate: false
-  xy: 800, 94
+  xy: 712, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_back
+icon_back_white
   rotate: false
-  xy: 834, 94
+  xy: 746, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_check
+icon_check_white
   rotate: false
-  xy: 868, 94
+  xy: 780, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_circle
+icon_circle_white
   rotate: false
-  xy: 902, 94
+  xy: 814, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_cross
+icon_cross_white
   rotate: false
-  xy: 936, 94
+  xy: 848, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_music
+icon_music_white
   rotate: false
-  xy: 970, 94
+  xy: 882, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_pause
+icon_pause_white
+  rotate: false
+  xy: 916, 94
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+icon_play_white
+  rotate: false
+  xy: 950, 94
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+icon_sound_off_white
+  rotate: false
+  xy: 984, 94
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+icon_sound_on_white
   rotate: false
   xy: 240, 21
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_play
+icon_star_white
   rotate: false
   xy: 274, 21
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_sound_off
+icon_tools_white
   rotate: false
   xy: 308, 24
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_sound_on
-  rotate: false
-  xy: 342, 24
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-icon_star
-  rotate: false
-  xy: 376, 24
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-icon_tools
+knob_01_white
   rotate: false
   xy: 416, 58
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-knob_01
-  rotate: false
-  xy: 484, 60
   size: 22, 32
   orig: 22, 32
   offset: 0, 0
   index: -1
-knob_02
+knob_02_white
   rotate: false
   xy: 68, 2
   size: 32, 22
   orig: 32, 22
   offset: 0, 0
   index: -1
-knob_03
+knob_03_white
   rotate: false
-  xy: 508, 60
+  xy: 376, 24
   size: 22, 32
   orig: 22, 32
   offset: 0, 0
   index: -1
-knob_04
+knob_04_white
   rotate: false
-  xy: 532, 70
+  xy: 400, 34
   size: 32, 22
   orig: 32, 22
   offset: 0, 0
   index: -1
-knob_05
+knob_05_white
   rotate: false
-  xy: 566, 70
+  xy: 434, 34
   size: 12, 22
   split: 5, 5, 6, 6
   orig: 12, 22
   offset: 0, 0
   index: -1
-knob_06
+knob_06_white
   rotate: false
   xy: 114, 10
   size: 22, 12
@@ -257,29 +265,29 @@ knob_06
   orig: 22, 12
   offset: 0, 0
   index: -1
-radiobox_off
+radiobox_off_white
   rotate: false
-  xy: 410, 24
+  xy: 342, 24
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-radiobox_on
+radiobox_on_white
   rotate: false
-  xy: 450, 60
+  xy: 342, 24
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-scroll_back_hor
+scroll_back_hor_white
   rotate: false
-  xy: 580, 82
+  xy: 138, 12
   size: 20, 10
   split: 4, 4, 3, 3
   orig: 20, 10
   offset: 0, 0
   index: -1
-scroll_back_ver
+scroll_back_ver_white
   rotate: false
   xy: 102, 2
   size: 10, 20
@@ -287,7 +295,7 @@ scroll_back_ver
   orig: 10, 20
   offset: 0, 0
   index: -1
-selectbox_01
+selectbox_01_white
   rotate: false
   xy: 240, 92
   size: 66, 34
@@ -296,7 +304,7 @@ selectbox_01
   orig: 66, 34
   offset: 0, 0
   index: -1
-slider_back_hor
+slider_back_hor_white
   rotate: false
   xy: 2, 8
   size: 32, 8
@@ -304,15 +312,15 @@ slider_back_hor
   orig: 32, 8
   offset: 0, 0
   index: -1
-slider_back_ver
+slider_back_ver_white
   rotate: false
-  xy: 1004, 94
+  xy: 440, 58
   size: 8, 32
   split: 3, 3, 8, 8
   orig: 8, 32
   offset: 0, 0
   index: -1
-textbox_01
+textbox_01_white
   rotate: false
   xy: 308, 92
   size: 66, 34
@@ -320,7 +328,7 @@ textbox_01
   orig: 66, 34
   offset: 0, 0
   index: -1
-textbox_02
+textbox_02_white
   rotate: false
   xy: 376, 92
   size: 66, 34
@@ -328,15 +336,15 @@ textbox_02
   orig: 66, 34
   offset: 0, 0
   index: -1
-textbox_cursor_02
+textbox_cursor_02_white
   rotate: false
-  xy: 444, 30
+  xy: 1018, 100
   size: 2, 26
   split: 0, 1, 0, 0
   orig: 2, 26
   offset: 0, 0
   index: -1
-window_01
+window_01_white
   rotate: false
   xy: 108, 24
   size: 64, 102
@@ -345,7 +353,7 @@ window_01
   orig: 64, 102
   offset: 0, 0
   index: -1
-window_02
+window_02_white
   rotate: false
   xy: 2, 60
   size: 104, 66
@@ -354,7 +362,7 @@ window_02
   orig: 104, 66
   offset: 0, 0
   index: -1
-window_03
+window_03_white
   rotate: false
   xy: 174, 62
   size: 64, 64

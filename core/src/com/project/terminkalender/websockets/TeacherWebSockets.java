@@ -24,6 +24,7 @@ public class TeacherWebSockets {
 	public final static String UPDATEGAME = "UpdateGame";
 	public final static String GAMES = "Games";
 	public final static String OPENGAMES = "OpenGames";
+	public final static String CLOSEGAMES = "CloseGames";
 	
 	private WebSocketClient wsc;
 	private boolean connected;
@@ -71,6 +72,8 @@ public class TeacherWebSockets {
 					updateGameCheck(trueMessage);
 				else if(action.equals(OPENGAMES))
 					openGameProcess(trueMessage);
+				else if(action.equals(CLOSEGAMES))
+					closeGameProcess(trueMessage);
 					
 			}
 
@@ -147,6 +150,9 @@ public class TeacherWebSockets {
 	public void openGameProcess(String message) {
 		TeacherMain.warningDialog.show(message + " Opened", TeacherMain.teacherGamesScreen.getStage());
 	}
+	public void closeGameProcess(String message) {
+		TeacherMain.warningDialog.show(message + " Closed", TeacherMain.teacherGamesScreen.getStage());
+	}
 	
 	public boolean loginTeacher(String teacherUser, String password) {
 		return sendMessage(LOGINTEACHER + POINTSPLIT + teacherUser + POINTSPLIT + password);
@@ -165,6 +171,9 @@ public class TeacherWebSockets {
 	}
 	public boolean openGame(String gameName, String teacher, String password, String tasks) {
 		return sendMessage(OPENGAMES + POINTSPLIT + gameName + POINTSPLIT + teacher + POINTSPLIT + password + POINTSPLIT + tasks);
+	}
+	public boolean closeGame(String gameName, String teacher) {
+		return sendMessage(CLOSEGAMES + POINTSPLIT + gameName + POINTSPLIT + teacher);
 	}
 	private boolean sendMessage(String message) {
 		if(connected) {

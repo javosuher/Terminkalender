@@ -21,10 +21,10 @@ public class TimetableActor extends TWindow {
 			SlotActor slotActor = new SlotActor(skin, slot);
 			dragAndDrop.addSource(new SlotSource(slotActor));
 			dragAndDrop.addTarget(new SlotTarget(slotActor));
-			add(slotActor);
+			add(slotActor).width(80).height(80);
 
 			i++;
-			if (i % 7 == 0) {
+			if (i % 5 == 0) {
 				row();
 			}
 		}

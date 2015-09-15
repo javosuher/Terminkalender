@@ -18,16 +18,16 @@ public class RoomActor extends Table {
 		this.chatActor = chatActor;
 		
 		ScrollWindow usersWindow = new ScrollWindow("Users", skin, room.getUsersTable());
-		TextButton refreshButton = new TextButton("Refresh", skin);
+		TextButton updateUsersButton = new TextButton("Update Users", skin);
 		
 		usersWindow.setMovable(false);
 		
 		add(usersWindow).width(150).height(Main.HEIGHT - 80).expand().pad(8).row();
-		add(refreshButton).width(125).height(65).padBottom(10);
+		add(updateUsersButton).width(135).height(65).padBottom(10);
 		
 		room.refreshUsers();
 		
-		refreshButton.addListener(new ClickListener() {
+		updateUsersButton.addListener(new ClickListener() {
 
 			@Override 
 			public void clicked(InputEvent event, float x, float y){

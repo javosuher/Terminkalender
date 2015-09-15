@@ -146,17 +146,40 @@ public class kennySkin extends Skin {
         
         addRegions(whiteAtlas);
         
-        final TextButtonStyle fullTextButtonDescriptionStyle = new TextButtonStyle(getDrawable("button_01_white"), 
-																		 getDrawable("button_01_white"), 
-																		 getDrawable("button_01_white"), 
-																		 getFont("KenPixelFont18"));
+        final TextButtonStyle emptyTextButtonDescriptionStyle = new TextButtonStyle(getDrawable("button_01_white"), 
+				 														 			getDrawable("button_01_white"), 
+				 														 			getDrawable("button_01_white"), 
+				 														 			getFont("KenPixelFont18"));
         
-        final TextButtonStyle emptyTextButtonDescriptionStyle = new TextButtonStyle(getDrawable("button_hollow_white"), 
-				 														 getDrawable("button_hollow_white"), 
-				 														 getDrawable("button_hollow_white"), 
-				 														 getFont("KenPixelFont18"));
-        
-        add("fullTextButtonDescription", fullTextButtonDescriptionStyle);
         add("emptyTextButtonDescription", emptyTextButtonDescriptionStyle);
+        
+        addRegions(greenAtlas);
+        
+        final TextButtonStyle greenTextButtonStyle = new TextButtonStyle(getDrawable("button_04_green"), 
+																	     getDrawable("button_02_green"), 
+																	     getDrawable("button_04_green"), 
+																	     getFont("KenPixelFont18"));
+        
+        final TextButtonStyle fullTextButtonDescriptionStyle = new TextButtonStyle(getDrawable("button_01_green"), 
+				 																   getDrawable("button_01_green"), 
+				 																   getDrawable("button_01_green"), 
+				 																   getFont("KenPixelFont18"));
+        
+        final WindowStyle windowDescriptionGreenStyle = new WindowStyle(getFont("KenPixelFont18"), 
+														Color.BLACK, 
+														getDrawable("button_01_green"));
+        
+        add("greenTextButton", greenTextButtonStyle);
+        add("windowDescriptionGreen", windowDescriptionGreenStyle);
+        add("fullTextButtonDescription", fullTextButtonDescriptionStyle);
+        
+        addRegions(orangeAtlas);
+        
+        final TextButtonStyle orangeTextButtonStyle = new TextButtonStyle(getDrawable("button_04_orange"), 
+			     														 getDrawable("button_02_orange"), 
+			     														 getDrawable("button_04_orange"), 
+			     														 getFont("KenPixelFont18"));
+        
+        add("orangeTextButton", orangeTextButtonStyle);
 	}	
 }

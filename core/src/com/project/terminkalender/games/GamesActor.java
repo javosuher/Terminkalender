@@ -58,7 +58,7 @@ public class GamesActor extends Table {
 			
 			games.getGamesTable().clear();
 			int column = createGamesButtons(gamesArray, TeacherMain.skin.get("default", TextButtonStyle.class), "Game", 0);
-			createGamesButtons(gamesOpenArray, TeacherMain.skin.get("redTextButton", TextButtonStyle.class), "OpenGame", column);
+			createGamesButtons(gamesOpenArray, TeacherMain.skin.get("greenTextButton", TextButtonStyle.class), "OpenGame", column);
 			
 			games.finishUpdate();
 		}

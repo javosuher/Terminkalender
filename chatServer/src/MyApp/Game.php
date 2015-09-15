@@ -72,6 +72,15 @@ class Game {
         return "";
     }
 
+    public function pickUpData() {
+        $chatsConversation = "CHATS \n================================================= \n\n";
+        foreach($this->chats as $chat) {
+            $chatsConversation = $chatsConversation . "------------ " . $chat->getUser1() . " and " . $chat->getUser2() . " ------------ \n";
+            $chatsConversation = $chatsConversation . $chat->pickUpChat() . "\n";
+        }
+        return $chatsConversation;
+    }
+
     public function getGameName() {
         return $this->gameName;
     }

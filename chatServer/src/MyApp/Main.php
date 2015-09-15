@@ -19,6 +19,7 @@ class Main implements MessageComponentInterface {
 	const UPDATEGAME = "UpdateGame";
 	const GAMES = "Games";
 	const OPENGAMES = "OpenGames";
+    const CLOSEGAMES = "CloseGames";
 	
     protected $clients, $dataBase, $games;
 
@@ -75,6 +76,9 @@ class Main implements MessageComponentInterface {
         }
         else if(strcmp($action, Main::OPENGAMES) == 0) {
         	$this->openGame($from, $msg);
+        }
+        else if(strcmp($action, Main::CLOSEGAMES) == 0) {
+            $this->closeGame($from, $msg);
         }
     }
 
@@ -282,6 +286,19 @@ class Main implements MessageComponentInterface {
     	$from->send($message);
     }
 
+    private function closeGame(ConnectionInterface $from, $msg) {
+        $gameName = explode(Main::POINTSPLIT, $msg)[1];
+        $teacher = explode(Main::POINTSPLIT, $msg)[2];
+
+        $this->pickUpOpenGameData($teacher, $gameName);
+        $this->deleteOpenGame($teacher, $gameName);
+        $message = Main::GAMES . Main::POINTSPLIT . $teacher;
+        $this->sendGamesTeacher($from, $message);
+        $message = Main::CLOSEGAMES . Main::POINTSPLIT . $gameName;
+        echo "Close Game: Success" . "\n";
+        $from->send($message);
+    }
+
     // ------------------------------- Open Games Functions -------------------------------
 
     private function searchOpenGames($teacher) {
@@ -304,6 +321,23 @@ class Main implements MessageComponentInterface {
             }
         }
         return "Empty";
+    }
+    private function deleteOpenGame($teacher, $gameName) {
+        foreach($this->games as $game) {
+            if ($game->getTeacher() == $teacher && $game->getGameName() == $gameName) {
+                $this->games->detach($game);
+                return true;
+            }
+        }
+        return false;
+    }
+    private function pickUpOpenGameData($teacher, $gameName) {
+        $game = $this->getOpenGame($teacher, $gameName);
+        $data = $game->pickUpData();
+        $gameDataFile = fopen($gameName ." (" . $teacher . ").txt", "w");
+        fwrite($gameDataFile, $data);
+        fclose($gameDataFile);
+        echo $gameName . " (" . $teacher . ").txt . " . "Created" . "\n";
     }
 
     // ------------------------------- Data Base Functions -------------------------------

@@ -36,6 +36,16 @@ class Chat {
         return $conversation;
     }
 
+    public function pickUpChat() {
+        $conversation = "";
+        foreach($this->messages as $message) {
+            $user = explode(Chat::CHATSPLIT, $message)[0];
+            $trueMessage = explode(Chat::CHATSPLIT, $message)[1];
+            $conversation = $conversation . $user . ": " . $trueMessage . "\n";
+        }
+        return $conversation;
+    }
+
     public function isUsersInChat($userOne, $userTwo) {
         return ($userOne == $this->user1 && $userTwo == $this->user2) || ($userOne == $this->user2 && $userTwo == $this->user1);
     }

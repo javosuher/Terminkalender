@@ -102,7 +102,7 @@ public class Chat {
 	}
 	public void buttonNotification() {
 		if(!isEmptyChat()) {
-			textButton.setStyle(Main.skin.get("redTextButton", TextButtonStyle.class));
+			textButton.setStyle(Main.skin.get("orangeTextButton", TextButtonStyle.class));
 		}
 	}
 	public void buttonNormal() {

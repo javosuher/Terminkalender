@@ -61,8 +61,6 @@ public class Main extends Game {
 	
 	private void loadAssets() {
 		skin = new kennySkin();
-		assets.load("Slot.png", Texture.class);
-		assets.load("EmptySlot.png", Texture.class);
 		assets.load("background.png", Texture.class);
 		assets.finishLoading();
 	}

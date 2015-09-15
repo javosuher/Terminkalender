@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.project.terminkalender.Main;
 
 public class SlotDescriptionListener extends InputListener {
 
@@ -25,7 +26,8 @@ public class SlotDescriptionListener extends InputListener {
 	public boolean mouseMoved(InputEvent event, float x, float y) {
 		if (inside && followCursor) {
 			event.getListenerActor().localToStageCoordinates(tmp.set(x, y));
-			tooltip.setPosition(tmp.x + position.x + offset.x, tmp.y + position.y + offset.y);
+			//tooltip.setPosition(tmp.x + position.x + offset.x, tmp.y + position.y + offset.y);
+			tooltip.setPosition(Main.WIDTH / 2, Main.WIDTH, 0);
 		}
 		return false;
 	}
@@ -36,7 +38,8 @@ public class SlotDescriptionListener extends InputListener {
 		tooltip.setVisible(true);
 		tmp.set(x, y);
 		event.getListenerActor().localToStageCoordinates(tmp);
-		tooltip.setPosition(tmp.x + position.x + offset.x, tmp.y + position.y + offset.y);
+		//tooltip.setPosition(tmp.x + position.x + offset.x, tmp.y + position.y + offset.y);
+		tooltip.setPosition(Main.WIDTH / 2, Main.WIDTH, 0);
 		tooltip.toFront();
 	}
 
@@ -46,8 +49,41 @@ public class SlotDescriptionListener extends InputListener {
 		tooltip.setVisible(false);
 	}
 
+	@Override
+	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+		inside = true;
+		tooltip.setVisible(true);
+		tmp.set(x, y);
+		event.getListenerActor().localToStageCoordinates(tmp);
+		//tooltip.setPosition(tmp.x + position.x + offset.x, tmp.y + position.y + offset.y);
+		tooltip.setPosition(Main.WIDTH / 2, Main.WIDTH, 0);
+		tooltip.toFront();
+		return true;
+	}
+	
+	@Override
+	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+		inside = true;
+		tooltip.setVisible(true);
+		tmp.set(x, y);
+		event.getListenerActor().localToStageCoordinates(tmp);
+		//tooltip.setPosition(tmp.x + position.x + offset.x, tmp.y + position.y + offset.y);
+		tooltip.setPosition(Main.WIDTH / 2, Main.WIDTH, 0);
+		tooltip.toFront();
+	}
+
+	@Override
+	public void touchDragged(InputEvent event, float x, float y, int pointer) {
+		inside = true;
+		tooltip.setVisible(true);
+		tmp.set(x, y);
+		event.getListenerActor().localToStageCoordinates(tmp);
+		//tooltip.setPosition(tmp.x + position.x + offset.x, tmp.y + position.y + offset.y);
+		tooltip.setPosition(Main.WIDTH / 2, Main.WIDTH, 0);
+		tooltip.toFront();
+	}
+
 	public void setOffset(float offsetX, float offsetY) {
 		offset.set(offsetX, offsetY);
 	}
-
 }

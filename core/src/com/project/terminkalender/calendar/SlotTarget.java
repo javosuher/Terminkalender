@@ -1,6 +1,5 @@
 package com.project.terminkalender.calendar;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
@@ -11,7 +10,7 @@ public class SlotTarget extends Target {
 	public SlotTarget(SlotActor actor) {
 		super(actor);
 		targetSlot = actor.getSlot();
-		getActor().setColor(Color.LIGHT_GRAY);
+		//getActor().setColor(Color.LIGHT_GRAY);
 	}
 
 	@Override
@@ -22,7 +21,10 @@ public class SlotTarget extends Target {
 	}
 
 	@Override
-	public void drop(Source source, Payload payload, float x, float y, int pointer) {}
+	public void drop(Source source, Payload payload, float x, float y, int pointer) {
+		/*DialogActor dialog = new DialogActor("", Main.skin);
+		dialog.show(Main.calendarScreen.getStage());*/
+	}
 
 	@Override
 	public void reset(Source source, Payload payload) {

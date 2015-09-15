@@ -23,6 +23,6 @@ public class OpenGameDialog extends GameDialog {
 	}
 	
 	protected void result(Object object) {
-		
+		game.closeGamePetition();
 	}
 }

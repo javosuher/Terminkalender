@@ -29,6 +29,8 @@ public class SlotSource extends Source {
 			payload.setObject(payloadSlot);
 			
 			TextButton icon = new TextButton(payloadSlot.getTask().getDescription(), Main.skin, "fullTextButtonDescription");
+			icon.setWidth(80);
+			icon.setHeight(80);
 
 			Actor dragActor = icon;
 			payload.setDragActor(dragActor);

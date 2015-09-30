@@ -50,6 +50,11 @@ public class kennySkin extends Skin {
 																	getDrawable("button_04"), 
 																	getFont("KenPixelFont18"));
 		
+		final TextButtonStyle textButtonStyle32 = new TextButtonStyle(getDrawable("button_04"), 
+																	getDrawable("button_02"), 
+																	getDrawable("button_04"), 
+																	getFont("KenPixelFont32"));
+		
 		final ScrollPaneStyle scrollPaneStyle = new ScrollPaneStyle(getDrawable("color_widgettext"), 
 																	getDrawable("scroll_back_hor"), 
 																	getDrawable("knob_06"), 
@@ -114,6 +119,7 @@ public class kennySkin extends Skin {
 		add("default", buttonStyle);
 		add("calender", calenderButtonStyle);
 		add("default", textButtonStyle);
+		add("default32", textButtonStyle32);
 		add("default", scrollPaneStyle);
 		add("window", scrollPaneWindowStyle);
 		add("default", splitPaneStyle);

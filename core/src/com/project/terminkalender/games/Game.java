@@ -54,16 +54,16 @@ public class Game {
 	}
 
 	public void addTask(String task) {
-		if(task.equals("")) {
-			TeacherMain.warningDialog.show("You must fill the task", TeacherMain.teacherGamesScreen.getStage());
-		}
-		else tasks.add(task);
+		tasks.add(task);
 	}
 	public void eraseTask(String task) {
 		tasks.removeValue(task, false);
 	}
 	public Array<String> getTasks() {
 		return tasks;
+	}
+	public void setTask(Array<String> tasks) {
+		this.tasks= tasks;
 	}
 	public String tasksString() {
 		if(tasks.size > 0) {

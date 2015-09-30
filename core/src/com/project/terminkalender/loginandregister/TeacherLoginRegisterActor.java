@@ -11,8 +11,8 @@ public class TeacherLoginRegisterActor extends Table {
 	public TeacherLoginRegisterActor(Skin skin) {
 		super(skin);
 		
-		TextButton loginButton = new TextButton("Login", skin);
-		TextButton registerButton = new TextButton("Register", skin);
+		TextButton loginButton = new TextButton("Login", skin, "default32");
+		TextButton registerButton = new TextButton("Register", skin, "default32");
 		final TeacherLoginDialogActor teacherLoginDialogActor = new TeacherLoginDialogActor(skin);
 		final TeacherRegisterDialogActor teacherRegisterDialogActor = new TeacherRegisterDialogActor(skin);
 		

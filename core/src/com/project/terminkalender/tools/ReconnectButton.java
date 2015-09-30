@@ -12,7 +12,7 @@ public class ReconnectButton extends TextButton {
 	public ReconnectButton(Skin skin) {
 		super("Reconnect", skin);
 		
-		setBounds(Main.WIDTH - 108, 8, 100, 50);
+		setBounds(Main.WIDTH - 118, 8, 110, 50);
 		
 		this.addListener(new ClickListener() {
 

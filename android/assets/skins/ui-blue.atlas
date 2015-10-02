@@ -370,3 +370,10 @@ window_03
   orig: 64, 64
   offset: 0, 0
   index: -1
+dialogBackground
+  rotate: false
+  xy: 129, 31
+  size: 3, 3
+  orig: 3, 3
+  offset: 0, 0
+  index: -1

@@ -19,6 +19,7 @@ class Main implements MessageComponentInterface {
 	const UPDATEGAME = "UpdateGame";
 	const GAMES = "Games";
 	const OPENGAMES = "OpenGames";
+    const REMOVEGAMES = "RemoveGames";
     const CLOSEGAMES = "CloseGames";
 	
     protected $clients, $dataBase, $games;
@@ -76,6 +77,9 @@ class Main implements MessageComponentInterface {
         }
         else if(strcmp($action, Main::OPENGAMES) == 0) {
         	$this->openGame($from, $msg);
+        }
+        else if(strcmp($action, Main::REMOVEGAMES) == 0) {
+            $this->removeGame($from, $msg);
         }
         else if(strcmp($action, Main::CLOSEGAMES) == 0) {
             $this->closeGame($from, $msg);
@@ -270,7 +274,6 @@ class Main implements MessageComponentInterface {
         }
     	$from->send($msg);
     }
-
     private function openGame(ConnectionInterface $from, $msg) {
     	$gameName = explode(Main::POINTSPLIT, $msg)[1];
     	$teacher = explode(Main::POINTSPLIT, $msg)[2];
@@ -285,7 +288,17 @@ class Main implements MessageComponentInterface {
     	echo "Open Game: Success" . "\n";
     	$from->send($message);
     }
+    private function removeGame(ConnectionInterface $from, $msg) {
+        $gameName = explode(Main::POINTSPLIT, $msg)[1];
+        $teacher = explode(Main::POINTSPLIT, $msg)[2];
 
+        $this->deleteGameInDataBase($gameName, $teacher);
+        $message = Main::GAMES . Main::POINTSPLIT . $teacher;
+        $this->sendGamesTeacher($from, $message);
+        $message = Main::REMOVEGAMES . Main::POINTSPLIT . $gameName;
+        echo "Remove Game: Success" . "\n";
+        $from->send($message);
+    }
     private function closeGame(ConnectionInterface $from, $msg) {
         $gameName = explode(Main::POINTSPLIT, $msg)[1];
         $teacher = explode(Main::POINTSPLIT, $msg)[2];

@@ -12,7 +12,7 @@ import com.project.terminkalender.TeacherMain;
 public class DialogActor extends Dialog {
 
 	public DialogActor(String title, Skin skin) {
-		super("", skin);
+		super("", skin, "windowDialog");
 		
 		Button closeButton;
 		try { closeButton = new Button(Main.skin.get("closeRedButton", ButtonStyle.class)); }

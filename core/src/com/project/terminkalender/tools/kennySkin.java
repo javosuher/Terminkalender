@@ -80,6 +80,12 @@ public class kennySkin extends Skin {
 														 Color.BLACK, 
 														 getDrawable("window_01"));
 		
+		final WindowStyle windowDialogStyle = new WindowStyle(getFont("KenPixelFont18"), 
+														Color.BLACK, 
+														getDrawable("window_03"));
+		
+		windowDialogStyle.stageBackground = newDrawable("dialogBackground", new Color(0, 0, 0, 0.45f));
+		
 		final WindowStyle windowDescriptionStyle = new WindowStyle(getFont("KenPixelFont18"), 
 				 										 	  	   Color.BLACK, 
 				 										 	  	   getDrawable("color_window"));
@@ -126,6 +132,7 @@ public class kennySkin extends Skin {
 		add("default", windowStyle);
 		add("window2", window2Style);
 		add("window3", window3Style);
+		add("windowDialog", windowDialogStyle);
 		add("windowDescription", windowDescriptionStyle);
 		add("default", progressBarStyle);
 		add("default", sliderStyle);

@@ -34,6 +34,9 @@ public class GameDialogActor extends GameDialog {
 	public final static String XML = "xml";
 	public final static String CSV = "csv";
 	
+	public final static String OPEN = "open";
+	public final static String DELETE = "delete";
+	
 	private final List<String> tasksBox = new List<String>(TeacherMain.skin);
 	private final TextField tasksText = new TextField("", TeacherMain.skin);
 	
@@ -51,15 +54,21 @@ public class GameDialogActor extends GameDialog {
 		final TextField passwordText = new TextField(game.getPassword(), skin);
 		Label tasksSettingsLabel = new Label("\nTASKS SETTINGS", skin);
 		Label newTasksLabel = new Label("New Task: ", skin);
-		TextButton addTaskButton = new TextButton("Add", skin);
+		Table taskAddDeleteTable = new Table(skin);
+		TextButton addTaskButton = new TextButton("Enter", skin);
+		TextButton deleteTaskButton = new TextButton("Delete", skin, "redTextButton");
 		TextButton openTaskFileButton = new TextButton("Load Tasks from file", skin);
 		Table tasksBoxTable = new Table(skin);
-		tasksBoxTable.add(tasksBox).expand().fill();
 		ScrollWindow tasksBoxWindow = new ScrollWindow("TASKS LIST", skin, tasksBoxTable);
 		tasksBox.setItems(game.getTasks());
 		actionButton = new TextButton("Open", TeacherMain.skin.get("greenTextButton", TextButtonStyle.class));
+		TextButton deleteGameButton = new TextButton("Delete", skin, "redTextButton");
 		
 		getButtonTable().defaults().width(150).height(50);
+		
+		taskAddDeleteTable.add(addTaskButton).width(70).height(35).padBottom(4).row();
+		taskAddDeleteTable.add(deleteTaskButton).width(70).height(35);
+		tasksBoxTable.add(tasksBox).expand().fill();
 		
 		getContentTable().padTop(40);
 		mainParemetersTable.add(essentialDataLabel).colspan(2).row();
@@ -70,19 +79,25 @@ public class GameDialogActor extends GameDialog {
 		mainParemetersTable.add(tasksSettingsLabel).colspan(2).row();
 		mainParemetersTable.add(newTasksLabel);
 		mainParemetersTable.add(tasksText).padRight(8);
-		mainParemetersTable.add(addTaskButton).width(50).height(35).row();
-		mainParemetersTable.add(openTaskFileButton).width(220).height(40).padTop(10).colspan(2);
+		mainParemetersTable.add(taskAddDeleteTable).row();
+		mainParemetersTable.add(openTaskFileButton).width(220).height(40).colspan(2);
 		taskParametersTable.add(tasksBoxWindow).width(300).height(310).row();
 		getContentTable().add(mainParemetersTable);
 		getContentTable().add(taskParametersTable).padLeft(20).row();
 		getContentTable().add(applyChangesButton).colspan(2).width(150).height(50).colspan(2).padTop(10);
 		getContentTable().pad(40);
 		
-		button(actionButton, "Open");
+		button(actionButton, OPEN);
+		button(deleteGameButton, DELETE);
 		
 		addTaskButton.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
 				addTask();
+			} 
+		});
+		deleteTaskButton.addListener(new ChangeListener() {
+			public void changed (ChangeEvent event, Actor actor) {
+				removeTask();
 			} 
 		});
 		applyChangesButton.addListener(new ChangeListener() {
@@ -92,7 +107,6 @@ public class GameDialogActor extends GameDialog {
 				game.update();
 			}
 		});
-		
 		openTaskFileButton.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
 				openTaskFile();
@@ -110,9 +124,6 @@ public class GameDialogActor extends GameDialog {
 		addListener(new InputListener() {
 			@Override
 			public boolean keyDown(InputEvent event, int keycode) {
-				if(keycode == Keys.R) {
-					removeTask();
-				}
 				if(keycode == Keys.ENTER) {
 					addTask();
 				}
@@ -123,7 +134,7 @@ public class GameDialogActor extends GameDialog {
 	
 	private void removeTask() {
 		String task = tasksBox.getSelected();
-		tasksBox.getItems().removeValue(task, false);
+		deleteItemtInStringList(tasksBox, task);
 		resizeTaskBox();
 	}
 	private void addTask() {
@@ -138,12 +149,23 @@ public class GameDialogActor extends GameDialog {
 			}
 			else tasksBox.getItems().add(task);
 		}
+		tasksBox.setSelectedIndex(tasksBox.getItems().size - 1);
 		resizeTaskBox();
 	}
 	private void resizeTaskBox() {
 		tasksBox.validate();
 		tasksBox.invalidate();
 		tasksBox.invalidateHierarchy();
+	}
+	private void deleteItemtInStringList(List<String> list, String item) {
+		int taskIndex = list.getSelectedIndex();
+		list.getItems().removeValue(item, false);
+		if(taskIndex - 1 >= 0) {
+			list.setSelectedIndex(taskIndex - 1); 
+		}
+		else if(list.getItems().size > 0) {
+			list.setSelectedIndex(0); 
+		}
 	}
 	
 	private void openTaskFile() {
@@ -187,6 +209,11 @@ public class GameDialogActor extends GameDialog {
 	}
 	
 	protected void result(Object object) {
-		game.openGamePetition();
+		if(object.equals(OPEN)) {
+			game.openGamePetition();
+		}
+		else if(object.equals(DELETE)) {
+			game.removeGamePetition();
+		}
 	}
 }

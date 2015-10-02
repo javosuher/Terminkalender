@@ -42,6 +42,10 @@ public class Game {
 		TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;
 		TeacherMain.teacherWebSockets.closeGame(name, teacherGamesScreen.getTeacher());
 	}
+	public void removeGamePetition() {
+		TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;
+		TeacherMain.teacherWebSockets.removeGame(name, teacherGamesScreen.getTeacher());
+	}
 
 	public String getName() {
 		return name;

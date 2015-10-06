@@ -19,13 +19,11 @@ public class Slot {
 	}
 	
 	public void setEmpty() {
-		//image = new TextureRegion(Main.assets.get("EmptySlot.png", Texture.class));
 		task = new Task();
 		empty = true;
 		notifyListeners();
 	}
 	public void setTask(Task task) {
-		//image = new TextureRegion(Main.assets.get("Slot.png", Texture.class));
 		this.task = task;
 		empty = false;
 		notifyListeners();

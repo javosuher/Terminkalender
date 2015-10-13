@@ -1,21 +1,37 @@
 package com.project.terminkalender.calendar;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 public class Slot {
 	private Array<SlotListener> slotListeners = new Array<SlotListener>();
+	private Vector2 position;
 	private boolean empty;
 	private Task task;
 
 	public Slot(Task task) {
 		setTask(task);
-	}	
+		noPosition();
+	}
+	public Slot(Task task, Vector2 position) {
+		setTask(task);
+		this.position = position;
+	}
 	public Slot() {
 		setEmpty();
+		noPosition();
+	}
+	public Slot(Vector2 position) {
+		setEmpty();
+		this.position = position;
 	}
 
 	public boolean isEmpty() {
 		return empty;
+	}
+	
+	public void noPosition() {
+		position = new Vector2(-1, -1);
 	}
 	
 	public void setEmpty() {
@@ -38,6 +54,16 @@ public class Slot {
 	
 	public Task getTask() {
 		return task;
+	}
+	
+	public Vector2 getPosition() {
+		return position;
+	}
+	public void setPosition(Vector2 position) {
+		this.position = position;
+	}
+	public boolean hasPosition() {
+		return position.x != -1 && position.y != -1;
 	}
 	
 	public void addListener(SlotListener slotListener) {

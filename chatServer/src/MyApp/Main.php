@@ -33,7 +33,7 @@ class Main implements MessageComponentInterface {
         $this->token = sem_get(0);
         echo "Init Server!\n";
 
-        $this->games->attach(new Game("dodo", "sandra", "f", "zoo,beber,aletear")); // Example OpenGame
+        $this->games->attach(new Game("dodo", "sandra", "f", "zoo,beber,aletear,estafraseesdemasiadolargaynecesitaqueseacortebastante")); // Example OpenGame
     }
 
     public function onOpen(ConnectionInterface $conn) {

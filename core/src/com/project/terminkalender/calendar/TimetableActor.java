@@ -24,7 +24,7 @@ public class TimetableActor extends TWindow {
 			add(slotActor).width(80).height(80);
 
 			i++;
-			if (i % 5 == 0) {
+			if (i % Timetable.COLUMN == 0) {
 				row();
 			}
 		}

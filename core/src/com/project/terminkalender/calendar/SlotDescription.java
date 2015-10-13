@@ -25,7 +25,7 @@ public class SlotDescription extends Window implements SlotListener {
 		
 		//setTitle("Task description");
 		clear();
-		Label label = new Label("Super awesome task description", Main.skin);
+		Label label = new Label(slot.getTask().getDescription(), Main.skin);
 		add(label);
 		pack();
 	}

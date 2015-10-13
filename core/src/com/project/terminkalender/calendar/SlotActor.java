@@ -10,7 +10,7 @@ public class SlotActor extends TextButton implements SlotListener {
 	private boolean setTSescription;
 
 	public SlotActor(Skin skin, Slot slot) {
-		super(slot.getTask().getDescription(), skin);
+		super(slot.getTask().getShortDescription(), skin);
 		setAppearance(slot);
 		setTSescription = true;
 
@@ -24,7 +24,7 @@ public class SlotActor extends TextButton implements SlotListener {
 			setStyle(Main.skin.get("emptyTextButtonDescription", TextButtonStyle.class));
 		}
 		else {
-			setText(slot.getTask().getDescription());
+			setText(slot.getTask().getShortDescription());
 			setStyle(Main.skin.get("fullTextButtonDescription", TextButtonStyle.class));
 		}
 	}
@@ -45,7 +45,8 @@ public class SlotActor extends TextButton implements SlotListener {
 		if(setTSescription) {
 			slotDescription = new SlotDescription(slot, Main.skin);
 			getStage().addActor(slotDescription);
-			addListener(new SlotDescriptionListener(slotDescription, true));
+			SlotDescriptionListener slotDescriptionListener = new SlotDescriptionListener(slotDescription, true);
+			addListener(slotDescriptionListener);
 			setTSescription = false;
 		}
 	}

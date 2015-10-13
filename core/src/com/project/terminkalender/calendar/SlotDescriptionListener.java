@@ -3,11 +3,10 @@ package com.project.terminkalender.calendar;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.project.terminkalender.Main;
 
-public class SlotDescriptionListener extends InputListener {
-
+public class SlotDescriptionListener extends DragListener {
 	private boolean inside;
 
 	private Actor tooltip;
@@ -29,51 +28,61 @@ public class SlotDescriptionListener extends InputListener {
 			//tooltip.setPosition(tmp.x + position.x + offset.x, tmp.y + position.y + offset.y);
 			tooltip.setPosition(Main.WIDTH / 2, Main.WIDTH, 0);
 		}
-		return false;
+		return true;
+	}
+
+	@Override
+	public void drag(InputEvent event, float x, float y, int pointer) {
+		
+	}
+
+	@Override
+	public void dragStart(InputEvent event, float x, float y, int pointer) {
+		System.out.println("estoy aqui");
+	}
+
+	@Override
+	public void dragStop(InputEvent event, float x, float y, int pointer) {
+		
+	}
+
+	@Override
+	public boolean isDragging() {
+		
+		return true;
 	}
 
 	@Override
 	public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-		inside = true;
-		tooltip.setVisible(true);
-		tmp.set(x, y);
-		event.getListenerActor().localToStageCoordinates(tmp);
-		//tooltip.setPosition(tmp.x + position.x + offset.x, tmp.y + position.y + offset.y);
-		tooltip.setPosition(Main.WIDTH / 2, Main.WIDTH, 0);
-		tooltip.toFront();
+		setDescription(event, x, y, pointer);
 	}
 
 	@Override
 	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-		inside = false;
-		tooltip.setVisible(false);
+		setDescriptionHide();
 	}
 
 	@Override
 	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-		inside = true;
-		tooltip.setVisible(true);
-		tmp.set(x, y);
-		event.getListenerActor().localToStageCoordinates(tmp);
-		//tooltip.setPosition(tmp.x + position.x + offset.x, tmp.y + position.y + offset.y);
-		tooltip.setPosition(Main.WIDTH / 2, Main.WIDTH, 0);
-		tooltip.toFront();
+		setDescription(event, x, y, pointer);;
 		return true;
 	}
 	
 	@Override
 	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-		inside = true;
-		tooltip.setVisible(true);
-		tmp.set(x, y);
-		event.getListenerActor().localToStageCoordinates(tmp);
-		//tooltip.setPosition(tmp.x + position.x + offset.x, tmp.y + position.y + offset.y);
-		tooltip.setPosition(Main.WIDTH / 2, Main.WIDTH, 0);
-		tooltip.toFront();
+		setDescription(event, x, y, pointer);
 	}
 
 	@Override
 	public void touchDragged(InputEvent event, float x, float y, int pointer) {
+		setDescription(event, x, y, pointer);
+	}
+
+	public void setOffset(float offsetX, float offsetY) {
+		offset.set(offsetX, offsetY);
+	}
+	
+	private void setDescription(InputEvent event, float x, float y, int pointer) {
 		inside = true;
 		tooltip.setVisible(true);
 		tmp.set(x, y);
@@ -82,8 +91,14 @@ public class SlotDescriptionListener extends InputListener {
 		tooltip.setPosition(Main.WIDTH / 2, Main.WIDTH, 0);
 		tooltip.toFront();
 	}
-
-	public void setOffset(float offsetX, float offsetY) {
-		offset.set(offsetX, offsetY);
+	public void setDescriptionVisible() {
+		inside = true;
+		tooltip.setVisible(true);
+		tooltip.setPosition(Main.WIDTH / 2, Main.WIDTH, 0);
+		tooltip.toFront();
+	}
+	public void setDescriptionHide() {
+		inside = false;
+		tooltip.setVisible(false);
 	}
 }

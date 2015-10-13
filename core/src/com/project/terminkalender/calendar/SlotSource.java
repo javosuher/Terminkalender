@@ -28,17 +28,17 @@ public class SlotSource extends Source {
 			sourceSlot.setEmpty();
 			payload.setObject(payloadSlot);
 			
-			TextButton icon = new TextButton(payloadSlot.getTask().getDescription(), Main.skin, "fullTextButtonDescription");
-			icon.setWidth(80);
-			icon.setHeight(80);
+			TextButton button = new TextButton(payloadSlot.getTask().getShortDescription(), Main.skin, "fullTextButtonDescription");
+			button.setWidth(80);
+			button.setHeight(80);
 
-			Actor dragActor = icon;
+			Actor dragActor = button;
 			payload.setDragActor(dragActor);
 
-			Actor validDragActor = icon;
+			Actor validDragActor = button;
 			payload.setValidDragActor(validDragActor);
 
-			Actor invalidDragActor = icon;
+			Actor invalidDragActor = button;
 			payload.setInvalidDragActor(invalidDragActor);
 
 			return payload;

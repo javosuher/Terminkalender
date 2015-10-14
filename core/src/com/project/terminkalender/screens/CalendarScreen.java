@@ -19,7 +19,7 @@ public class CalendarScreen extends AbstractScreen {
 	private Background background;
 	private TimetableActor timetableActor;
 	private TasktableActor tasktableActor;
-	private TextButton changeToChatButton;
+	private TextButton changeToChatButton, validateButton;
 
 	public CalendarScreen(Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
@@ -31,19 +31,30 @@ public class CalendarScreen extends AbstractScreen {
 		timetableActor = new TimetableActor(dragAndDrop, Main.skin);
 		tasktableActor = new TasktableActor(dragAndDrop, Main.skin);
 		changeToChatButton = new TextButton("Chat", Main.skin);
+		validateButton = new TextButton("Validate", Main.skin, "greenTextButton");
 		
 		stage.addActor(background);
 		stage.addActor(timetableActor);
 		stage.addActor(tasktableActor);
 		stage.addActor(changeToChatButton);
+		stage.addActor(validateButton);
 		
 		changeToChatButton.setBounds(8, 8, 100, 50);
+		validateButton.setBounds(750, 8, 100, 50);
 		
 		changeToChatButton.addListener(new ClickListener() {
 
 			@Override 
 			public void clicked(InputEvent event, float x, float y){
 				Main.setNewScreen(Main.chatScreen);
+			}
+		});
+		
+		validateButton.addListener(new ClickListener() {
+
+			@Override 
+			public void clicked(InputEvent event, float x, float y){
+				
 			}
 		});
 	}

@@ -26,6 +26,7 @@ public class WebSockets {
 	public final static String MESSAGE = "Message";
 	public final static String USERSROOM = "UsersRoom";
 	public final static String CHAT = "Chat";
+	public final static String TASKVALIDATE = "TaskValidate";
 	
 	private WebSocketClient wsc;
 	private boolean connected;
@@ -151,6 +152,10 @@ public class WebSockets {
 	public boolean askChatFromUser(String userDestination, int messagesSize) {
 		User user = Main.user;
 		return sendMessage(CHAT + POINTSPLIT + user.getName() + POINTSPLIT + user.getGame().getName() + POINTSPLIT + user.getTeacher() + POINTSPLIT + userDestination + POINTSPLIT + messagesSize);
+	}
+	public boolean sendCalendarInformation() {
+		User user = Main.user;
+		return sendMessage(TASKVALIDATE + POINTSPLIT);
 	}
 	private boolean sendMessage(String message) {
 		if (connected) {

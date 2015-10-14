@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.List.ListStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox.SelectBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.SplitPane.SplitPaneStyle;
@@ -115,6 +116,12 @@ public class kennySkin extends Skin {
 												  Color.BLACK, 
 												  getDrawable("button_01"));
 		
+		final SelectBoxStyle selectBoxStyle = new SelectBoxStyle(getFont("KenPixelFont18"), 
+				 												 Color.BLACK, 
+				 												 getDrawable("selectbox_01"), 
+				 												 scrollPaneStyle, 
+				 												 listStyle);
+		
 		final TouchpadStyle touchpadStyle = new TouchpadStyle(getDrawable("window_02"), 
 															  getDrawable("knob_04"));
 		
@@ -139,6 +146,7 @@ public class kennySkin extends Skin {
 		add("default", labelStyle);
 		add("default", textFieldStyle);
         add("default", checkBoxStyle);
+        add("default", selectBoxStyle);
         add("default", listStyle);
         add("default", touchpadStyle);
         add("default", treeStyle);

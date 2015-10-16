@@ -38,7 +38,7 @@ public class SlotDescriptionListener extends DragListener {
 
 	@Override
 	public void dragStart(InputEvent event, float x, float y, int pointer) {
-		System.out.println("estoy aqui");
+		
 	}
 
 	@Override

@@ -58,6 +58,11 @@ public class GameDialogActor extends GameDialog {
 		TextButton addTaskButton = new TextButton("Enter", skin);
 		TextButton deleteTaskButton = new TextButton("Delete", skin, "redTextButton");
 		TextButton openTaskFileButton = new TextButton("Load Tasks from file", skin);
+		Label userSettingsLabel = new Label("\nUSERS SETTINGS", skin);
+		Label newUsersLabel = new Label("New User: ", skin);
+		Table userAddDeleteTable = new Table(skin);
+		TextButton addUserButton = new TextButton("Enter", skin);
+		TextButton deleteUserButton = new TextButton("Delete", skin, "redTextButton");
 		Table tasksBoxTable = new Table(skin);
 		ScrollWindow tasksBoxWindow = new ScrollWindow("TASKS LIST", skin, tasksBoxTable);
 		tasksBox.setItems(game.getTasks());
@@ -80,7 +85,8 @@ public class GameDialogActor extends GameDialog {
 		mainParemetersTable.add(newTasksLabel);
 		mainParemetersTable.add(tasksText).padRight(8);
 		mainParemetersTable.add(taskAddDeleteTable).row();
-		mainParemetersTable.add(openTaskFileButton).width(220).height(40).colspan(2);
+		mainParemetersTable.add(openTaskFileButton).width(220).height(40).colspan(2).row();
+		mainParemetersTable.add(userSettingsLabel).colspan(2).row();
 		taskParametersTable.add(tasksBoxWindow).width(300).height(310).row();
 		getContentTable().add(mainParemetersTable);
 		getContentTable().add(taskParametersTable).padLeft(20).row();

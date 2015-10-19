@@ -13,6 +13,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -38,13 +39,16 @@ public class GameDialogActor extends GameDialog {
 	public final static String DELETE = "delete";
 	
 	private final List<String> tasksBox = new List<String>(TeacherMain.skin);
+	private final List<String> usersBox = new List<String>(TeacherMain.skin);
 	private final TextField tasksText = new TextField("", TeacherMain.skin);
+	private final TextField usersText = new TextField("", TeacherMain.skin);
 	
 	public GameDialogActor(Skin skin, final Game game, TextButton thisButton) {
 		super(skin, game, thisButton);
 		
 		Table mainParemetersTable = new Table(skin);
 		Table taskParametersTable = new Table(skin);
+		Table userParametersTable = new Table(skin);
 		
 		TextButton applyChangesButton = new TextButton("Apply Changes", skin);
 		Label essentialDataLabel = new Label("ESSENTIAL DATA", skin);
@@ -63,17 +67,27 @@ public class GameDialogActor extends GameDialog {
 		Table userAddDeleteTable = new Table(skin);
 		TextButton addUserButton = new TextButton("Enter", skin);
 		TextButton deleteUserButton = new TextButton("Delete", skin, "redTextButton");
+		TextButton openUserFileButton = new TextButton("Load Users from file", skin);
 		Table tasksBoxTable = new Table(skin);
 		ScrollWindow tasksBoxWindow = new ScrollWindow("TASKS LIST", skin, tasksBoxTable);
+		Table usersBoxTable = new Table(skin);
+		ScrollWindow usersBoxWindow = new ScrollWindow("USERS LIST", skin, usersBoxTable);
 		tasksBox.setItems(game.getTasks());
 		actionButton = new TextButton("Open", TeacherMain.skin.get("greenTextButton", TextButtonStyle.class));
 		TextButton deleteGameButton = new TextButton("Delete", skin, "redTextButton");
+		
+		ImageButton loadFile = new ImageButton(skin);
 		
 		getButtonTable().defaults().width(150).height(50);
 		
 		taskAddDeleteTable.add(addTaskButton).width(70).height(35).padBottom(4).row();
 		taskAddDeleteTable.add(deleteTaskButton).width(70).height(35);
 		tasksBoxTable.add(tasksBox).expand().fill();
+		userAddDeleteTable.add(addUserButton).width(70).height(35).padBottom(4).row();
+		userAddDeleteTable.add(deleteUserButton).width(70).height(35);
+		usersBoxTable.add(usersBox).expand().fill();
+		
+		//openTaskFileButton..getLabel().setWrap(true);
 		
 		getContentTable().padTop(40);
 		mainParemetersTable.add(essentialDataLabel).colspan(2).row();
@@ -81,18 +95,27 @@ public class GameDialogActor extends GameDialog {
 		mainParemetersTable.add(nameGameLabel).row();
 		mainParemetersTable.add(passwordLabel);
 		mainParemetersTable.add(passwordText).row();
-		mainParemetersTable.add(tasksSettingsLabel).colspan(2).row();
-		mainParemetersTable.add(newTasksLabel);
-		mainParemetersTable.add(tasksText).padRight(8);
-		mainParemetersTable.add(taskAddDeleteTable).row();
-		mainParemetersTable.add(openTaskFileButton).width(220).height(40).colspan(2).row();
-		mainParemetersTable.add(userSettingsLabel).colspan(2).row();
-		taskParametersTable.add(tasksBoxWindow).width(300).height(310).row();
-		getContentTable().add(mainParemetersTable);
-		getContentTable().add(taskParametersTable).padLeft(20).row();
-		getContentTable().add(applyChangesButton).colspan(2).width(150).height(50).colspan(2).padTop(10);
-		getContentTable().pad(40);
 		
+		taskParametersTable.add(tasksSettingsLabel).colspan(2).row();
+		taskParametersTable.add(newTasksLabel);
+		taskParametersTable.add(tasksText).padRight(8);
+		taskParametersTable.add(taskAddDeleteTable).row();
+		taskParametersTable.add(tasksBoxWindow).colspan(2).width(300).height(200);
+		//taskParametersTable.add(openTaskFileButton).width(40).height(200).colspan(2);
+		
+		userParametersTable.add(userSettingsLabel).colspan(2).row();
+		userParametersTable.add(newUsersLabel);
+		userParametersTable.add(usersText).padRight(8);
+		userParametersTable.add(userAddDeleteTable).row();
+		userParametersTable.add(usersBoxWindow).colspan(2).width(300).height(200);
+		//userParametersTable.add(openUserFileButton).width(220).height(40).colspan(2);
+		
+		getContentTable().add(mainParemetersTable).colspan(2).row();
+		getContentTable().add(taskParametersTable);
+		getContentTable().add(userParametersTable).padLeft(10).row();
+		
+		getContentTable().padBottom(10);
+		getButtonTable().add(applyChangesButton);
 		button(actionButton, OPEN);
 		button(deleteGameButton, DELETE);
 		

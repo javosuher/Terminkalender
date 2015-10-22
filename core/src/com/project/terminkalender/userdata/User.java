@@ -1,12 +1,13 @@
-package com.project.terminkalender.login;
+package com.project.terminkalender.userdata;
 
 import com.project.terminkalender.Main;
+import com.project.terminkalender.login.GamesOpen;
 import com.project.terminkalender.screens.LoginGamesScreen;
 import com.project.terminkalender.websockets.TeacherWebSockets;
 
 public class User {
 	private String name, teacher;
-	private GameOpen game;
+	private Game game;
 	
 	public User() {}
 	public User(String name, String teacher) {
@@ -55,7 +56,7 @@ public class User {
 	public String getTeacher() {
 		return teacher;
 	}	
-	public GameOpen getGame() {
+	public Game getGame() {
 		return game;
 	}
 }

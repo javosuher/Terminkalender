@@ -9,7 +9,7 @@ import com.project.terminkalender.websockets.TeacherWebSockets;
 
 public class Games {
 	private Table gamesTable;
-	private Array<Game> games, openGames;
+	private Array<TeacherGame> games, openGames;
 	private boolean update;
 	
 	public Games() {
@@ -17,8 +17,8 @@ public class Games {
 		
 		gamesTable = new Table(skin);
 		TeacherMain.teacherWebSockets.setGames(this);
-		games = new Array<Game>();
-		openGames = new Array<Game>();
+		games = new Array<TeacherGame>();
+		openGames = new Array<TeacherGame>();
 		update = false;
 	}
 	
@@ -29,16 +29,16 @@ public class Games {
 		this.openGames.addAll(gameStringToGameArray(openGames));
 		update = true;
 	}
-	private Array<Game> gameStringToGameArray(Array<String> gamesString) {
-		Array<Game> games = new Array<Game>();
+	private Array<TeacherGame> gameStringToGameArray(Array<String> gamesString) {
+		Array<TeacherGame> games = new Array<TeacherGame>();
 		for(String game : gamesString) {
 			String [] gameData = game.split(TeacherWebSockets.DATASPLIT);
 			if(gameData.length < 3) {
-				games.add(new Game(gameData[0], gameData[1]));
+				games.add(new TeacherGame(gameData[0], gameData[1]));
 			}
 			else {
 				Array<String> tasks = new Array<String>(gameData[2].split(TeacherWebSockets.TASKSPLIT));
-				games.add(new Game(gameData[0], gameData[1], tasks));
+				games.add(new TeacherGame(gameData[0], gameData[1], tasks));
 			}
 		}
 		return games;
@@ -56,32 +56,32 @@ public class Games {
 		return gamesTable;
 	}
 	
-	public Array<Game> getGames() {
+	public Array<TeacherGame> getGames() {
 		return games;
 	}
-	public Game findGame(String gameName) {
+	public TeacherGame findGame(String gameName) {
 		return findGame(gameName, this.games);
 	}
-	public Game findOpenGame(String gameName) {
+	public TeacherGame findOpenGame(String gameName) {
 		return findGame(gameName, this.openGames);
 	}
-	private Game findGame(String gameName, Array<Game> games) {
-		for(Game game : games) {
+	private TeacherGame findGame(String gameName, Array<TeacherGame> games) {
+		for(TeacherGame game : games) {
 			if(game.getName().equals(gameName)) {
 				return game;
 			}
 		}
-		return new Game("NoExiste", "NoExiste");
+		return new TeacherGame("NoExiste", "NoExiste");
 	}
 	public boolean deleteGame(String gameName) {
-		Game game = findGame(gameName);
+		TeacherGame game = findGame(gameName);
 		return games.removeValue(game, true);
 	}
 	public boolean deleteOpenGame(String gameName) {
-		Game game = findOpenGame(gameName);
+		TeacherGame game = findOpenGame(gameName);
 		return openGames.removeValue(game, true);
 	}
-	public Array<Game> getOpenGames() {
+	public Array<TeacherGame> getOpenGames() {
 		return openGames;
 	}
 

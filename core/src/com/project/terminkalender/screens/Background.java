@@ -1,9 +1,10 @@
-package com.project.terminkalender;
+package com.project.terminkalender.screens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.project.terminkalender.Main;
 
 public class Background extends Actor {
 	private final static float SPEED = 0.5f;

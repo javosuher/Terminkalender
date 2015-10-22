@@ -2,12 +2,15 @@ package com.project.terminkalender.tools;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.List.ListStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
@@ -21,6 +24,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.TreeStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.project.terminkalender.TeacherMain;
 
 public class kennySkin extends Skin {
 
@@ -33,7 +38,7 @@ public class kennySkin extends Skin {
 		
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/babyblue.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 18;
+		parameter.size = 20;
 		BitmapFont fontMed = generator.generateFont(parameter);
 		parameter.size = 40;
 		BitmapFont fontBig = generator.generateFont(parameter);
@@ -64,15 +69,24 @@ public class kennySkin extends Skin {
 																	getFont("FontMed"));
 		
 		final TextButtonStyle textButtonStyle32 = new TextButtonStyle(getDrawable("button_04"), 
-																	getDrawable("button_02"), 
-																	getDrawable("button_04"), 
-																	getFont("FontBig"));
+																	  getDrawable("button_02"), 
+																	  getDrawable("button_04"), 
+																	  getFont("FontBig"));
+		
+		TextureRegion image = new TextureRegion(TeacherMain.assets.get("folderIcon.png", Texture.class));														 
+		final ImageButtonStyle imageButtonStyleFolder = new ImageButtonStyle(getDrawable("button_04"), 
+																			 getDrawable("button_02"), 
+																			 getDrawable("button_04"), 
+																			 new TextureRegionDrawable(image), 
+																			 new TextureRegionDrawable(image), 
+																			 new TextureRegionDrawable(image));															 
 		
 		final ScrollPaneStyle scrollPaneStyle = new ScrollPaneStyle(getDrawable("color_widgettext"), 
 																	getDrawable("scroll_back_hor"), 
 																	getDrawable("knob_06"), 
 																	getDrawable("scroll_back_ver"), 
 																	getDrawable("knob_05"));
+		
 		final ScrollPaneStyle scrollPaneWindowStyle = new ScrollPaneStyle(getDrawable("color_window"), 
 																	getDrawable("scroll_back_hor"), 
 																	getDrawable("knob_06"), 
@@ -145,6 +159,7 @@ public class kennySkin extends Skin {
 		add("calender", calenderButtonStyle);
 		add("default", textButtonStyle);
 		add("default32", textButtonStyle32);
+		add("imageButtonFolder", imageButtonStyleFolder);
 		add("default", scrollPaneStyle);
 		add("window", scrollPaneWindowStyle);
 		add("default", splitPaneStyle);

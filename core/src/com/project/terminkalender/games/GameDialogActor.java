@@ -34,16 +34,19 @@ import com.project.terminkalender.websockets.TeacherWebSockets;
 public class GameDialogActor extends GameDialog {
 	public final static String XML = "xml";
 	public final static String CSV = "csv";
+	public final static String TASK = "Task";
+	public final static String USER = "User";
 	
 	public final static String OPEN = "open";
 	public final static String DELETE = "delete";
 	
 	private final List<String> tasksBox = new List<String>(TeacherMain.skin);
+	private final TextField taskNameText = new TextField("", TeacherMain.skin);
+	private final TextField taskLimitUsers = new TextField("", TeacherMain.skin);
 	private final List<String> usersBox = new List<String>(TeacherMain.skin);
-	private final TextField tasksText = new TextField("", TeacherMain.skin);
 	private final TextField usersText = new TextField("", TeacherMain.skin);
 	
-	public GameDialogActor(Skin skin, final Game game, TextButton thisButton) {
+	public GameDialogActor(Skin skin, final TeacherGame game, TextButton thisButton) {
 		super(skin, game, thisButton);
 		
 		Table mainParemetersTable = new Table(skin);
@@ -57,17 +60,19 @@ public class GameDialogActor extends GameDialog {
 		Label passwordLabel = new Label("Password: ", skin);
 		final TextField passwordText = new TextField(game.getPassword(), skin);
 		Label tasksSettingsLabel = new Label("\nTASKS SETTINGS", skin);
-		Label newTasksLabel = new Label("New Task: ", skin);
+		Table taskDataTable = new Table(skin);
+		Label newTasksLabel = new Label("Task Name: ", skin);
+		Label newTasksNumLabel = new Label("Task Limit:", skin);
 		Table taskAddDeleteTable = new Table(skin);
 		TextButton addTaskButton = new TextButton("Enter", skin);
 		TextButton deleteTaskButton = new TextButton("Delete", skin, "redTextButton");
-		TextButton openTaskFileButton = new TextButton("Load Tasks from file", skin);
+		ImageButton openTaskFileButton = new ImageButton(skin, "imageButtonFolder");	
 		Label userSettingsLabel = new Label("\nUSERS SETTINGS", skin);
 		Label newUsersLabel = new Label("New User: ", skin);
 		Table userAddDeleteTable = new Table(skin);
-		TextButton addUserButton = new TextButton("Enter", skin);
+		TextButton addUserButton = new TextButton("Shift", skin);
 		TextButton deleteUserButton = new TextButton("Delete", skin, "redTextButton");
-		TextButton openUserFileButton = new TextButton("Load Users from file", skin);
+		ImageButton openUserFileButton = new ImageButton(skin, "imageButtonFolder");
 		Table tasksBoxTable = new Table(skin);
 		ScrollWindow tasksBoxWindow = new ScrollWindow("TASKS LIST", skin, tasksBoxTable);
 		Table usersBoxTable = new Table(skin);
@@ -76,10 +81,10 @@ public class GameDialogActor extends GameDialog {
 		actionButton = new TextButton("Open", TeacherMain.skin.get("greenTextButton", TextButtonStyle.class));
 		TextButton deleteGameButton = new TextButton("Delete", skin, "redTextButton");
 		
-		ImageButton loadFile = new ImageButton(skin);
-		
-		getButtonTable().defaults().width(150).height(50);
-		
+		taskDataTable.add(newTasksLabel);
+		taskDataTable.add(taskNameText).row();
+		taskDataTable.add(newTasksNumLabel).left();
+		taskDataTable.add(taskLimitUsers).left().width(50);
 		taskAddDeleteTable.add(addTaskButton).width(70).height(35).padBottom(4).row();
 		taskAddDeleteTable.add(deleteTaskButton).width(70).height(35);
 		tasksBoxTable.add(tasksBox).expand().fill();
@@ -87,33 +92,31 @@ public class GameDialogActor extends GameDialog {
 		userAddDeleteTable.add(deleteUserButton).width(70).height(35);
 		usersBoxTable.add(usersBox).expand().fill();
 		
-		//openTaskFileButton..getLabel().setWrap(true);
-		
 		getContentTable().padTop(40);
+		getButtonTable().defaults().width(150).height(50);
+		
 		mainParemetersTable.add(essentialDataLabel).colspan(2).row();
 		mainParemetersTable.add(nameLabel);
 		mainParemetersTable.add(nameGameLabel).row();
 		mainParemetersTable.add(passwordLabel);
 		mainParemetersTable.add(passwordText).row();
 		
-		taskParametersTable.add(tasksSettingsLabel).colspan(2).row();
-		taskParametersTable.add(newTasksLabel);
-		taskParametersTable.add(tasksText).padRight(8);
+		taskParametersTable.add(tasksSettingsLabel).colspan(4).row();
+		taskParametersTable.add(taskDataTable);
+		taskParametersTable.add(openTaskFileButton).width(50).height(50).padRight(8).padLeft(8);
 		taskParametersTable.add(taskAddDeleteTable).row();
-		taskParametersTable.add(tasksBoxWindow).colspan(2).width(300).height(200);
-		//taskParametersTable.add(openTaskFileButton).width(40).height(200).colspan(2);
+		taskParametersTable.add(tasksBoxWindow).padTop(8).colspan(3).width(300).height(200);
 		
 		userParametersTable.add(userSettingsLabel).colspan(2).row();
 		userParametersTable.add(newUsersLabel);
-		userParametersTable.add(usersText).padRight(8);
+		userParametersTable.add(usersText);
+		userParametersTable.add(openUserFileButton).width(50).height(50).padRight(8).padLeft(8);
 		userParametersTable.add(userAddDeleteTable).row();
-		userParametersTable.add(usersBoxWindow).colspan(2).width(300).height(200);
-		//userParametersTable.add(openUserFileButton).width(220).height(40).colspan(2);
+		userParametersTable.add(usersBoxWindow).padTop(8).colspan(3).width(300).height(200);
 		
 		getContentTable().add(mainParemetersTable).colspan(2).row();
 		getContentTable().add(taskParametersTable);
 		getContentTable().add(userParametersTable).padLeft(10).row();
-		
 		getContentTable().padBottom(10);
 		getButtonTable().add(applyChangesButton);
 		button(actionButton, OPEN);
@@ -129,16 +132,35 @@ public class GameDialogActor extends GameDialog {
 				removeTask();
 			} 
 		});
+		
+		addUserButton.addListener(new ChangeListener() {
+			public void changed (ChangeEvent event, Actor actor) {
+				addUser();
+			} 
+		});
+		deleteUserButton.addListener(new ChangeListener() {
+			public void changed (ChangeEvent event, Actor actor) {
+				removeUser();
+			} 
+		});
+		
+		openTaskFileButton.addListener(new ChangeListener() {
+			public void changed (ChangeEvent event, Actor actor) {
+				openTasksFile();
+			}
+		});
+		openUserFileButton.addListener(new ChangeListener() {
+			public void changed (ChangeEvent event, Actor actor) {
+				openUsersFile();
+			}
+		});
+		
 		applyChangesButton.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
 				game.setPassword(passwordText.getText());
 				game.setTask(tasksBox.getItems());
+				game.setUsers(usersBox.getItems());
 				game.update();
-			}
-		});
-		openTaskFileButton.addListener(new ChangeListener() {
-			public void changed (ChangeEvent event, Actor actor) {
-				openTaskFile();
 			}
 		});
 		
@@ -149,6 +171,13 @@ public class GameDialogActor extends GameDialog {
 				removeTask();
 			}
 		});
+		usersBox.addListener(new ClickListener(Buttons.RIGHT) {
+
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				removeUser();
+			}
+		});
 		
 		addListener(new InputListener() {
 			@Override
@@ -156,35 +185,67 @@ public class GameDialogActor extends GameDialog {
 				if(keycode == Keys.ENTER) {
 					addTask();
 				}
+				if(keycode == Keys.SHIFT_RIGHT) {
+					addUser();
+				}
 				return true;
 			}
 		});
 	}
 	
+	protected void result(Object object) {
+		if(object.equals(OPEN)) {
+			game.openGamePetition();
+		}
+		else if(object.equals(DELETE)) {
+			game.removeGamePetition();
+		}
+	}
+	
 	private void removeTask() {
-		String task = tasksBox.getSelected();
-		deleteItemtInStringList(tasksBox, task);
-		resizeTaskBox();
+		removeInList(tasksBox);
+	}
+	private void removeUser() {
+		removeInList(usersBox);
 	}
 	private void addTask() {
-		String task = tasksText.getText().toLowerCase();
-		tasksText.setText("");
-		addTask(task);
+		String task = taskNameText.getText();
+		taskNameText.setText("");
+		addInList(task, tasksBox);
 	}
 	private void addTask(String task) {
-		if(!task.equals("")) {
-			if(task.contains(TeacherWebSockets.TASKSPLIT)) {
-				TeacherMain.warningDialog.show("you musn't use ','", TeacherMain.teacherGamesScreen.getStage());
-			}
-			else tasksBox.getItems().add(task);
-		}
-		tasksBox.setSelectedIndex(tasksBox.getItems().size - 1);
-		resizeTaskBox();
+		addInList(task, tasksBox);
 	}
-	private void resizeTaskBox() {
-		tasksBox.validate();
-		tasksBox.invalidate();
-		tasksBox.invalidateHierarchy();
+	private void addUser(String user) {
+		addInList(user, usersBox);
+	}
+	
+	private void addUser() {
+		String user = usersText.getText();
+		usersText.setText("");
+		addInList(user, usersBox);
+	}
+	private void removeInList(List<String> list) {
+		String item = list.getSelected();
+		deleteItemtInStringList(list, item);
+		resizeStringList(list);
+	}
+	private void addInList(String string, List<String> list) {
+		if(!string.equals("")) {
+			if(string.contains(TeacherWebSockets.TASKSPLIT) || string.contains(TeacherWebSockets.TASKLIMITSPLIT)) {
+				TeacherMain.warningDialog.show("you musn't use ',' and '|'", TeacherMain.teacherGamesScreen.getStage());
+			}
+			else {
+				list.getItems().add(string);
+				list.setSelectedIndex(list.getItems().size - 1);
+				resizeStringList(list);
+			}
+		}
+	}
+	private void resizeStringList(List<String> list) {
+		list.validate();
+		list.invalidate();
+		list.invalidateHierarchy();
 	}
 	private void deleteItemtInStringList(List<String> list, String item) {
 		int taskIndex = list.getSelectedIndex();
@@ -197,19 +258,26 @@ public class GameDialogActor extends GameDialog {
 		}
 	}
 	
-	private void openTaskFile() {
+	private void openTasksFile() {
+		openFile(TASK, false);
+	}
+	private void openUsersFile() {
+		openFile(USER, true);
+	}
+	private void openFile(String setting, boolean csv) {
 		JFileChooser fileChooser = new JFileChooser();
-		
 		fileChooser.setAcceptAllFileFilterUsed(false);
+		
+		if(csv) {
+			FileNameExtensionFilter filterCSV = new FileNameExtensionFilter("CSV Files", "csv");
+			fileChooser.setFileFilter(filterCSV);
+		}
 		FileNameExtensionFilter filterXML = new FileNameExtensionFilter("XML Files", "xml");
-		FileNameExtensionFilter filterCSV = new FileNameExtensionFilter("CSV Files", "csv");
-		fileChooser.setFileFilter(filterCSV);
 		fileChooser.setFileFilter(filterXML);
 		
 		int result = fileChooser.showOpenDialog(new JFrame());
 		if(result == JFileChooser.APPROVE_OPTION) {
 		    File file = fileChooser.getSelectedFile();
-		    
 		    String fileName = file.getName();
 		    String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
 		    
@@ -217,32 +285,41 @@ public class GameDialogActor extends GameDialog {
 		    	if(fileExtension.equals(XML)) {
 		    		XmlReader xmlReader = new XmlReader();
 		    		Element xmlFile = xmlReader.parse(Gdx.files.absolute(file.getAbsolutePath()));
-		    		Array<Element> tasksElement = xmlFile.getChildrenByName("task");
-		    		for(Element taskElement : tasksElement) {
-		    			addTask(taskElement.getText());
+		    		
+		    		if(setting.equals(TASK)) {
+		    			Array<Element> newTasks = xmlFile.getChildrenByName("task");
+		    			for(Element task : newTasks) {
+		    				addTask(task.getText());
+		    			}
+		    		}
+		    		else if(setting.equals(USER)) {
+		    			Array<Element> newUsers = xmlFile.getChildrenByName("user");
+		    			for(Element user : newUsers) {
+		    				addUser(user.getText());
+		    			}
 		    		}
 		    	}
-		    	else if(fileExtension.equals(CSV)) {
+		    	else if(csv && fileExtension.equals(CSV)) {
 		    		CsvReader csvTaskReader = new CsvReader();
-		    		Array<String> newTasks = csvTaskReader.parse(Gdx.files.absolute(file.getAbsolutePath()));
-		    		for(String task : newTasks) {
-		    			addTask(task);
+		    		
+		    		if(setting.equals(TASK)) {
+		    			Array<String> newTasks = csvTaskReader.parse(Gdx.files.absolute(file.getAbsolutePath()));
+			    		for(String task : newTasks) {
+			    			addTask(task);
+			    		}
+		    		}
+		    		else if(setting.equals(USER)) {
+		    			Array<String> newUsers = csvTaskReader.parse(Gdx.files.absolute(file.getAbsolutePath()));
+			    		for(String user : newUsers) {
+			    			addTask(user);
+			    		}
 		    		}
 		    	}
 		    }
-		    catch(IOException exception) { 
-		    	TeacherMain.warningDialog.show("Error", TeacherMain.teacherGamesScreen.getStage());
+		    catch(Exception exception) { 
+		    	TeacherMain.warningDialog.show("Error Loading File", TeacherMain.teacherGamesScreen.getStage());
 		    	exception.printStackTrace(); 
 		    }
-		}
-	}
-	
-	protected void result(Object object) {
-		if(object.equals(OPEN)) {
-			game.openGamePetition();
-		}
-		else if(object.equals(DELETE)) {
-			game.removeGamePetition();
 		}
 	}
 }

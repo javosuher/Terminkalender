@@ -18,6 +18,7 @@ public class TeacherWebSockets {
 	public final static String POINTSPLIT = ":";
 	public final static String DATASPLIT = ";";
 	public final static String TASKSPLIT = ",";
+	public final static String TASKLIMITSPLIT = "|";
 	public final static String LOGINTEACHER = "LoginTeacher";
 	public final static String REGISTERTEACHER = "RegisterTeacher";
 	public final static String CREATEGAME = "CreateGame";

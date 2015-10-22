@@ -53,8 +53,8 @@ public class GamesActor extends Table {
 		super.act(delta);
 		
 		if(games.update()) {
-			Array<Game> gamesArray = games.getGames();
-			Array<Game> gamesOpenArray = games.getOpenGames();
+			Array<TeacherGame> gamesArray = games.getGames();
+			Array<TeacherGame> gamesOpenArray = games.getOpenGames();
 			
 			games.getGamesTable().clear();
 			int column = createGamesButtons(gamesArray, TeacherMain.skin.get("default", TextButtonStyle.class), "Game", 0);
@@ -64,11 +64,11 @@ public class GamesActor extends Table {
 		}
 	}
 	
-	private int createGamesButtons(Array<Game> games, TextButtonStyle textButtonStyle, final String typeGame, int column) {
+	private int createGamesButtons(Array<TeacherGame> games, TextButtonStyle textButtonStyle, final String typeGame, int column) {
 		Table gamesTable = this.games.getGamesTable();
 		int actualColumn = column;
 		
-		for(final Game game : games) {
+		for(final TeacherGame game : games) {
 			final TextButton gameButton = new TextButton(game.getName(), textButtonStyle);
 			gamesTable.add(gameButton).width(200).height(100).pad(30);
 			

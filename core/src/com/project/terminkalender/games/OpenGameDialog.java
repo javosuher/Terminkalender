@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class OpenGameDialog extends GameDialog {
 	
-	public OpenGameDialog(Skin skin, final Game game, TextButton thisButton) {
+	public OpenGameDialog(Skin skin, final TeacherGame game, TextButton thisButton) {
 		super(skin, game, thisButton);
 		
 		actionButton = new TextButton("Close Game", skin, "greenTextButton");

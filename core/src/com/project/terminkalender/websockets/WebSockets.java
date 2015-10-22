@@ -12,9 +12,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Main;
 import com.project.terminkalender.chat.Room;
-import com.project.terminkalender.login.User;
 import com.project.terminkalender.screens.LoginGamesScreen;
 import com.project.terminkalender.screens.LoginScreen;
+import com.project.terminkalender.userdata.User;
 
 public class WebSockets {
 	public final static String POINTSPLIT = ":";

@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Main;
 import com.project.terminkalender.TeacherMain;
 import com.project.terminkalender.tools.ScrollWindow;
+import com.project.terminkalender.userdata.Game;
 
 public class GamesOpenActor extends Table {
 	private GamesOpen games;
@@ -40,12 +41,12 @@ public class GamesOpenActor extends Table {
 		super.act(delta);
 		
 		if(games.update()) {
-			Array<GameOpen> gamesArray = games.getGames();
+			Array<Game> gamesArray = games.getGames();
 			Table gamesTable = this.games.getGamesTable();
 			
 			int actualColumn = 0;
 			games.getGamesTable().clear();
-			for(final GameOpen game : gamesArray) {
+			for(final Game game : gamesArray) {
 				final TextButton gameButton = new TextButton(game.getName(), Main.skin);
 				final GameSelectionDialog gameSelectionDialog = new GameSelectionDialog("Hola", game, Main.skin);
 				gamesTable.add(gameButton).width(200).height(100).pad(30);

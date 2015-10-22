@@ -1,18 +1,18 @@
 package com.project.terminkalender.calendar;
 
-public class Task {
+public class TaskCalendar {
 	private String description, position, location, partner;
 	
-	public Task() {
+	public TaskCalendar() {
 		erase();
 	}
-	public Task(String description) {
+	public TaskCalendar(String description) {
 		this.description = description;
 		this.position = "";
 		this.location = "";
 		this.partner = "";
 	}
-	public Task(String description, String position, String location, String partner) {
+	public TaskCalendar(String description, String position, String location, String partner) {
 		this.description = description;
 		this.position = position;
 		this.location = location;

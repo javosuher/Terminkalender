@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.project.terminkalender.Background;
 import com.project.terminkalender.Main;
 import com.project.terminkalender.login.LoginActor;
 import com.project.terminkalender.tools.ReconnectButton;

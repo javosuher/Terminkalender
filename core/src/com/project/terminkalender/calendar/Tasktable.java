@@ -14,7 +14,7 @@ public class Tasktable {
 		slots = new Array<Slot>(tasks.size);
 		
 		for (String task : tasks) {
-			slots.add(new Slot(new Task(task)));
+			slots.add(new Slot(new TaskCalendar(task)));
 		}
 	}
 	

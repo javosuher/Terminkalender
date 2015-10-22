@@ -52,9 +52,10 @@ public class TeacherMain extends Game {
 	}
 	
 	private void loadAssets() {
-		skin = new kennySkin();
 		assets.load("background.png", Texture.class);
+		assets.load("folderIcon.png", Texture.class);
 		assets.finishLoading();
+		skin = new kennySkin();
 	}
 	
 	public static void setNewScreen(AbstractScreen newScreen) {

@@ -9,12 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.project.terminkalender.Main;
 import com.project.terminkalender.tools.DialogActor;
+import com.project.terminkalender.userdata.Game;
 
 public class GameSelectionDialog extends DialogActor {
-	private GameOpen game;
+	private Game game;
 	private TextField nameText, passwordText;
 
-	public GameSelectionDialog(String title, GameOpen game, Skin skin) {
+	public GameSelectionDialog(String title, Game game, Skin skin) {
 		super(title, skin);
 		
 		this.game = game;

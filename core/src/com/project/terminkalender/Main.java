@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.project.terminkalender.login.User;
 import com.project.terminkalender.screens.AbstractScreen;
 import com.project.terminkalender.screens.CalendarScreen;
 import com.project.terminkalender.screens.ChatScreen;
@@ -16,6 +15,7 @@ import com.project.terminkalender.screens.LoginGamesScreen;
 import com.project.terminkalender.screens.LoginScreen;
 import com.project.terminkalender.tools.WarningDialogActor;
 import com.project.terminkalender.tools.kennySkin;
+import com.project.terminkalender.userdata.User;
 import com.project.terminkalender.websockets.ServerDirection;
 import com.project.terminkalender.websockets.WebSockets;
 

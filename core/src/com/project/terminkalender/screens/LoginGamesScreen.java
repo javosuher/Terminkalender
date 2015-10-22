@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.project.terminkalender.Background;
 import com.project.terminkalender.Main;
 import com.project.terminkalender.login.GamesOpen;
 import com.project.terminkalender.login.GamesOpenActor;

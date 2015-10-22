@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.project.terminkalender.Background;
 import com.project.terminkalender.Main;
 import com.project.terminkalender.chat.ChatActor;
 import com.project.terminkalender.chat.RoomActor;

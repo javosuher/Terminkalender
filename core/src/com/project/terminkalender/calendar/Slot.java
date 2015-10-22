@@ -7,13 +7,13 @@ public class Slot {
 	private Array<SlotListener> slotListeners = new Array<SlotListener>();
 	private Vector2 position;
 	private boolean empty;
-	private Task task;
+	private TaskCalendar task;
 
-	public Slot(Task task) {
+	public Slot(TaskCalendar task) {
 		setTask(task);
 		noPosition();
 	}
-	public Slot(Task task, Vector2 position) {
+	public Slot(TaskCalendar task, Vector2 position) {
 		setTask(task);
 		this.position = position;
 	}
@@ -35,24 +35,24 @@ public class Slot {
 	}
 	
 	public void setEmpty() {
-		task = new Task();
+		task = new TaskCalendar();
 		empty = true;
 		notifyListeners();
 	}
-	public void setTask(Task task) {
+	public void setTask(TaskCalendar task) {
 		this.task = task;
 		empty = false;
 		notifyListeners();
 	}
 	
-	public void copy(Boolean empty, Task task) {
+	public void copy(Boolean empty, TaskCalendar task) {
 		if(empty)
 			setEmpty();
 		else
 			setTask(task);
 	}
 	
-	public Task getTask() {
+	public TaskCalendar getTask() {
 		return task;
 	}
 	

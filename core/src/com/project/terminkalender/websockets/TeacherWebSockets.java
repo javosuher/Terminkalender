@@ -18,7 +18,7 @@ public class TeacherWebSockets {
 	public final static String POINTSPLIT = ":";
 	public final static String DATASPLIT = ";";
 	public final static String TASKSPLIT = ",";
-	public final static String TASKLIMITSPLIT = "|";
+	public final static String TASKLIMITSPLIT = "-";
 	public final static String LOGINTEACHER = "LoginTeacher";
 	public final static String REGISTERTEACHER = "RegisterTeacher";
 	public final static String CREATEGAME = "CreateGame";
@@ -170,14 +170,14 @@ public class TeacherWebSockets {
 	public boolean createGame(String gameName, String teacher, String password) {
 		return sendMessage(CREATEGAME + POINTSPLIT + gameName + POINTSPLIT + teacher + POINTSPLIT + password);
 	}
-	public boolean updateGame(String gameName, String teacher, String password, String tasks) {
-		return sendMessage(UPDATEGAME + POINTSPLIT + gameName + POINTSPLIT + teacher + POINTSPLIT + password + POINTSPLIT + tasks);
+	public boolean updateGame(String gameName, String teacher, String password, String tasks, String users) {
+		return sendMessage(UPDATEGAME + POINTSPLIT + gameName + POINTSPLIT + teacher + POINTSPLIT + password + POINTSPLIT + tasks + POINTSPLIT + users);
 	}
 	public boolean askGamesTeacher(String teacher) {
 		return sendMessage(GAMES + POINTSPLIT + teacher);
 	}
-	public boolean openGame(String gameName, String teacher, String password, String tasks) {
-		return sendMessage(OPENGAMES + POINTSPLIT + gameName + POINTSPLIT + teacher + POINTSPLIT + password + POINTSPLIT + tasks);
+	public boolean openGame(String gameName, String teacher, String password, String tasks, String users) {
+		return sendMessage(OPENGAMES + POINTSPLIT + gameName + POINTSPLIT + teacher + POINTSPLIT + password + POINTSPLIT + tasks + POINTSPLIT + users);
 	}
 	public boolean removeGame(String gameName, String teacher) {
 		return sendMessage(REMOVEGAMES + POINTSPLIT + gameName + POINTSPLIT + teacher);

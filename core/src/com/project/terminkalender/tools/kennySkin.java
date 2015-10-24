@@ -87,6 +87,12 @@ public class kennySkin extends Skin {
 																	getDrawable("scroll_back_ver"), 
 																	getDrawable("knob_05"));
 		
+		final ScrollPaneStyle scrollPaneSelectBoxStyle = new ScrollPaneStyle(getDrawable("textbox_02"), 
+																			 getDrawable("scroll_back_hor"), 
+																			 getDrawable("knob_06"), 
+																			 getDrawable("scroll_back_ver"), 
+																			 getDrawable("knob_05"));
+		
 		final ScrollPaneStyle scrollPaneWindowStyle = new ScrollPaneStyle(getDrawable("color_window"), 
 																	getDrawable("scroll_back_hor"), 
 																	getDrawable("knob_06"), 
@@ -145,7 +151,7 @@ public class kennySkin extends Skin {
 		final SelectBoxStyle selectBoxStyle = new SelectBoxStyle(getFont("FontMed"), 
 				 												 Color.BLACK, 
 				 												 getDrawable("selectbox_01"), 
-				 												 scrollPaneStyle, 
+				 												 scrollPaneSelectBoxStyle, 
 				 												 listStyle);
 		
 		final TouchpadStyle touchpadStyle = new TouchpadStyle(getDrawable("window_02"), 

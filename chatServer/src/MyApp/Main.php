@@ -33,7 +33,7 @@ class Main implements MessageComponentInterface {
         $this->token = sem_get(0);
         echo "Init Server!\n";
 
-        $this->games->attach(new Game("dodo", "sandra", "f", "zoo,beber,aletear,estafraseesdemasiadolargaynecesitaqueseacortebastante")); // Example OpenGame
+        //$this->games->attach(new Game("dodo", "sandra", "f", "zoo,beber,aletear,estafraseesdemasiadolargaynecesitaqueseacortebastante")); // Example OpenGame
     }
 
     public function onOpen(ConnectionInterface $conn) {
@@ -250,9 +250,10 @@ class Main implements MessageComponentInterface {
     	$teacher = explode(Main::POINTSPLIT, $msg)[2];
     	$password = explode(Main::POINTSPLIT, $msg)[3];
     	$tasks = explode(Main::POINTSPLIT, $msg)[4];
-    	echo sprintf('Connection %d want to update a game: "%s" from teacher: "%s" password: "%s" and tasks: %s' . "\n", $from->resourceId, $gameName, $teacher, $password, $tasks);
+        $users = explode(Main::POINTSPLIT, $msg)[5];
+    	echo sprintf('Connection %d want to update a game: "%s" from teacher: "%s" password: "%s", tasks: %s and users: %s' . "\n", $from->resourceId, $gameName, $teacher, $password, $tasks, $users);
 
-    	$this->updateGameInDataBase($gameName, $teacher, $password, $tasks);
+    	$this->updateGameInDataBase($gameName, $teacher, $password, $tasks, $users);
     	$message = Main::UPDATEGAME . Main::POINTSPLIT;
     	$from->send($message);
     	echo "update Game: Success" . "\n";
@@ -266,11 +267,11 @@ class Main implements MessageComponentInterface {
 
     	$msg = Main::GAMES . Main::POINTSPLIT;
     	foreach ($gamesDB as $game) {
-            $msg = $msg . $game["name"] . Main::DATASPLIT . $game["password"] . Main::DATASPLIT . $game["tasks"] . Main::POINTSPLIT;
+            $msg = $msg . $game["name"] . Main::DATASPLIT . $game["password"] . Main::DATASPLIT . $game["tasks"] . Main::DATASPLIT . $game["users"] . Main::POINTSPLIT;
         }
         $msg = $msg . Main::OPENGAMES . Main::POINTSPLIT;
         foreach ($openGames as $game) {
-            $msg = $msg . $game["name"] . Main::DATASPLIT . $game["password"] . Main::DATASPLIT . $game["tasks"] . Main::POINTSPLIT;
+            $msg = $msg . $game["name"] . Main::DATASPLIT . $game["password"] . Main::DATASPLIT . $game["tasks"] . Main::DATASPLIT . $game["users"] . Main::POINTSPLIT;
         }
     	$from->send($msg);
     }
@@ -279,8 +280,9 @@ class Main implements MessageComponentInterface {
     	$teacher = explode(Main::POINTSPLIT, $msg)[2];
     	$password = explode(Main::POINTSPLIT, $msg)[3];
     	$tasks = explode(Main::POINTSPLIT, $msg)[4];
+        $users = explode(Main::POINTSPLIT, $msg)[5];
 
-    	$this->games->attach(new Game($gameName, $teacher, $password, $tasks));
+    	$this->games->attach(new Game($gameName, $teacher, $password, $tasks, $users));
     	$this->deleteGameInDataBase($gameName, $teacher);
     	$message = Main::GAMES . Main::POINTSPLIT . $teacher;
     	$this->sendGamesTeacher($from, $message);
@@ -321,7 +323,8 @@ class Main implements MessageComponentInterface {
             	$name = $game->getGameName();
             	$password = $game->getPassword();
             	$tasks = $game->getTasks();
-            	array_push($openGames, array("name"=>$name, "password"=>$password, "tasks"=>$tasks));
+                $users = $game->getUsers();
+            	array_push($openGames, array("name"=>$name, "password"=>$password, "tasks"=>$tasks, "users"));
             }
         }
         //print_r($openGames);
@@ -408,18 +411,18 @@ class Main implements MessageComponentInterface {
     }
     private function storeNewGameInDataBase($gameName, $teacher, $password) {
         try {
-			$sql = $this->dataBase->prepare("INSERT INTO games (name, teacher, password, tasks) VALUES (?, ?, ?, ?)");
- 			$sql -> execute(array($gameName, $teacher, $password, ""));
+			$sql = $this->dataBase->prepare("INSERT INTO games (name, teacher, password, tasks, users) VALUES (?, ?, ?, ?, ?)");
+ 			$sql -> execute(array($gameName, $teacher, $password, "", ""));
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
     	}
     }
-    private function updateGameInDataBase($gameName, $teacher, $password, $tasks) {
+    private function updateGameInDataBase($gameName, $teacher, $password, $tasks, $users) {
         try {
 			$sql = $this->dataBase->prepare("UPDATE games 
-				SET name =:gameName, teacher =:teacher, password =:password, tasks =:tasks 
+				SET name =:gameName, teacher =:teacher, password =:password, tasks =:tasks, users =:users 
 				WHERE name =:gameName AND teacher =:teacher");
- 			$sql -> execute(array(":gameName" => $gameName, ":teacher" => $teacher, ":password" => $password, ":tasks" => $tasks));
+ 			$sql -> execute(array(":gameName" => $gameName, ":teacher" => $teacher, ":password" => $password, ":tasks" => $tasks, ":users" => $users));
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
     	}

@@ -11,5 +11,6 @@ CREATE TABLE games(
 	name varchar(50) not null,
 	teacher varchar(50) not null,
 	password varchar(50) not null,
-	tasks varchar(10000)
+	tasks varchar(10000),
+	users varchar(10000)
 );

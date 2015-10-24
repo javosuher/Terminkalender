@@ -5,6 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.TeacherMain;
 import com.project.terminkalender.userdata.Game;
+import com.project.terminkalender.userdata.Task;
+import com.project.terminkalender.websockets.TeacherWebSockets;
 import com.project.terminkalender.websockets.WebSockets;
 
 public class GamesOpen {
@@ -33,7 +35,13 @@ public class GamesOpen {
 				games.add(new Game(gameData[0], gameData[1]));
 			}
 			else {
-				Array<String> tasks = new Array<String>(gameData[2].split(WebSockets.TASKSPLIT));
+				Array<String> tasksArray = new Array<String>(gameData[2].split(TeacherWebSockets.TASKSPLIT));
+				Array<Task> tasks = new Array<Task>();
+				for(String task : tasksArray) {
+					String [] taskSplit = task.split(TeacherWebSockets.TASKLIMITSPLIT);
+					Task newTask = new Task(taskSplit[0], taskSplit[1]);
+					tasks.add(newTask);
+				}
 				games.add(new Game(gameData[0], gameData[1], tasks));
 			}
 		}

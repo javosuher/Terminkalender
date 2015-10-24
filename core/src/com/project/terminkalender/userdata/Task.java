@@ -3,11 +3,16 @@ package com.project.terminkalender.userdata;
 import com.project.terminkalender.websockets.TeacherWebSockets;
 
 public class Task {
-	private String name, limit;
+	private String name;
+	private int limit;
 
-	public Task(String name, String limit) {
+	public Task(String name, int limit) {
 		this.name = name;
 		this.limit = limit;
+	}
+	public Task(String name, String limit) {
+		this.name = name;
+		this.limit = Integer.parseInt(limit);
 	}
 
 	public String getName() {
@@ -17,10 +22,10 @@ public class Task {
 		this.name = name;
 	}
 
-	public String getLimit() {
+	public int getLimit() {
 		return limit;
 	}
-	public void setLimit(String limit) {
+	public void setLimit(int limit) {
 		this.limit = limit;
 	}
 

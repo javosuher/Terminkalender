@@ -3,6 +3,7 @@ package com.project.terminkalender.calendar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Main;
+import com.project.terminkalender.userdata.Task;
 
 public class Tasktable {
 	private Array<Slot> slots;
@@ -10,11 +11,11 @@ public class Tasktable {
 
 	public Tasktable() {
 		table = new Table();
-		Array<String> tasks = Main.user.getGame().getTasks();
+		Array<Task> tasks = Main.user.getGame().getTasks();
 		slots = new Array<Slot>(tasks.size);
 		
-		for (String task : tasks) {
-			slots.add(new Slot(new TaskCalendar(task)));
+		for (Task task : tasks) {
+			slots.add(new Slot(new TaskCalendar(task.getName())));
 		}
 	}
 	

@@ -6,8 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.project.terminkalender.Main;
-import com.project.terminkalender.TeacherMain;
+import com.project.terminkalender.Resources;
 
 public class DialogActor extends Dialog {
 
@@ -15,8 +14,8 @@ public class DialogActor extends Dialog {
 		super("", skin, "windowDialog");
 		
 		Button closeButton;
-		try { closeButton = new Button(Main.skin.get("closeRedButton", ButtonStyle.class)); }
-		catch(Exception exception) { closeButton = new Button(TeacherMain.skin.get("closeRedButton", ButtonStyle.class)); }
+		try { closeButton = new Button(Resources.skin.get("closeRedButton", ButtonStyle.class)); }
+		catch(Exception exception) { closeButton = new Button(Resources.skin.get("closeRedButton", ButtonStyle.class)); }
 		
 		
 		center();

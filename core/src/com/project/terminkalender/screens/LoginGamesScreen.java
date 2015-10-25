@@ -7,7 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.AppMain;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.login.GamesOpen;
 import com.project.terminkalender.login.GamesOpenActor;
 import com.project.terminkalender.tools.ReconnectButton;
@@ -21,11 +22,11 @@ public class LoginGamesScreen extends AbstractScreen {
 	public LoginGamesScreen(Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
 		
-		TextureRegion backgroundTexture = new TextureRegion(Main.assets.get("background.png", Texture.class));
+		TextureRegion backgroundTexture = new TextureRegion(Resources.assets.get("background.png", Texture.class));
 		
 		background = new Background(backgroundTexture);
-		reconnectButton = new ReconnectButton(Main.skin);
-		teacherGames = new GamesOpenActor(Main.skin);
+		reconnectButton = new ReconnectButton(Resources.skin);
+		teacherGames = new GamesOpenActor(Resources.skin);
 		enterGame = false;
 		
 		stage.addActor(background);
@@ -59,8 +60,8 @@ public class LoginGamesScreen extends AbstractScreen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		if(enterGame) {
-			Main.createGameScreens();
-			Main.setNewScreen(Main.calendarScreen);
+			AppMain.createGameScreens();
+			AppMain.setNewScreen(AppMain.calendarScreen);
 			enterGame = false;
 		}
 		

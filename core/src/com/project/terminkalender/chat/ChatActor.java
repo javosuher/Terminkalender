@@ -11,11 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.AppMain;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.tools.Pair;
 import com.project.terminkalender.tools.ScrollWindow;
 import com.project.terminkalender.tools.TWindow;
-import com.project.terminkalender.websockets.WebSockets;
+import com.project.terminkalender.websockets.AppWebSockets;
 
 public class ChatActor extends Table {
 	private Chat chat;
@@ -26,9 +27,9 @@ public class ChatActor extends Table {
 		super(skin);
 		chat = new Chat("");
 		
-		final Table messageTable = new Table(Main.skin);
+		final Table messageTable = new Table(Resources.skin);
 		scrollMessagesTable = new ScrollWindow("", skin, messageTable);
-		TWindow sendWindow = new TWindow(Main.user.getName() + " Send:", skin);
+		TWindow sendWindow = new TWindow(AppMain.user.getName() + " Send:", skin);
 		
 		textMessage = new TextField("", skin);
 		TextButton sendButton = new TextButton("Send", skin);
@@ -43,7 +44,7 @@ public class ChatActor extends Table {
 		add(scrollMessagesTable).expand().width(widthMessages).height(heightMessages).top().pad(8).row();
 		add(sendWindow).expand().bottom().pad(8);
 		
-		Label label = new Label("Choose an user", Main.skin);
+		Label label = new Label("Choose an user", Resources.skin);
 		messageTable.add(label).expandX().center();
 
 		sendButton.addListener(new ClickListener() {
@@ -70,12 +71,12 @@ public class ChatActor extends Table {
 		Table messageTable = chat.getMessageTable();
 		String message = textMessage.getText();
 		if(!message.equals("")) {
-			if(message.contains(WebSockets.POINTSPLIT) || message.contains(WebSockets.DATASPLIT) || 
-					message.contains(WebSockets.CHATSPLIT)) {
-				Main.warningDialog.show("you musn't use '=', ';', or ':'", getStage());
+			if(message.contains(AppWebSockets.POINTSPLIT) || message.contains(AppWebSockets.DATASPLIT) || 
+					message.contains(AppWebSockets.CHATSPLIT)) {
+				AppMain.warningDialog.show("you musn't use '=', ';', or ':'", getStage());
 			}
 			else if(!chat.isEmptyChat()) {
-				Label newMessage = new Label(Chat.YOU + Chat.CHATSPACE + message, Main.skin);
+				Label newMessage = new Label(Chat.YOU + Chat.CHATSPACE + message, Resources.skin);
 				messageTable.add(newMessage).expandX().right().padRight(20).row();
 				chat.addMessage(message);
 			}
@@ -92,7 +93,7 @@ public class ChatActor extends Table {
 			Table messageTable = chat.getMessageTable();
 			Array<Pair<String>> messages = chat.getMessages();
 			
-			Label newMessage = new Label(messages.peek().toString(), Main.skin);
+			Label newMessage = new Label(messages.peek().toString(), Resources.skin);
 			messageTable.add(newMessage).expandX().left().padLeft(20).row();
 			
 			srollBottom();
@@ -106,7 +107,7 @@ public class ChatActor extends Table {
 			messageTable.clear();
 			
 			for(Pair<String> message : messages) {
-				Label newMessage = new Label(message.toString(), Main.skin);
+				Label newMessage = new Label(message.toString(), Resources.skin);
 				if(message.getFirst().equals(Chat.YOU)) {
 					messageTable.add(newMessage).expandX().right().padRight(20).row();
 				}
@@ -136,7 +137,7 @@ public class ChatActor extends Table {
 		
 		scrollMessagesTable.clear();
 		scrollMessagesTable.getTitleLabel().setText(chat.getUser());
-		scrollMessagesTable.setTable(Main.skin, chat.getMessageTable());
+		scrollMessagesTable.setTable(Resources.skin, chat.getMessageTable());
 		chat.startUpdateMessages();
 	}
 	public String getUserName() {

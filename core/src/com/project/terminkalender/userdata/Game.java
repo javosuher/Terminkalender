@@ -1,8 +1,8 @@
 package com.project.terminkalender.userdata;
 
 import com.badlogic.gdx.utils.Array;
-import com.project.terminkalender.Main;
-import com.project.terminkalender.TeacherMain;
+import com.project.terminkalender.AppMain;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.websockets.TeacherWebSockets;
 
 public class Game {
@@ -35,7 +35,7 @@ public class Game {
 
 	public void addTask(Task task) {
 		if(task.equals("")) {
-			TeacherMain.warningDialog.show("You must fill the task", Main.loginGamesScreen.getStage());
+			Resources.warningDialog.show("You must fill the task", AppMain.loginGamesScreen.getStage());
 		}
 		else tasks.add(task);
 	}
@@ -70,7 +70,7 @@ public class Game {
 	
 	public void addUserUser(String user) {
 		if(user.equals("")) {
-			TeacherMain.warningDialog.show("You must fill the user", Main.loginGamesScreen.getStage());
+			Resources.warningDialog.show("You must fill the user", AppMain.loginGamesScreen.getStage());
 		}
 		else users.add(user);
 	}

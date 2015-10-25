@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.AppMain;
 
 public class SlotDescriptionListener extends DragListener {
 	private boolean inside;
@@ -26,7 +26,7 @@ public class SlotDescriptionListener extends DragListener {
 		if (inside && followCursor) {
 			event.getListenerActor().localToStageCoordinates(tmp.set(x, y));
 			//tooltip.setPosition(tmp.x + position.x + offset.x, tmp.y + position.y + offset.y);
-			tooltip.setPosition(Main.WIDTH / 2, Main.WIDTH, 0);
+			tooltip.setPosition(AppMain.WIDTH / 2, AppMain.WIDTH, 0);
 		}
 		return true;
 	}
@@ -88,13 +88,13 @@ public class SlotDescriptionListener extends DragListener {
 		tmp.set(x, y);
 		event.getListenerActor().localToStageCoordinates(tmp);
 		//tooltip.setPosition(tmp.x + position.x + offset.x, tmp.y + position.y + offset.y);
-		tooltip.setPosition(Main.WIDTH / 2, Main.WIDTH, 0);
+		tooltip.setPosition(AppMain.WIDTH / 2, AppMain.WIDTH, 0);
 		tooltip.toFront();
 	}
 	public void setDescriptionVisible() {
 		inside = true;
 		tooltip.setVisible(true);
-		tooltip.setPosition(Main.WIDTH / 2, Main.WIDTH, 0);
+		tooltip.setPosition(AppMain.WIDTH / 2, AppMain.WIDTH, 0);
 		tooltip.toFront();
 	}
 	public void setDescriptionHide() {

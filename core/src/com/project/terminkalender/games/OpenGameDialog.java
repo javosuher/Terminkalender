@@ -9,7 +9,7 @@ public class OpenGameDialog extends GameDialog {
 	public OpenGameDialog(Skin skin, final TeacherGame game, TextButton thisButton) {
 		super(skin, game, thisButton);
 		
-		actionButton = new TextButton("Close Game", skin, "greenTextButton");
+		actionButton = new TextButton("Close Game", skin, "redTextButton");
 		Label nameLabel = new Label("Name: " + game.getName(), skin);
 		Label passwordLabel = new Label("Password: " + game.getPassword(), skin);
 		

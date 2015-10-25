@@ -4,11 +4,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.AppMain;
 
 public class Background extends Actor {
 	private final static float SPEED = 0.5f;
-	private final static float OUTOFRANGE = Main.HEIGHT;
+	private final static float OUTOFRANGE = AppMain.HEIGHT;
 	private TextureRegion backgroundTop, backgroundBot;
 	private float xTop, yTop, xBot, yBot;
 	
@@ -16,8 +16,8 @@ public class Background extends Actor {
 		backgroundTop = texture;
 		backgroundBot = texture;
 		setTopPosition(0, 0);
-		setBotPosition(0, -Main.HEIGHT);
-		setSize(Main.WIDTH, Main.HEIGHT);
+		setBotPosition(0, -AppMain.HEIGHT);
+		setSize(AppMain.WIDTH, AppMain.HEIGHT);
 	}
 	
 	@Override
@@ -33,9 +33,9 @@ public class Background extends Actor {
 		super.act(delta);
 		
 		if(yTop >= OUTOFRANGE)
-			setTopPosition(0, -Main.HEIGHT);
+			setTopPosition(0, -AppMain.HEIGHT);
 		if(yBot >= OUTOFRANGE)
-			setBotPosition(0, -Main.HEIGHT);
+			setBotPosition(0, -AppMain.HEIGHT);
 		
 		yTop += SPEED;
 		yBot += SPEED;

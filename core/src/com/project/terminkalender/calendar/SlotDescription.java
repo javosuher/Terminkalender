@@ -3,7 +3,7 @@ package com.project.terminkalender.calendar;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.Resources;
 
 public class SlotDescription extends Window implements SlotListener {
 	private Slot slot;
@@ -25,7 +25,7 @@ public class SlotDescription extends Window implements SlotListener {
 		
 		//setTitle("Task description");
 		clear();
-		Label label = new Label(slot.getTask().getDescription(), Main.skin);
+		Label label = new Label(slot.getTask().getDescription(), Resources.skin);
 		add(label);
 		pack();
 	}

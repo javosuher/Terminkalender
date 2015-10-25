@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.AppMain;
 import com.project.terminkalender.tools.TWindow;
 
 public class LoginActor extends Table {
@@ -30,7 +30,7 @@ public class LoginActor extends Table {
 		
 		loginButton.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				Main.user.login(teacherNameText.getText());
+				AppMain.user.login(teacherNameText.getText());
 			}
 		});
 	}

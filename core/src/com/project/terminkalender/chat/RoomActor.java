@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.AppMain;
 import com.project.terminkalender.tools.ScrollWindow;
 
 public class RoomActor extends Table {
@@ -22,7 +22,7 @@ public class RoomActor extends Table {
 		
 		usersWindow.setMovable(false);
 		
-		add(usersWindow).width(150).height(Main.HEIGHT - 80).expand().pad(8).row();
+		add(usersWindow).width(150).height(AppMain.HEIGHT - 80).expand().pad(8).row();
 		add(updateUsersButton).width(135).height(65).padBottom(10);
 		
 		room.refreshUsers();
@@ -66,7 +66,7 @@ public class RoomActor extends Table {
 					public void clicked(InputEvent event, float x, float y) {
 						chatActor.setChat(chat);
 						chat.setTextButton(userButton);
-						Main.webSockets.askChatFromUser(chat.getUser(), chat.getMessagesSize());
+						AppMain.webSockets.askChatFromUser(chat.getUser(), chat.getMessagesSize());
 					}
 				});
 			}

@@ -26,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.TeacherMain;
 import com.project.terminkalender.tools.CsvReader;
 import com.project.terminkalender.tools.ScrollWindow;
@@ -41,11 +42,11 @@ public class GameDialogActor extends GameDialog {
 	public final static String OPEN = "open";
 	public final static String DELETE = "delete";
 	
-	private final List<String> tasksBox = new List<String>(TeacherMain.skin);
-	private final TextField taskNameText = new TextField("", TeacherMain.skin);
-	SelectBox<String> tasksLimitUserSelect = new SelectBox<String>(TeacherMain.skin);
-	private final List<String> usersBox = new List<String>(TeacherMain.skin);
-	private final TextField usersText = new TextField("", TeacherMain.skin);
+	private final List<String> tasksBox = new List<String>(Resources.skin);
+	private final TextField taskNameText = new TextField("", Resources.skin);
+	SelectBox<String> tasksLimitUserSelect = new SelectBox<String>(Resources.skin);
+	private final List<String> usersBox = new List<String>(Resources.skin);
+	private final TextField usersText = new TextField("", Resources.skin);
 	
 	public GameDialogActor(Skin skin, final TeacherGame game, TextButton thisButton) {
 		super(skin, game, thisButton);
@@ -80,7 +81,7 @@ public class GameDialogActor extends GameDialog {
 		ScrollWindow usersBoxWindow = new ScrollWindow("USERS LIST", skin, usersBoxTable);
 		tasksBox.setItems(tasksToTaskBox(game.getTasks()));
 		usersBox.setItems(game.getUsers());
-		actionButton = new TextButton("Open", TeacherMain.skin.get("greenTextButton", TextButtonStyle.class));
+		actionButton = new TextButton("Open", Resources.skin.get("greenTextButton", TextButtonStyle.class));
 		TextButton deleteGameButton = new TextButton("Delete", skin, "redTextButton");
 		
 		Array<String> tasksLimitRange = new Array<String>();
@@ -248,7 +249,7 @@ public class GameDialogActor extends GameDialog {
 		if(!string.equals("")) {
 			if(string.contains(TeacherWebSockets.TASKSPLIT) || string.contains(TeacherWebSockets.TASKLIMITSPLIT) || 
 					string.contains(TeacherWebSockets.DATASPLIT) || string.contains(TeacherWebSockets.POINTSPLIT)) {
-				TeacherMain.warningDialog.show("you musn't use ',', ';', ':' or '-'", TeacherMain.teacherGamesScreen.getStage());
+				Resources.warningDialog.show("you musn't use ',', ';', ':' or '-'", TeacherMain.teacherGamesScreen.getStage());
 			}
 			else {
 				list.getItems().add(string);
@@ -347,7 +348,7 @@ public class GameDialogActor extends GameDialog {
 		    	}
 		    }
 		    catch(Exception exception) { 
-		    	TeacherMain.warningDialog.show("Error Loading File", TeacherMain.teacherGamesScreen.getStage());
+		    	Resources.warningDialog.show("Error Loading File", TeacherMain.teacherGamesScreen.getStage());
 		    	exception.printStackTrace(); 
 		    }
 		}

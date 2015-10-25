@@ -3,6 +3,7 @@ package com.project.terminkalender.games;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.TeacherMain;
 import com.project.terminkalender.screens.TeacherGamesScreen;
 import com.project.terminkalender.userdata.Task;
@@ -14,7 +15,7 @@ public class Games {
 	private boolean update;
 	
 	public Games() {
-		Skin skin = TeacherMain.skin;
+		Skin skin = Resources.skin;
 		
 		gamesTable = new Table(skin);
 		TeacherMain.teacherWebSockets.setGames(this);

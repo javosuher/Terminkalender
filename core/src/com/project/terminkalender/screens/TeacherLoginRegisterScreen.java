@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.project.terminkalender.TeacherMain;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.loginandregister.TeacherLoginRegisterActor;
 import com.project.terminkalender.tools.ReconnectButton;
 
@@ -18,11 +18,11 @@ public class TeacherLoginRegisterScreen extends AbstractScreen {
 	public TeacherLoginRegisterScreen(Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
 		
-		TextureRegion backgroundTexture = new TextureRegion(TeacherMain.assets.get("background.png", Texture.class));
+		TextureRegion backgroundTexture = new TextureRegion(Resources.assets.get("background.png", Texture.class));
 		
 		background = new Background(backgroundTexture);
-		teacherLoginRegisterActor = new TeacherLoginRegisterActor(TeacherMain.skin);
-		reconnectButton = new ReconnectButton(TeacherMain.skin);
+		teacherLoginRegisterActor = new TeacherLoginRegisterActor(Resources.skin);
+		reconnectButton = new ReconnectButton(Resources.skin);
 		
 		stage.addActor(background);
 		stage.addActor(teacherLoginRegisterActor);

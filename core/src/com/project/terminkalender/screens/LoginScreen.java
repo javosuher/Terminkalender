@@ -6,7 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.AppMain;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.login.LoginActor;
 import com.project.terminkalender.tools.ReconnectButton;
 
@@ -19,12 +20,12 @@ public class LoginScreen extends AbstractScreen {
 	public LoginScreen(Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
 		
-		TextureRegion backgroundTexture = new TextureRegion(Main.assets.get("background.png", Texture.class));
+		TextureRegion backgroundTexture = new TextureRegion(Resources.assets.get("background.png", Texture.class));
 		
 		changeScreen = false;
 		background = new Background(backgroundTexture);
-		reconnectButton = new ReconnectButton(Main.skin);
-		loginActor = new LoginActor(Main.skin);
+		reconnectButton = new ReconnectButton(Resources.skin);
+		loginActor = new LoginActor(Resources.skin);
 		
 		stage.addActor(background);
 		stage.addActor(reconnectButton);
@@ -51,7 +52,7 @@ public class LoginScreen extends AbstractScreen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		if(changeScreen) {
-			Main.setNewScreen(Main.loginGamesScreen);
+			AppMain.setNewScreen(AppMain.loginGamesScreen);
 			changeScreen = false;
 		}
 		

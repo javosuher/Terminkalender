@@ -3,7 +3,7 @@ package com.project.terminkalender.calendar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.AppMain;
 import com.project.terminkalender.tools.ScrollWindow;
 
 public class TasktableActor extends ScrollWindow {
@@ -27,12 +27,12 @@ public class TasktableActor extends ScrollWindow {
 		getScrollTable().setFlickScroll(false);
 		getScrollTable().setFadeScrollBars(false);
 		
-		setPosition(Main.WIDTH, Main.HEIGHT);
-		setBounds(Main.WIDTH, Main.HEIGHT, 100, Main.HEIGHT);
+		setPosition(AppMain.WIDTH, AppMain.HEIGHT);
+		setBounds(AppMain.WIDTH, AppMain.HEIGHT, 100, AppMain.HEIGHT);
 		setMovable(false);
 		
 		setWidth(125);
-		setHeight(Main.HEIGHT);
+		setHeight(AppMain.HEIGHT);
 		pad(8);
 	}
 }

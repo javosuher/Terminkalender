@@ -2,8 +2,9 @@ package com.project.terminkalender.chat;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
-import com.project.terminkalender.Main;
-import com.project.terminkalender.websockets.WebSockets;
+import com.project.terminkalender.AppMain;
+import com.project.terminkalender.Resources;
+import com.project.terminkalender.websockets.AppWebSockets;
 
 public class Room {
 	private Table usersTable;
@@ -11,10 +12,10 @@ public class Room {
 	private boolean update;
 
 	public Room() {
-		usersTable = new Table(Main.skin);
+		usersTable = new Table(Resources.skin);
 		chats = new Array<Chat>();
 		update = false;
-		Main.webSockets.setRoom(this);
+		AppMain.webSockets.setRoom(this);
 	}
 	
 	public void updateUsers(Array<String> users) {
@@ -31,7 +32,7 @@ public class Room {
 	public void updateChatFromUser(String user, String messages) {
 		int index = indexUser(user);
 		Chat chat = chats.get(index);
-		Array<String> splitMessages = new Array<String>(messages.split(WebSockets.DATASPLIT));
+		Array<String> splitMessages = new Array<String>(messages.split(AppWebSockets.DATASPLIT));
 		chat.addMessages(splitMessages);
 	}
 	
@@ -60,7 +61,7 @@ public class Room {
 	}
 	
 	public void refreshUsers() {
-		Main.webSockets.askUsers();
+		AppMain.webSockets.askUsers();
 	}
 	
 	public Table getUsersTable() {

@@ -25,7 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.TreeStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.project.terminkalender.TeacherMain;
+import com.project.terminkalender.Resources;
 
 public class kennySkin extends Skin {
 
@@ -73,7 +73,7 @@ public class kennySkin extends Skin {
 																	  getDrawable("button_04"), 
 																	  getFont("FontBig"));
 		
-		TextureRegion image = new TextureRegion(TeacherMain.assets.get("folderIcon.png", Texture.class));														 
+		TextureRegion image = new TextureRegion(Resources.assets.get("folderIcon.png", Texture.class));														 
 		final ImageButtonStyle imageButtonStyleFolder = new ImageButtonStyle(getDrawable("button_04"), 
 																			 getDrawable("button_02"), 
 																			 getDrawable("button_04"), 

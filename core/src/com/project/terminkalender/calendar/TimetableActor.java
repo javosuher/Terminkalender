@@ -2,7 +2,7 @@ package com.project.terminkalender.calendar;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.AppMain;
 import com.project.terminkalender.tools.TWindow;
 
 public class TimetableActor extends TWindow {
@@ -11,7 +11,7 @@ public class TimetableActor extends TWindow {
 	public TimetableActor(DragAndDrop dragAndDrop, Skin skin) {
 		super("Timetable", skin);
 		
-		setPosition(0, Main.HEIGHT);
+		setPosition(0, AppMain.HEIGHT);
 		setMovable(false);
 		defaults().space(8);
 		row().fill().expandX();

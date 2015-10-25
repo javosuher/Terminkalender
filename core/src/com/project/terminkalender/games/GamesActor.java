@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.TeacherMain;
 import com.project.terminkalender.tools.ScrollWindow;
 
@@ -57,8 +58,8 @@ public class GamesActor extends Table {
 			Array<TeacherGame> gamesOpenArray = games.getOpenGames();
 			
 			games.getGamesTable().clear();
-			int column = createGamesButtons(gamesArray, TeacherMain.skin.get("default", TextButtonStyle.class), "Game", 0);
-			createGamesButtons(gamesOpenArray, TeacherMain.skin.get("greenTextButton", TextButtonStyle.class), "OpenGame", column);
+			int column = createGamesButtons(gamesArray, Resources.skin.get("default", TextButtonStyle.class), "Game", 0);
+			createGamesButtons(gamesOpenArray, Resources.skin.get("greenTextButton", TextButtonStyle.class), "OpenGame", column);
 			
 			games.finishUpdate();
 		}
@@ -83,10 +84,10 @@ public class GamesActor extends Table {
 				public void clicked(InputEvent event, float x, float y) {
 					GameDialog dialogActor = null;
 					if(typeGame.equals("Game")) {
-						dialogActor = new GameDialogActor(TeacherMain.skin, game, gameButton);
+						dialogActor = new GameDialogActor(Resources.skin, game, gameButton);
 					}
 					else if(typeGame.equals("OpenGame")) {
-						dialogActor = new OpenGameDialog(TeacherMain.skin, game, gameButton);
+						dialogActor = new OpenGameDialog(Resources.skin, game, gameButton);
 					}
 					dialogActor.show(getStage());
 				}

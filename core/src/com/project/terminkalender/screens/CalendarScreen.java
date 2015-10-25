@@ -10,7 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.AppMain;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.calendar.TasktableActor;
 import com.project.terminkalender.calendar.TimetableActor;
 
@@ -23,14 +24,14 @@ public class CalendarScreen extends AbstractScreen {
 	public CalendarScreen(Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
 		
-		TextureRegion backgroundTexture = new TextureRegion(Main.assets.get("background.png", Texture.class));
+		TextureRegion backgroundTexture = new TextureRegion(Resources.assets.get("background.png", Texture.class));
 		DragAndDrop dragAndDrop = new DragAndDrop();
 		
 		background = new Background(backgroundTexture);
-		timetableActor = new TimetableActor(dragAndDrop, Main.skin);
-		tasktableActor = new TasktableActor(dragAndDrop, Main.skin);
-		changeToChatButton = new TextButton("Chat", Main.skin);
-		validateButton = new TextButton("Validate", Main.skin, "greenTextButton");
+		timetableActor = new TimetableActor(dragAndDrop, Resources.skin);
+		tasktableActor = new TasktableActor(dragAndDrop, Resources.skin);
+		changeToChatButton = new TextButton("Chat", Resources.skin);
+		validateButton = new TextButton("Validate", Resources.skin, "greenTextButton");
 		
 		stage.addActor(background);
 		stage.addActor(timetableActor);
@@ -45,7 +46,7 @@ public class CalendarScreen extends AbstractScreen {
 
 			@Override 
 			public void clicked(InputEvent event, float x, float y){
-				Main.setNewScreen(Main.chatScreen);
+				AppMain.setNewScreen(AppMain.chatScreen);
 			}
 		});
 		

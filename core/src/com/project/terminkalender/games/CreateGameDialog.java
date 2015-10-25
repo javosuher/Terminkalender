@@ -2,6 +2,7 @@ package com.project.terminkalender.games;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.TeacherMain;
 import com.project.terminkalender.screens.TeacherGamesScreen;
 import com.project.terminkalender.websockets.TeacherWebSockets;
@@ -10,7 +11,7 @@ public class CreateGameDialog {
 	private TextField gameNameText, gamePasswordText, gamePasswordRepeatText;
 	
 	public CreateGameDialog() {
-		Skin skin = TeacherMain.skin;
+		Skin skin = Resources.skin;
 		
 		gameNameText = new TextField("", skin);
 		gamePasswordText = new TextField("", skin);
@@ -19,17 +20,17 @@ public class CreateGameDialog {
 	
 	public void createGame() {
 		if(gameNameText.getText().equals("") || gamePasswordText.getText().equals("") || gamePasswordRepeatText.getText().equals("")) {
-			TeacherMain.warningDialog.show("You must fill the gaps", TeacherMain.teacherGamesScreen.getStage());
+			Resources.warningDialog.show("You must fill the gaps", TeacherMain.teacherGamesScreen.getStage());
 		}
 		else if(!gamePasswordText.getText().equals(gamePasswordRepeatText.getText())) {
-			TeacherMain.warningDialog.show("Passwords must be the same", TeacherMain.teacherGamesScreen.getStage());
+			Resources.warningDialog.show("Passwords must be the same", TeacherMain.teacherGamesScreen.getStage());
 		}
 		else if(gameNameText.getText().contains(TeacherWebSockets.DATASPLIT) || gameNameText.getText().contains(TeacherWebSockets.POINTSPLIT) || 
 				gameNameText.getText().contains(TeacherWebSockets.TASKSPLIT) || gamePasswordText.getText().contains(TeacherWebSockets.DATASPLIT) || 
 				gamePasswordText.getText().contains(TeacherWebSockets.POINTSPLIT) || gamePasswordText.getText().contains(TeacherWebSockets.TASKSPLIT) ||
 				gamePasswordRepeatText.getText().contains(TeacherWebSockets.DATASPLIT) || gamePasswordRepeatText.getText().contains(TeacherWebSockets.POINTSPLIT) || 
 				gamePasswordRepeatText.getText().contains(TeacherWebSockets.TASKSPLIT)) {
-			TeacherMain.warningDialog.show("you musn't use ',', ';' or ':'", TeacherMain.teacherLoginRegisterScreen.getStage());
+			Resources.warningDialog.show("you musn't use ',', ';' or ':'", TeacherMain.teacherLoginRegisterScreen.getStage());
 		}
 		else {
 			TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;

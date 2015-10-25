@@ -2,7 +2,7 @@ package com.project.terminkalender.calendar;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.Resources;
 
 public class SlotActor extends TextButton implements SlotListener {
 	private Slot slot;
@@ -21,11 +21,11 @@ public class SlotActor extends TextButton implements SlotListener {
 		this.slot = slot;
 		if(slot.isEmpty()) {
 			setText("");
-			setStyle(Main.skin.get("emptyTextButtonDescription", TextButtonStyle.class));
+			setStyle(Resources.skin.get("emptyTextButtonDescription", TextButtonStyle.class));
 		}
 		else {
 			setText(slot.getTask().getShortDescription());
-			setStyle(Main.skin.get("fullTextButtonDescription", TextButtonStyle.class));
+			setStyle(Resources.skin.get("fullTextButtonDescription", TextButtonStyle.class));
 		}
 	}
 
@@ -43,7 +43,7 @@ public class SlotActor extends TextButton implements SlotListener {
 		super.act(delta);
 		
 		if(setTSescription) {
-			slotDescription = new SlotDescription(slot, Main.skin);
+			slotDescription = new SlotDescription(slot, Resources.skin);
 			getStage().addActor(slotDescription);
 			SlotDescriptionListener slotDescriptionListener = new SlotDescriptionListener(slotDescription, true);
 			addListener(slotDescriptionListener);

@@ -8,7 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.AppMain;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.TeacherMain;
 import com.project.terminkalender.tools.ScrollWindow;
 import com.project.terminkalender.userdata.Game;
@@ -22,7 +23,7 @@ public class GamesOpenActor extends Table {
 		
 		games = new GamesOpen();
 		gamesWindow = new ScrollWindow("Games", skin, games.getGamesTable());
-		TextButton backButton = new TextButton("Back", Main.skin);
+		TextButton backButton = new TextButton("Back", Resources.skin);
 		
 		setFillParent(true);
 		
@@ -31,7 +32,7 @@ public class GamesOpenActor extends Table {
 		
 		backButton.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				Main.setNewScreen(Main.loginScreen);
+				AppMain.setNewScreen(AppMain.loginScreen);
 			}
 		});
 	}
@@ -47,8 +48,8 @@ public class GamesOpenActor extends Table {
 			int actualColumn = 0;
 			games.getGamesTable().clear();
 			for(final Game game : gamesArray) {
-				final TextButton gameButton = new TextButton(game.getName(), Main.skin);
-				final GameSelectionDialog gameSelectionDialog = new GameSelectionDialog("Hola", game, Main.skin);
+				final TextButton gameButton = new TextButton(game.getName(), Resources.skin);
+				final GameSelectionDialog gameSelectionDialog = new GameSelectionDialog("Hola", game, Resources.skin);
 				gamesTable.add(gameButton).width(200).height(100).pad(30);
 				
 				++actualColumn;

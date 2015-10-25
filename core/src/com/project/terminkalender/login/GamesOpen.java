@@ -3,11 +3,11 @@ package com.project.terminkalender.login;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
-import com.project.terminkalender.TeacherMain;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.userdata.Game;
 import com.project.terminkalender.userdata.Task;
 import com.project.terminkalender.websockets.TeacherWebSockets;
-import com.project.terminkalender.websockets.WebSockets;
+import com.project.terminkalender.websockets.AppWebSockets;
 
 public class GamesOpen {
 	private Table gamesTable;
@@ -15,7 +15,7 @@ public class GamesOpen {
 	private boolean update;
 	
 	public GamesOpen() {
-		Skin skin = TeacherMain.skin;
+		Skin skin = Resources.skin;
 		
 		gamesTable = new Table(skin);
 		games = new Array<Game>();
@@ -30,7 +30,7 @@ public class GamesOpen {
 	private Array<Game> gameStringToGameArray(Array<String> gamesString) {
 		Array<Game> games = new Array<Game>();
 		for(String game : gamesString) {
-			String [] gameData = game.split(WebSockets.DATASPLIT);
+			String [] gameData = game.split(AppWebSockets.DATASPLIT);
 			if(gameData.length < 3) {
 				games.add(new Game(gameData[0], gameData[1]));
 			}

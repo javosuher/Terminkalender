@@ -1,6 +1,7 @@
 package com.project.terminkalender.games;
 
 import com.badlogic.gdx.utils.Array;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.TeacherMain;
 import com.project.terminkalender.screens.TeacherGamesScreen;
 import com.project.terminkalender.userdata.Game;
@@ -21,11 +22,11 @@ public class TeacherGame extends Game {
 
 	public void update() {
 		if(password.equals("")) {
-			TeacherMain.warningDialog.show("You must fill the password", TeacherMain.teacherGamesScreen.getStage());
+			Resources.warningDialog.show("You must fill the password", TeacherMain.teacherGamesScreen.getStage());
 		}
 		else if(password.contains(TeacherWebSockets.DATASPLIT) || password.contains(TeacherWebSockets.POINTSPLIT) || 
 				password.contains(TeacherWebSockets.TASKSPLIT)) {
-			TeacherMain.warningDialog.show("you musn't use ',', ';' or ':'", TeacherMain.teacherLoginRegisterScreen.getStage());
+			Resources.warningDialog.show("you musn't use ',', ';' or ':'", TeacherMain.teacherLoginRegisterScreen.getStage());
 		}
 		else {
 			TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;

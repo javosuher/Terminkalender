@@ -10,7 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.AppMain;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.chat.ChatActor;
 import com.project.terminkalender.chat.RoomActor;
 
@@ -23,13 +24,13 @@ public class ChatScreen extends AbstractScreen {
 	public ChatScreen(Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
 		
-		TextureRegion backgroundTexture = new TextureRegion(Main.assets.get("background.png", Texture.class));
+		TextureRegion backgroundTexture = new TextureRegion(Resources.assets.get("background.png", Texture.class));
 		
 		background = new Background(backgroundTexture);
-		Table table = new Table(Main.skin);
-		chatActor = new ChatActor(Main.skin);
-		roomActor = new RoomActor(Main.skin, chatActor);
-		changeToCalendarButton = new TextButton("Calendar", Main.skin);
+		Table table = new Table(Resources.skin);
+		chatActor = new ChatActor(Resources.skin);
+		roomActor = new RoomActor(Resources.skin, chatActor);
+		changeToCalendarButton = new TextButton("Calendar", Resources.skin);
 		
 		table.add(roomActor);
 		table.add(chatActor);
@@ -40,13 +41,13 @@ public class ChatScreen extends AbstractScreen {
 		stage.addActor(background);
 		stage.addActor(table);
 		
-		changeToCalendarButton.setBounds(Main.WIDTH - 108, 8, 100, 50);
+		changeToCalendarButton.setBounds(AppMain.WIDTH - 108, 8, 100, 50);
 		
 		changeToCalendarButton.addListener(new ClickListener() {
 
 			@Override 
 			public void clicked(InputEvent event, float x, float y){
-				Main.setNewScreen(Main.calendarScreen);
+				AppMain.setNewScreen(AppMain.calendarScreen);
 			}
 		});
 	}

@@ -10,7 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.AppMain;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.TeacherMain;
 import com.project.terminkalender.games.GamesActor;
 import com.project.terminkalender.tools.ReconnectButton;
@@ -25,8 +26,8 @@ public class TeacherGamesScreen extends AbstractScreen {
 	public TeacherGamesScreen(Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
 		
-		TextureRegion backgroundTexture = new TextureRegion(TeacherMain.assets.get("background.png", Texture.class));
-		Skin skin = TeacherMain.skin;
+		TextureRegion backgroundTexture = new TextureRegion(Resources.assets.get("background.png", Texture.class));
+		Skin skin = Resources.skin;
 		
 		background = new Background(backgroundTexture);
 		gamesActor = new GamesActor(skin);
@@ -38,7 +39,7 @@ public class TeacherGamesScreen extends AbstractScreen {
 		stage.addActor(changeToLoginRegisterButton);
 		stage.addActor(reconnectButton);
 		
-		changeToLoginRegisterButton.setBounds(Main.WIDTH - 108, Main.HEIGHT - 58, 100, 50);
+		changeToLoginRegisterButton.setBounds(AppMain.WIDTH - 108, AppMain.HEIGHT - 58, 100, 50);
 		
 		changeToLoginRegisterButton.addListener(new ClickListener() {
 

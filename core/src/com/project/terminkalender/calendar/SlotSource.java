@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.Resources;
 
 public class SlotSource extends Source {
 	private Slot sourceSlot;
@@ -28,7 +28,7 @@ public class SlotSource extends Source {
 			sourceSlot.setEmpty();
 			payload.setObject(payloadSlot);
 			
-			TextButton button = new TextButton(payloadSlot.getTask().getShortDescription(), Main.skin, "fullTextButtonDescription");
+			TextButton button = new TextButton(payloadSlot.getTask().getShortDescription(), Resources.skin, "fullTextButtonDescription");
 			button.setWidth(80);
 			button.setHeight(80);
 

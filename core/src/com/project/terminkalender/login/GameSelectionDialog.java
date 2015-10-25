@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.AppMain;
 import com.project.terminkalender.tools.DialogActor;
 import com.project.terminkalender.userdata.Game;
 
@@ -51,6 +51,6 @@ public class GameSelectionDialog extends DialogActor {
 	}
 	
 	protected void result(Object object) {
-		Main.user.enterGame(nameText.getText(), game.getName(), passwordText.getText());
+		AppMain.user.enterGame(nameText.getText(), game.getName(), passwordText.getText());
 	}
 }

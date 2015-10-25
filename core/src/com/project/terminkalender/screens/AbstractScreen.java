@@ -4,7 +4,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.project.terminkalender.Main;
+import com.project.terminkalender.Resources;
 
 public class AbstractScreen implements Screen {
 	protected Viewport viewport;
@@ -36,7 +36,7 @@ public class AbstractScreen implements Screen {
 	
 	@Override
 	public void resume() { 
-		Main.assets.finishLoading(); 
+		Resources.assets.finishLoading(); 
 	}
 	
 	@Override

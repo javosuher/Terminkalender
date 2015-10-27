@@ -8,6 +8,7 @@ use MyApp\Game;
 class Main implements MessageComponentInterface {
 	const POINTSPLIT = ":";
 	const DATASPLIT = ";";
+    const TASKLIMITSPLIT = "-";
 	const LOGIN = "Login";
     const ENTERGAME = "EnterGame";
 	const MESSAGE = "Message";
@@ -33,7 +34,7 @@ class Main implements MessageComponentInterface {
         $this->token = sem_get(0);
         echo "Init Server!\n";
 
-        //$this->games->attach(new Game("dodo", "sandra", "f", "zoo,beber,aletear,estafraseesdemasiadolargaynecesitaqueseacortebastante")); // Example OpenGame
+        $this->games->attach(new Game("dodo", "sandra", "f", "zoo-2,beber-2,aletear-2", "Juan,Pepe,María")); // Example OpenGame
     }
 
     public function onOpen(ConnectionInterface $conn) {
@@ -106,7 +107,7 @@ class Main implements MessageComponentInterface {
         $openGames = $this->searchOpenGames($teacher);
         $trueMessage = Main::LOGIN . Main::POINTSPLIT;
         foreach($openGames as $game) {
-            $trueMessage = $trueMessage . $game["name"] . Main::DATASPLIT . $game["password"] . Main::DATASPLIT . $game["tasks"] . Main::POINTSPLIT;
+            $trueMessage = $trueMessage . $game["name"] . Main::DATASPLIT . $game["password"] . Main::DATASPLIT . $game["tasks"] . Main::DATASPLIT . $game["users"] . Main::POINTSPLIT;
         }
         $from->send($trueMessage);
     }
@@ -120,11 +121,18 @@ class Main implements MessageComponentInterface {
         $game = $this->getOpenGame($teacher, $gameName);
 
         if($game->getPassword() == $password) {
-            $game->addUser($userName, $from);
-
-            echo "Enter Game: Success" . "\n";
-            $message = Main::ENTERGAME . Main::POINTSPLIT . $gameName;
-            $from->send($message);
+            $enter = $game->enterInGame($userName, $from);
+            
+            if($enter) {
+                echo "Enter Game: Success" . "\n";
+                $message = Main::ENTERGAME . Main::POINTSPLIT . $gameName;
+                $from->send($message);
+            }
+            else {
+                echo "Enter Game: User not exist" . "\n";
+                $message = Main::ENTERGAME . Main::POINTSPLIT . "UserNoExist";
+                $from->send($message);
+            }
         }
         else {
             echo "Enter Game: Wrong password" . "\n";
@@ -145,8 +153,10 @@ class Main implements MessageComponentInterface {
         $game->addMessage($userSender, $userDestination, $message);
         $userID = $game->getUserID($userDestination);
 
-        $trueMessage = Main::MESSAGE . Main::POINTSPLIT . $userSender . Main::POINTSPLIT . $message;
-        $userID->send($trueMessage);
+        if($userID !== NoID) {
+            $trueMessage = Main::MESSAGE . Main::POINTSPLIT . $userSender . Main::POINTSPLIT . $message;
+            $userID->send($trueMessage);
+        }
     }
     private function sendUsers(ConnectionInterface $from, $msg) {
         $name = explode(Main::POINTSPLIT, $msg)[1];
@@ -155,7 +165,7 @@ class Main implements MessageComponentInterface {
     	echo sprintf('"%s" need users' . "\n", $name);
 
         $game = $this->getOpenGame($teacher, $gameName);
-        $users = $game->getUserNames();
+        $users = $game->getUserUserNames();
 
     	$message = Main::USERSROOM . Main::POINTSPLIT;
     	foreach ($users as $user) {
@@ -322,9 +332,9 @@ class Main implements MessageComponentInterface {
             if ($game->getTeacher() == $teacher) {
             	$name = $game->getGameName();
             	$password = $game->getPassword();
-            	$tasks = $game->getTasks();
-                $users = $game->getUsers();
-            	array_push($openGames, array("name"=>$name, "password"=>$password, "tasks"=>$tasks, "users"));
+            	$tasks = $game->getStringTasks();
+                $users = $game->getStringUserNames();
+            	array_push($openGames, array("name"=>$name, "password"=>$password, "tasks"=>$tasks, "users"=>$users));
             }
         }
         //print_r($openGames);

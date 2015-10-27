@@ -2,17 +2,37 @@
 
 namespace MyApp;
 use MyApp\Chat;
+use MyApp\Calendar;
 
 class Game {
-    protected $gameName, $teacher, $password, $tasks, $users, $chats;
+    const TASKLIMITSPLIT = "-";
+    const SPLIT = ",";
 
-    public function __construct($gameName, $teacher, $password, $tasks) {
+    protected $gameName, $teacher, $password, $tasks, $users, $chats, $calendars;
+
+    public function __construct($gameName, $teacher, $password, $tasks, $users) {
         $this->gameName = $gameName;
         $this->teacher = $teacher;
         $this->password = $password;
-        $this->tasks = $tasks;
+        $this->tasks = array();
         $this->users = array();
         $this->chats = new \SplObjectStorage;
+        $this->calendars = new \SplObjectStorage;
+
+        $taksSplit = explode(Game::SPLIT, $tasks);
+        foreach($taksSplit as $task) {
+            $name = explode(Game::TASKLIMITSPLIT, $task)[0];
+            $limit = explode(Game::TASKLIMITSPLIT, $task)[1];
+
+            array_push($this->tasks, array("name"=>$name, "limit"=>$limit));
+        }
+
+        $usersSplit = explode(Game::SPLIT, $users);
+        $userName = 0;
+        foreach($usersSplit as $user) {
+            array_push($this->users, array("name"=>$user, "userName"=>$userName, "id"=>"NoID"));
+            ++$userName;
+        }
     }
 
     public function isUserInGame($userName) {
@@ -23,15 +43,74 @@ class Game {
         }
         return false;
     }
-    public function addUser($userName, $id) {
+    public function enterInGame($name, $id) {
         foreach($this->users as &$user) {
-            if($user["name"] == $userName) {
+            if($user["name"] == $name) {
                 $user["id"] = $id;
-                return "User Update";
+                return true;
             }
         }
-        array_push($this->users, array("name"=>$userName, "id"=>$id));
-        return "New User";
+        return false;
+    }
+
+    public function getTaskNames() {
+        $tasks = Array();
+        foreach($this->tasks as $task) {
+            array_push($tasks, $task["name"]);
+        }
+        return $tasks;
+    }
+    public function getTaskLimit($taskName) {
+        foreach ($this->tasks as $task) {
+            if($task["name"] == $taskName) {
+                return $task["limit"];
+            }
+        }
+        return "NoTask";
+    }
+    public function getStringTasks() {
+        $tasksString = "";
+        foreach ($this->tasks as $task) {
+            $tasksString = $tasksString . $task["name"] . Game::TASKLIMITSPLIT . $task["limit"] . Game::SPLIT;
+        }
+        $tasksString = rtrim($tasksString, ",");
+        return $tasksString;
+    }
+
+    public function getUserNames() {
+        return $this->getUserFields("name");
+    }
+    public function getUserUserNames() {
+        return $this->getUserFields("userName");
+    }
+    public function getUserID($userName) {
+        foreach($this->users as $user) {
+            if($user["name"] == $userName) {
+                return $user["id"];
+            }
+        }
+        return "NoID";
+    }
+    public function getStringUsers() {
+        return $this->getStringUserFields("name");
+    }
+    public function getStringUserNames() {
+        return $this->getStringUserFields("userName");
+    }
+    private function getUserFields($field) {
+        $users = Array();
+        foreach($this->users as $user) {
+            array_push($users, $user[$field]);
+        }
+        return $users;
+    }
+    private function getStringUserFields($field) {
+        $usersString = "";
+        foreach ($this->users as $user) {
+            $usersString = $usersString . $user[$field] . Game::SPLIT;
+        }
+        $usersString = rtrim($usersString, ",");
+        return $usersString;
     }
 
     public function addMessage($userSender, $userDestination, $message) {
@@ -46,23 +125,6 @@ class Game {
         $this->chats->attach($chat);
         return false;
     }
-
-    public function getUserNames() {
-        $userNames = Array();
-        foreach($this->users as $user) {
-            array_push($userNames, $user["name"]);
-        }
-        return $userNames;
-    }
-    public function getUserID($userName) {
-        foreach($this->users as $user) {
-            if($user["name"] == $userName) {
-                return $user["id"];
-            }
-        }
-        return "NoUser";
-    }
-
     public function getChatFromUsers($userOne, $userTwo, $messagesSize) {
         foreach($this->chats as $chat) {
             if($chat->isUsersInChat($userOne, $userTwo) && ($messagesSize < $chat->getMessagesSize())) {
@@ -98,6 +160,9 @@ class Game {
     }
     public function getChats() {
         return $this->chats;
+    }
+    public function getCalendars() {
+        return $this->calendars;
     }
 }
 

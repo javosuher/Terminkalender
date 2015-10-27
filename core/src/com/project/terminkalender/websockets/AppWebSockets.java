@@ -39,6 +39,9 @@ public class AppWebSockets extends WebSockets {
 		if(message.equals("WrongPassword")) {
 			AppMain.warningDialog.show("Wrong Password", AppMain.loginGamesScreen.getStage());
 		}
+		else if(message.equals("UserNoExist")) {
+			AppMain.warningDialog.show("User no Exist", AppMain.loginGamesScreen.getStage());
+		}
 		else {
 			AppMain.user.startGame(message);
 		}

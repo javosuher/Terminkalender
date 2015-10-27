@@ -15,8 +15,8 @@ public abstract class WebSockets {
 	public final static String DATASPLIT = ";";
 	public final static String TASKSPLIT = ",";
 	public final static String TASKLIMITSPLIT = "-";
-	
 	public final static String CHATSPLIT = "=";
+	
 	public final static String LOGIN = "Login";
 	public final static String ENTERGAME = "EnterGame";
 	public final static String MESSAGE = "Message";

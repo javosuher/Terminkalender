@@ -14,14 +14,16 @@ public class Room {
 	public Room() {
 		usersTable = new Table(Resources.skin);
 		chats = new Array<Chat>();
-		update = false;
+		updateUsers(AppMain.user.getGame().getUsers());
 		AppMain.webSockets.setRoom(this);
 	}
 	
 	public void updateUsers(Array<String> users) {
 		chats.clear();
 		for(String user : users) {
-			chats.add(new Chat(user));
+			if(!user.equals(AppMain.user.getUserName())) {
+				chats.add(new Chat(user));
+			}
 		}
 		update = true;
 	}
@@ -60,9 +62,9 @@ public class Room {
 		return index;
 	}
 	
-	public void refreshUsers() {
+	/*public void refreshUsers() {
 		AppMain.webSockets.askUsers();
-	}
+	}*/
 	
 	public Table getUsersTable() {
 		return usersTable;

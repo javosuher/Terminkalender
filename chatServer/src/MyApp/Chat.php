@@ -6,11 +6,13 @@ class Chat {
     const CHATSPLIT = "=";
     const MESSAGESPLIT = ";";
 
-    protected $user1, $user2, $messages;
+    protected $user1, $user2, $userRealName1, $userRealName2, $messages;
 
-    public function __construct($userOne, $userTwo) {
+    public function __construct($userOne, $userTwo, $userReal1, $userReal2) {
         $this->user1 = $userOne;
         $this->user2 = $userTwo;
+        $this->userRealName1 = $userReal1;
+        $this->userRealName2 = $userReal2;
         $this->messages = array();
     }
 
@@ -40,6 +42,8 @@ class Chat {
         $conversation = "";
         foreach($this->messages as $message) {
             $user = explode(Chat::CHATSPLIT, $message)[0];
+            if($user == $this->user1) $user = $this->userRealName1;
+            else $user = $this->userRealName2;
             $trueMessage = explode(Chat::CHATSPLIT, $message)[1];
             $conversation = $conversation . $user . ": " . $trueMessage . "\n";
         }
@@ -55,6 +59,12 @@ class Chat {
     }
     public function getUser2() {
         return $this->user2;
+    }
+    public function getUserRealName1() {
+        return $this->userRealName1;
+    }
+    public function getUserRealName2() {
+        return $this->userRealName2;
     }
     public function getMessages() {
         return $this->messages;

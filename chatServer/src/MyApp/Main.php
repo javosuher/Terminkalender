@@ -34,7 +34,7 @@ class Main implements MessageComponentInterface {
         $this->token = sem_get(0);
         echo "Init Server!\n";
 
-        $this->games->attach(new Game("dodo", "sandra", "f", "zoo-2,beber-2,aletear-2", "Juan,Pepe,María")); // Example OpenGame
+        $this->games->attach(new Game("dodo", "sandra", "f", "zoo-2,beber-2,aletear-2", "Juan,pepe,maria")); // Example OpenGame
     }
 
     public function onOpen(ConnectionInterface $conn) {
@@ -125,7 +125,8 @@ class Main implements MessageComponentInterface {
             
             if($enter) {
                 echo "Enter Game: Success" . "\n";
-                $message = Main::ENTERGAME . Main::POINTSPLIT . $gameName;
+                $userUserName = $game->getUserUserName($userName);
+                $message = Main::ENTERGAME . Main::POINTSPLIT . $gameName . Main::POINTSPLIT . $userUserName;
                 $from->send($message);
             }
             else {
@@ -138,24 +139,6 @@ class Main implements MessageComponentInterface {
             echo "Enter Game: Wrong password" . "\n";
             $message = Main::ENTERGAME . Main::POINTSPLIT . "WrongPassword";
             $from->send($message);
-        }
-    }
-    private function sendMessage(ConnectionInterface $from, $msg) {
-        $userSender = explode(Main::POINTSPLIT, $msg)[1];
-        $gameName = explode(Main::POINTSPLIT, $msg)[2];
-    	$teacher = explode(Main::POINTSPLIT, $msg)[3];
-    	$userDestination = explode(Main::POINTSPLIT, $msg)[4];
-        $messageStart = strlen(Main::MESSAGE) + strlen($userSender) + strlen($gameName) + strlen($teacher) + strlen($userDestination) + 5;
-    	$message = substr($msg, $messageStart);
-        echo sprintf('"%s" sending message "%s" to "%s"' . "\n", $userSender, $message, $userDestination);
-
-        $game = $this->getOpenGame($teacher, $gameName);
-        $game->addMessage($userSender, $userDestination, $message);
-        $userID = $game->getUserID($userDestination);
-
-        if($userID !== NoID) {
-            $trueMessage = Main::MESSAGE . Main::POINTSPLIT . $userSender . Main::POINTSPLIT . $message;
-            $userID->send($trueMessage);
         }
     }
     private function sendUsers(ConnectionInterface $from, $msg) {
@@ -174,6 +157,24 @@ class Main implements MessageComponentInterface {
             }
         }
         $from->send($message);
+    }
+    private function sendMessage(ConnectionInterface $from, $msg) {
+        $userSender = explode(Main::POINTSPLIT, $msg)[1];
+        $gameName = explode(Main::POINTSPLIT, $msg)[2];
+        $teacher = explode(Main::POINTSPLIT, $msg)[3];
+        $userDestination = explode(Main::POINTSPLIT, $msg)[4];
+        $messageStart = strlen(Main::MESSAGE) + strlen($userSender) + strlen($gameName) + strlen($teacher) + strlen($userDestination) + 5;
+        $message = substr($msg, $messageStart);
+        echo sprintf('"%s" sending message "%s" to "%s"' . "\n", $userSender, $message, $userDestination);
+
+        $game = $this->getOpenGame($teacher, $gameName);
+        $game->addMessage($userSender, $userDestination, $message);
+        $userID = $game->getUserID2($userDestination);
+
+        if($userID !== "NoID") {
+            $trueMessage = Main::MESSAGE . Main::POINTSPLIT . $userSender . Main::POINTSPLIT . $message;
+            $userID->send($trueMessage);
+        }
     }
     private function sendChatConversation(ConnectionInterface $from, $msg) {
         $name = explode(Main::POINTSPLIT, $msg)[1];
@@ -363,7 +364,7 @@ class Main implements MessageComponentInterface {
         $gameDataFile = fopen($gameName ." (" . $teacher . ").txt", "w");
         fwrite($gameDataFile, $data);
         fclose($gameDataFile);
-        echo $gameName . " (" . $teacher . ").txt . " . "Created" . "\n";
+        echo $gameName . " (" . $teacher . ").txt" . " Created" . "\n";
     }
 
     // ------------------------------- Data Base Functions -------------------------------

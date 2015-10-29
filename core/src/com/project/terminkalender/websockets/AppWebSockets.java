@@ -2,6 +2,7 @@ package com.project.terminkalender.websockets;
 
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.AppMain;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.chat.Room;
 import com.project.terminkalender.screens.LoginGamesScreen;
 import com.project.terminkalender.screens.LoginScreen;
@@ -37,13 +38,15 @@ public class AppWebSockets extends WebSockets {
 	}
 	public void enterGame(String message) {
 		if(message.equals("WrongPassword")) {
-			AppMain.warningDialog.show("Wrong Password", AppMain.loginGamesScreen.getStage());
+			Resources.warningDialog.show("Wrong Password", AppMain.loginGamesScreen.getStage());
 		}
 		else if(message.equals("UserNoExist")) {
-			AppMain.warningDialog.show("User no Exist", AppMain.loginGamesScreen.getStage());
+			Resources.warningDialog.show("User no Exist", AppMain.loginGamesScreen.getStage());
 		}
 		else {
-			AppMain.user.startGame(message);
+			String gameName = message.split(POINTSPLIT)[0];
+			String userUserName = message.split(POINTSPLIT)[1];
+			AppMain.user.startGame(gameName, userUserName);
 		}
 	}
 	public void addMessageToChat(String message) {
@@ -83,17 +86,17 @@ public class AppWebSockets extends WebSockets {
 	public boolean sendMessageChat(String message, String userDestination) {
 		if(message.length() != 0) {
 			User user = AppMain.user;
-			return sendMessage(MESSAGE + POINTSPLIT + user.getName() + POINTSPLIT + user.getGame().getName() + POINTSPLIT + user.getTeacher() + POINTSPLIT + userDestination + POINTSPLIT + message);
+			return sendMessage(MESSAGE + POINTSPLIT + user.getUserName() + POINTSPLIT + user.getGame().getName() + POINTSPLIT + user.getTeacher() + POINTSPLIT + userDestination + POINTSPLIT + message);
 		}
 		else return false;
 	}
-	public boolean askUsers() {
+	/*public boolean askUsers() {
 		User user = AppMain.user;
 		return sendMessage(USERSROOM + POINTSPLIT + user.getName() + POINTSPLIT + user.getGame().getName() + POINTSPLIT + user.getTeacher());
-	}
+	}*/
 	public boolean askChatFromUser(String userDestination, int messagesSize) {
 		User user = AppMain.user;
-		return sendMessage(CHAT + POINTSPLIT + user.getName() + POINTSPLIT + user.getGame().getName() + POINTSPLIT + user.getTeacher() + POINTSPLIT + userDestination + POINTSPLIT + messagesSize);
+		return sendMessage(CHAT + POINTSPLIT + user.getUserName() + POINTSPLIT + user.getGame().getName() + POINTSPLIT + user.getTeacher() + POINTSPLIT + userDestination + POINTSPLIT + messagesSize);
 	}
 	public boolean sendCalendarInformation() {
 		User user = AppMain.user;

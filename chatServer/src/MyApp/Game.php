@@ -83,19 +83,35 @@ class Game {
     public function getUserUserNames() {
         return $this->getUserFields("userName");
     }
+    public function getUserUserName($userName) {
+        return $this->getUserField($userName, "name", "userName");
+    }
+    public function getUserName($userUserName) {
+        return $this->getUserField($userUserName, "userName", "name");
+    }
     public function getUserID($userName) {
-        foreach($this->users as $user) {
-            if($user["name"] == $userName) {
-                return $user["id"];
-            }
-        }
-        return "NoID";
+        $id = $this->getUserField($userName, "name", "id");
+        if($id == "NotFound") return "NoID";
+        else return $id;
+    }
+    public function getUserID2($userUserName) {
+        $id = $this->getUserField($userUserName, "userName", "id");
+        if($id == "NotFound") return "NoID";
+        else return $id;
     }
     public function getStringUsers() {
         return $this->getStringUserFields("name");
     }
     public function getStringUserNames() {
         return $this->getStringUserFields("userName");
+    }
+    private function getUserField($userField, $field, $fieldReturn) {
+        foreach($this->users as $user) {
+            if($user[$field] == $userField) {
+                return $user[$fieldReturn];
+            }
+        }
+        return "NotFound";
     }
     private function getUserFields($field) {
         $users = Array();
@@ -120,7 +136,8 @@ class Game {
                 return true;
             }
         }
-        $chat = new Chat($userSender, $userDestination);
+        echo $this->getUserName($userSender) . "   " . $this->getUserName($userDestination) . "\n";
+        $chat = new Chat($userSender, $userDestination, $this->getUserName($userSender), $this->getUserName($userDestination));
         $chat->addMessage($userDestination, $message);
         $this->chats->attach($chat);
         return false;
@@ -137,7 +154,7 @@ class Game {
     public function pickUpData() {
         $chatsConversation = "CHATS \n================================================= \n\n";
         foreach($this->chats as $chat) {
-            $chatsConversation = $chatsConversation . "------------ " . $chat->getUser1() . " and " . $chat->getUser2() . " ------------ \n";
+            $chatsConversation = $chatsConversation . "------------ " . $chat->getUserRealName1() . " and " . $chat->getUserRealName2() . " ------------ \n";
             $chatsConversation = $chatsConversation . $chat->pickUpChat() . "\n";
         }
         return $chatsConversation;

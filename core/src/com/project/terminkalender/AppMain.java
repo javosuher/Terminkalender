@@ -13,7 +13,6 @@ import com.project.terminkalender.websockets.AppWebSockets;
 public class AppMain extends Main {
 	public static AppWebSockets webSockets;
 	public static AbstractScreen loginScreen, loginGamesScreen, calendarScreen, chatScreen;
-	public static WarningDialogActor warningDialog;
 	public static User user;
 	
 	@Override

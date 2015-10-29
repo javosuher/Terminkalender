@@ -44,7 +44,7 @@ public class Chat {
 	public void addMessages(Array<String> messages) {
 		for(String message : messages) {
 			String [] userPlusMessage = message.split(AppWebSockets.CHATSPLIT);
-			if(userPlusMessage[0].equals(AppMain.user.getName())) {
+			if(userPlusMessage[0].equals(AppMain.user.getUserName())) {
 				this.messages.add(new Pair<String>(YOU, userPlusMessage[1]));
 			}
 			else this.messages.add(new Pair<String>(userPlusMessage[0], userPlusMessage[1]));

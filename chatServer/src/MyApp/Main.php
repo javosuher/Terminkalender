@@ -17,6 +17,7 @@ class Main implements MessageComponentInterface {
     const CHAT = "Chat";
     const TASK = "Task";
     const TASKVALIDATE = "TaskValidate";
+    const TASKS = "Tasks";
 
 	const LOGINTEACHER = "LoginTeacher";
 	const REGISTERTEACHER = "RegisterTeacher";
@@ -38,7 +39,7 @@ class Main implements MessageComponentInterface {
         $this->token = sem_get(0);
         echo "Init Server!\n";
 
-        $this->games->attach(new Game("dodo", "sandra", "f", "zoo-2,beber-2,aletear-2", "juan,pepe,maria,andrés,perico,taquiato")); // Example OpenGame
+        $this->games->attach(new Game("dodo", "sandra", "f", "zoo-2,beber-2,aletear-2,pescar-3,leer un libro-1", "juan,pepe,maria,andrés,perico,taquiato")); // Example OpenGame
     }
 
     public function onOpen(ConnectionInterface $conn) {
@@ -218,6 +219,9 @@ class Main implements MessageComponentInterface {
         echo "Add/Update Task Calendar: Success" . "\n";
     }
     private function userValidateTask(ConnectionInterface $from, $msg) {
+
+    }
+    private function sendTaskCalendar(ConnectionInterface $from, $msg) {
 
     }
 

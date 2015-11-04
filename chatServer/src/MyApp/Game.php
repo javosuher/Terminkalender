@@ -20,21 +20,22 @@ class Game {
         $this->tasksData = new \SplObjectStorage;
 
         $taksSplit = explode(Game::SPLIT, $tasks);
+        $usersSplit = explode(Game::SPLIT, $users);
+
+        $userName = 0;
+        foreach($usersSplit as $user) {
+            array_push($this->users, array("name"=>$user, "userName"=>$userName, "id"=>"NoID"));
+            ++$userName;
+        }
+
         foreach($taksSplit as $task) {
             $name = explode(Game::TASKLIMITSPLIT, $task)[0];
             $limit = explode(Game::TASKLIMITSPLIT, $task)[1];
 
             array_push($this->tasks, array("name"=>$name, "limit"=>$limit));
 
-            $taskData = new TaskCalendar($name, $limit);
+            $taskData = new TaskCalendar($name, $limit, $this->users);
             $this->tasksData->attach($taskData);
-        }
-
-        $usersSplit = explode(Game::SPLIT, $users);
-        $userName = 0;
-        foreach($usersSplit as $user) {
-            array_push($this->users, array("name"=>$user, "userName"=>$userName, "id"=>"NoID"));
-            ++$userName;
         }
     }
 
@@ -139,7 +140,6 @@ class Game {
                 return true;
             }
         }
-        echo $this->getUserName($userSender) . "   " . $this->getUserName($userDestination) . "\n";
         $chat = new Chat($userSender, $userDestination, $this->getUserName($userSender), $this->getUserName($userDestination));
         $chat->addMessage($userDestination, $message);
         $this->chats->attach($chat);

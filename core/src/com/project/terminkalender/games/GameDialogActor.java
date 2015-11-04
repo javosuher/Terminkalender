@@ -305,24 +305,28 @@ public class GameDialogActor extends GameDialog {
 	private boolean isTaskRepeat(Array<Task> tasks) {
 		int index = 0;
 		for(Task task : tasks) {
-			while(index < tasks.size) {
-				if(task.getName().toLowerCase().equals(tasks.get(index).getName().toLowerCase())) {
+			++index;
+			int indexIteration = index;
+			while(indexIteration < tasks.size) {
+				if(task.getName().toLowerCase().equals(tasks.get(indexIteration).getName().toLowerCase())) {
 					return true;
 				}
+				++indexIteration;
 			}
-			++index;
 		}
 		return false;
 	}
 	private boolean isUserRepeat(Array<String> users) {
 		int index = 0;
 		for(String user : users) {
-			while(index < users.size) {
-				if(user.toLowerCase().equals(users.get(index).toLowerCase())) {
+			++index;
+			int indexIteration = index;
+			while(indexIteration < users.size) {
+				if(user.toLowerCase().equals(users.get(indexIteration).toLowerCase())) {
 					return true;
 				}
+				++indexIteration;
 			}
-			++index;
 		}
 		return false;
 	}

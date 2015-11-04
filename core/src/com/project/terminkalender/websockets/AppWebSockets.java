@@ -86,7 +86,8 @@ public class AppWebSockets extends WebSockets {
 	public boolean sendMessageChat(String message, String userDestination) {
 		if(message.length() != 0) {
 			User user = AppMain.user;
-			return sendMessage(MESSAGE + POINTSPLIT + user.getUserName() + POINTSPLIT + user.getGame().getName() + POINTSPLIT + user.getTeacher() + POINTSPLIT + userDestination + POINTSPLIT + message);
+			return sendMessage(MESSAGE + POINTSPLIT + user.getUserName() + POINTSPLIT + user.getGame().getName() + 
+					POINTSPLIT + user.getTeacher() + POINTSPLIT + userDestination + POINTSPLIT + message);
 		}
 		else return false;
 	}
@@ -96,7 +97,13 @@ public class AppWebSockets extends WebSockets {
 	}*/
 	public boolean askChatFromUser(String userDestination, int messagesSize) {
 		User user = AppMain.user;
-		return sendMessage(CHAT + POINTSPLIT + user.getUserName() + POINTSPLIT + user.getGame().getName() + POINTSPLIT + user.getTeacher() + POINTSPLIT + userDestination + POINTSPLIT + messagesSize);
+		return sendMessage(CHAT + POINTSPLIT + user.getUserName() + POINTSPLIT + user.getGame().getName() + 
+				POINTSPLIT + user.getTeacher() + POINTSPLIT + userDestination + POINTSPLIT + messagesSize);
+	}
+	public boolean sendTaskFill(String description, String location, String position, String partners) {
+		User user = AppMain.user;
+		return sendMessage(TASK + POINTSPLIT + user.getUserName() + POINTSPLIT + user.getGame().getName() + 
+				POINTSPLIT + user.getTeacher() + POINTSPLIT + description + POINTSPLIT + location + POINTSPLIT + position + POINTSPLIT + partners);
 	}
 	public boolean sendCalendarInformation() {
 		User user = AppMain.user;

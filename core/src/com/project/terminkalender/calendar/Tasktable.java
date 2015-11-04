@@ -15,7 +15,7 @@ public class Tasktable {
 		slots = new Array<Slot>(tasks.size);
 		
 		for (Task task : tasks) {
-			slots.add(new Slot(new TaskCalendar(task.getName())));
+			slots.add(new Slot(new TaskCalendar(task.getName(), task.getLimit())));
 		}
 	}
 	

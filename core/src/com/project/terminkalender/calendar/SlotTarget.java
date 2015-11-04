@@ -8,12 +8,10 @@ import com.project.terminkalender.Resources;
 
 public class SlotTarget extends Target {
 	private Slot targetSlot;
-	private SetTaskInCalendarDialog dialog;
-
+	
 	public SlotTarget(SlotActor actor) {
 		super(actor);
 		targetSlot = actor.getSlot();
-		dialog = new SetTaskInCalendarDialog("Hola", Resources.skin);
 	}
 
 	@Override
@@ -24,11 +22,7 @@ public class SlotTarget extends Target {
 	}
 
 	@Override
-	public void drop(Source source, Payload payload, float x, float y, int pointer) {
-		if(targetSlot.hasPosition()) {
-			dialog.show(AppMain.calendarScreen.getStage());
-		}
-	}
+	public void drop(Source source, Payload payload, float x, float y, int pointer) {}
 
 	@Override
 	public void reset(Source source, Payload payload) {}

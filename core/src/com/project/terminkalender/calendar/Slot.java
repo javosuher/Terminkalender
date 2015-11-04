@@ -41,6 +41,7 @@ public class Slot {
 	}
 	public void setTask(TaskCalendar task) {
 		this.task = task;
+		task.setPosition(position);
 		empty = false;
 		notifyListeners();
 	}
@@ -48,8 +49,10 @@ public class Slot {
 	public void copy(Boolean empty, TaskCalendar task) {
 		if(empty)
 			setEmpty();
-		else
+		else {
 			setTask(task);
+			System.out.println(task);
+		}
 	}
 	
 	public TaskCalendar getTask() {

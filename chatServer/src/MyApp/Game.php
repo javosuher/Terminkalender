@@ -2,13 +2,13 @@
 
 namespace MyApp;
 use MyApp\Chat;
-use MyApp\Calendar;
+use MyApp\TaskCalendar;
 
 class Game {
     const TASKLIMITSPLIT = "-";
     const SPLIT = ",";
 
-    protected $gameName, $teacher, $password, $tasks, $users, $chats, $calendars;
+    protected $gameName, $teacher, $password, $tasks, $users, $chats, $tasksData;
 
     public function __construct($gameName, $teacher, $password, $tasks, $users) {
         $this->gameName = $gameName;
@@ -17,7 +17,7 @@ class Game {
         $this->tasks = array();
         $this->users = array();
         $this->chats = new \SplObjectStorage;
-        $this->calendars = new \SplObjectStorage;
+        $this->tasksData = new \SplObjectStorage;
 
         $taksSplit = explode(Game::SPLIT, $tasks);
         foreach($taksSplit as $task) {
@@ -25,6 +25,9 @@ class Game {
             $limit = explode(Game::TASKLIMITSPLIT, $task)[1];
 
             array_push($this->tasks, array("name"=>$name, "limit"=>$limit));
+
+            $taskData = new TaskCalendar($name, $limit);
+            $this->tasksData->attach($taskData);
         }
 
         $usersSplit = explode(Game::SPLIT, $users);
@@ -151,13 +154,34 @@ class Game {
         return "";
     }
 
+    public function addTaskCalendar($description, $userUserName, $location, $position, $partners) {
+        foreach ($this->tasksData as $taskData) {
+            if($taskData->getName() == $description) {
+                $taskData->addUserData($userUserName, $this->getUserName($userUserName), $location, $position, $partners);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function pickUpData() {
+        return $this->pickUpChatData() . "\n\n" . $this->pickUpCalendarData();
+    }
+    private function pickUpChatData() {
         $chatsConversation = "CHATS \n================================================= \n\n";
         foreach($this->chats as $chat) {
             $chatsConversation = $chatsConversation . "------------ " . $chat->getUserRealName1() . " and " . $chat->getUserRealName2() . " ------------ \n";
             $chatsConversation = $chatsConversation . $chat->pickUpChat() . "\n";
         }
         return $chatsConversation;
+    }
+    private function pickUpCalendarData() {
+        $calendarData = "CALENDAR TASKS \n================================================= \n\n";
+        foreach($this->tasksData as $taskData) {
+            $calendarData = $calendarData . "------------ " . $taskData->getName() . " ------------ \n";
+            $calendarData = $calendarData . $taskData->pickUpTaskCalendar() . "\n";
+        }
+        return $calendarData;
     }
 
     public function getGameName() {

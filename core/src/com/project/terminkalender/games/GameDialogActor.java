@@ -168,11 +168,20 @@ public class GameDialogActor extends GameDialog {
 		
 		applyChangesButton.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				game.setPassword(passwordText.getText());
 				Array<Task> tasks = TaskBoxToTask(tasksBox.getItems());
-				game.setTasks(tasks);
-				game.setUsers(usersBox.getItems());
-				game.update();
+				Array<String> users = usersBox.getItems();
+				if(isTaskRepeat(tasks)) {
+					Resources.warningDialog.show("You mustn't have two or more tasks with the same name", TeacherMain.teacherGamesScreen.getStage());
+				}
+				else if(isUserRepeat(users)) {
+					Resources.warningDialog.show("You mustn't have two or more users with the same name", TeacherMain.teacherGamesScreen.getStage());
+				}
+				else {
+					game.setPassword(passwordText.getText());
+					game.setTasks(tasks);
+					game.setUsers(users);
+					game.update();
+				}
 			}
 		});
 		
@@ -291,6 +300,31 @@ public class GameDialogActor extends GameDialog {
 			tasks.add(task);
 		}
 		return tasks;
+	}
+	
+	private boolean isTaskRepeat(Array<Task> tasks) {
+		int index = 0;
+		for(Task task : tasks) {
+			while(index < tasks.size) {
+				if(task.getName().toLowerCase().equals(tasks.get(index).getName().toLowerCase())) {
+					return true;
+				}
+			}
+			++index;
+		}
+		return false;
+	}
+	private boolean isUserRepeat(Array<String> users) {
+		int index = 0;
+		for(String user : users) {
+			while(index < users.size) {
+				if(user.toLowerCase().equals(users.get(index).toLowerCase())) {
+					return true;
+				}
+			}
+			++index;
+		}
+		return false;
 	}
 	
 	private void openTasksFile() {

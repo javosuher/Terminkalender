@@ -9,11 +9,15 @@ class Main implements MessageComponentInterface {
 	const POINTSPLIT = ":";
 	const DATASPLIT = ";";
     const TASKLIMITSPLIT = "-";
+
 	const LOGIN = "Login";
     const ENTERGAME = "EnterGame";
 	const MESSAGE = "Message";
 	const USERSROOM = "UsersRoom";
     const CHAT = "Chat";
+    const TASK = "Task";
+    const TASKVALIDATE = "TaskValidate";
+
 	const LOGINTEACHER = "LoginTeacher";
 	const REGISTERTEACHER = "RegisterTeacher";
 	const CREATEGAME = "CreateGame";
@@ -34,7 +38,7 @@ class Main implements MessageComponentInterface {
         $this->token = sem_get(0);
         echo "Init Server!\n";
 
-        $this->games->attach(new Game("dodo", "sandra", "f", "zoo-2,beber-2,aletear-2", "Juan,pepe,maria")); // Example OpenGame
+        $this->games->attach(new Game("dodo", "sandra", "f", "zoo-2,beber-2,aletear-2", "juan,pepe,maria,andrés,perico,taquiato")); // Example OpenGame
     }
 
     public function onOpen(ConnectionInterface $conn) {
@@ -61,6 +65,13 @@ class Main implements MessageComponentInterface {
         else if(strcmp($action, Main::CHAT) == 0) {
             $this->sendChatConversation($from, $msg);
         }
+        else if(strcmp($action, Main::TASK) == 0) {
+            $this->addTaskCalendar($from, $msg);
+        }
+        else if(strcmp($action, Main::TASKVALIDATE) == 0) {
+            $this->userValidateTask($from, $msg);
+        }
+
         else if(strcmp($action, Main::LOGINTEACHER) == 0) {
         	$this->loginTeacher($from, $msg);
         }
@@ -191,6 +202,23 @@ class Main implements MessageComponentInterface {
             $message = Main::CHAT . Main::POINTSPLIT . $name2 . Main::POINTSPLIT . $conversation;
             $from->send($message);
         }
+    }
+    private function addTaskCalendar(ConnectionInterface $from, $msg) {
+        $userUserName = explode(Main::POINTSPLIT, $msg)[1];
+        $gameName = explode(Main::POINTSPLIT, $msg)[2];
+        $teacher = explode(Main::POINTSPLIT, $msg)[3];
+        $description = explode(Main::POINTSPLIT, $msg)[4];
+        $location = explode(Main::POINTSPLIT, $msg)[5];
+        $position = explode(Main::POINTSPLIT, $msg)[6];
+        $partners = explode(Main::POINTSPLIT, $msg)[7];
+
+        $game = $this->getOpenGame($teacher, $gameName);
+        $game->addTaskCalendar($description, $userUserName, $location, $position, $partners);
+
+        echo "Add/Update Task Calendar: Success" . "\n";
+    }
+    private function userValidateTask(ConnectionInterface $from, $msg) {
+
     }
 
     // ------------------------------- Teacher Functions ------------------------------- 

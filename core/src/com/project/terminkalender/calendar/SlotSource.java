@@ -6,14 +6,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
+import com.project.terminkalender.AppMain;
 import com.project.terminkalender.Resources;
 
 public class SlotSource extends Source {
 	private Slot sourceSlot;
+	private SetTaskInCalendarDialog dialog;
 
 	public SlotSource(SlotActor actor) {
 		super(actor);
 		this.sourceSlot = actor.getSlot();
+		this.dialog = new SetTaskInCalendarDialog("", Resources.skin);
 	}
 
 	@Override
@@ -52,6 +55,11 @@ public class SlotSource extends Source {
 			Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
 			sourceSlot.copy(targetSlot.isEmpty(), targetSlot.getTask());
 			targetSlot.copy(payloadSlot.isEmpty(), payloadSlot.getTask());
+			
+			if(targetSlot.hasPosition()) {
+				dialog.setTask(targetSlot.getTask());
+				dialog.show(AppMain.calendarScreen.getStage());
+			}
 		} else {
 			sourceSlot.copy(payloadSlot.isEmpty(), payloadSlot.getTask());
 		}

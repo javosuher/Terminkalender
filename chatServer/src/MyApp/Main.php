@@ -9,6 +9,7 @@ class Main implements MessageComponentInterface {
 	const POINTSPLIT = ":";
 	const DATASPLIT = ";";
     const TASKLIMITSPLIT = "-";
+    const TASKSPLIT = ",";
 
 	const LOGIN = "Login";
     const ENTERGAME = "EnterGame";
@@ -71,6 +72,9 @@ class Main implements MessageComponentInterface {
         }
         else if(strcmp($action, Main::TASKVALIDATE) == 0) {
             $this->userValidateTask($from, $msg);
+        }
+        else if(strcmp($action, Main::TASKS) == 0) {
+            $this->sendTaskCalendar($from, $msg);
         }
 
         else if(strcmp($action, Main::LOGINTEACHER) == 0) {
@@ -152,6 +156,8 @@ class Main implements MessageComponentInterface {
             $message = Main::ENTERGAME . Main::POINTSPLIT . "WrongPassword";
             $from->send($message);
         }
+
+        $this->sendTaskCalendar($from, $msg);
     }
     private function sendUsers(ConnectionInterface $from, $msg) {
         $name = explode(Main::POINTSPLIT, $msg)[1];
@@ -212,17 +218,35 @@ class Main implements MessageComponentInterface {
         $location = explode(Main::POINTSPLIT, $msg)[5];
         $position = explode(Main::POINTSPLIT, $msg)[6];
         $partners = explode(Main::POINTSPLIT, $msg)[7];
+        echo sprintf('"%s" add Task Data: Description: "%s", Location: "%s", Position: "%s", Partners: "%s"' . "\n", $userUserName, $description, $location, $position, $partners);
 
         $game = $this->getOpenGame($teacher, $gameName);
         $game->addTaskCalendar($description, $userUserName, $location, $position, $partners);
-
-        echo "Add/Update Task Calendar: Success" . "\n";
-    }
-    private function userValidateTask(ConnectionInterface $from, $msg) {
-
     }
     private function sendTaskCalendar(ConnectionInterface $from, $msg) {
+        $userName = explode(Main::POINTSPLIT, $msg)[1];
+        $teacher = explode(Main::POINTSPLIT, $msg)[2];
+        $gameName = explode(Main::POINTSPLIT, $msg)[3];
+        echo sprintf('"%s" search Tasks Data' . "\n", $userName);
 
+        $game = $this->getOpenGame($teacher, $gameName);
+        $tasks = $game->getTasksDataFromUser($userName);
+
+        $message = Main::TASKS . Main::POINTSPLIT . $tasks;
+        $from->send($message);
+    }
+    private function userValidateTask(ConnectionInterface $from, $msg) {
+        $userUserName = explode(Main::POINTSPLIT, $msg)[1];
+        $gameName = explode(Main::POINTSPLIT, $msg)[2];
+        $teacher = explode(Main::POINTSPLIT, $msg)[3];
+        echo sprintf('"%s" want validate their Tasks' . "\n", $userUserName);
+
+        $game = $this->getOpenGame($teacher, $gameName);
+        $tasks = $game->validateTasksDataFromUser($userUserName);
+
+        echo "Validate Calendar: Success" . "\n";
+        $message = Main::TASKVALIDATE . Main::POINTSPLIT . $tasks;
+        $from->send($message);
     }
 
     // ------------------------------- Teacher Functions ------------------------------- 

@@ -42,6 +42,7 @@ public class Slot {
 	public void setTask(TaskCalendar task) {
 		this.task = task;
 		task.setPosition(position);
+		task.setSlot(this);
 		empty = false;
 		notifyListeners();
 	}
@@ -51,7 +52,6 @@ public class Slot {
 			setEmpty();
 		else {
 			setTask(task);
-			System.out.println(task);
 		}
 	}
 	

@@ -24,6 +24,7 @@ public abstract class WebSockets {
 	public final static String CHAT = "Chat";
 	public final static String TASK = "Task";
 	public final static String TASKVALIDATE = "TaskValidate";
+	public final static String TASKS = "Tasks";
 	
 	public final static String LOGINTEACHER = "LoginTeacher";
 	public final static String REGISTERTEACHER = "RegisterTeacher";

@@ -31,4 +31,8 @@ public class TimetableActor extends TWindow {
 		}
 		pack();
 	}
+
+	public Timetable getTimetable() {
+		return timetable;
+	}
 }

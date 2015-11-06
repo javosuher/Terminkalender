@@ -37,22 +37,53 @@ class TaskCalendar {
         return explode(TaskCalendar::SPLIT, $partners);
     }
 
+    public function getUserTaskDataByUserName($userName) {
+        return $this->getUserTaskData($userName, "userName");
+    }
+    public function getUserTaskDataByRealName($userRealName) {
+        return $this->getUserTaskData($userRealName, "userRealName");
+    }
+    private function getUserTaskData($user, $field) {
+        foreach($this->usersTask as $userTask) {
+            if($userTask[$field] == $user) {
+                return $userTask;
+            }
+        }
+        return "NotFound";
+    }
+
+    public function partnersToString($partners) {
+        if(!empty($partners)) {
+            return $this->partnersToStringSeparator($partners, ",", false);
+        }
+        else return "";
+    }
+
     public function pickUpTaskCalendar() {
         $data = "";
         foreach($this->usersTask as $userTask) {
             $data = $data . "-----> " . $userTask["userRealName"] . "\n" . "Location: " . $userTask["location"] . "\n" . "Position: " . $userTask["position"]["x"] . ", " . $userTask["position"]["y"] . "\n";
             if($this->numberPartners > 0) {
-               $data = $data  . "Partners: " . $this->partnersToString($userTask["partners"]) . "\n";
+               $data = $data  . "Partners: " . $this->pickUpPartnersToString($userTask["partners"]) . "\n";
             }
+            $data = $data . "\n";
         }
         return $data;
     }
-    private function partnersToString($partners) {
+    private function pickUpPartnersToString($partners) {
+        return $this->partnersToStringSeparator($partners, ", ", true);
+    }
+    private function partnersToStringSeparator($partners, $separator, $realName) {
         $usersString = "";
         foreach ($partners as $partner) {
-            $usersString = $usersString . $this->getUserRealName($partner) . ", ";
+            if($realName) {
+                $usersString = $usersString . $this->getUserRealName($partner) . $separator;
+            }
+            else {
+                $usersString = $usersString . $partner . $separator;
+            }
         }
-        $usersString = rtrim($usersString, ",");
+        $usersString = rtrim($usersString, $separator);
         return $usersString;
     }
     private function getUserRealName($userName) {

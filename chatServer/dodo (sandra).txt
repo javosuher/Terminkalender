@@ -1,0 +1,32 @@
+CHATS 
+================================================= 
+
+
+
+CALENDAR TASKS 
+================================================= 
+
+------------ zoo ------------ 
+
+------------ beber ------------ 
+-----> maria
+Location: en la feria
+Position: 2.0, 1.0
+Partners: juan
+-----> juan
+Location: la feria
+Position: 2.0, 2.0
+Partners: maria
+
+------------ aletear ------------ 
+
+------------ pescar ------------ 
+
+------------ leer un libro ------------ 
+-----> maria
+Location: mi tias hiouse
+Position: 1.0, 1.0
+-----> juan
+Location: mi casa
+Position: 1.0, 4.0
+

@@ -35,4 +35,8 @@ public class TasktableActor extends ScrollWindow {
 		setHeight(AppMain.HEIGHT);
 		pad(8);
 	}
+
+	public Tasktable getTasktable() {
+		return tasktable;
+	}
 }

@@ -6,6 +6,7 @@ import com.project.terminkalender.AppMain;
 import com.project.terminkalender.websockets.WebSockets;
 
 public class TaskCalendar {
+	private Slot slot;
 	private String description, location;
 	private int numberPartners;
 	private Vector2 position;
@@ -100,6 +101,13 @@ public class TaskCalendar {
 	}
 	public void setNumberPartners(int numberPartners) {
 		this.numberPartners = numberPartners;
+	}
+	
+	public Slot getSlot() {
+		return slot;
+	}
+	public void setSlot(Slot slot) {
+		this.slot = slot;
 	}
 	
 	@Override

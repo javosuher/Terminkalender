@@ -19,6 +19,7 @@ public class SetTaskInCalendarDialog extends DialogActor {
 	private Label partnerLabel, locationLabel;
 	private Array<SelectBox<String>> partnertsboxes;
 	private TextField locationText;
+	private Array<String> users;
 
 	public SetTaskInCalendarDialog(String title, Skin skin) {
 		super(title, skin);
@@ -29,6 +30,10 @@ public class SetTaskInCalendarDialog extends DialogActor {
 		partnertsboxes = new Array<SelectBox<String>>();
 		locationText = new TextField("", skin);
 		TextButton acceptButton = new TextButton("Accept", skin);
+		
+		Game game = AppMain.user.getGame();
+		users = new Array<String>(game.getUsers());
+		users.removeValue(AppMain.user.getUserName(), false);
 		
 		getButtonTable().defaults().width(150).height(50);
 		getContentTable().padTop(40);
@@ -46,12 +51,11 @@ public class SetTaskInCalendarDialog extends DialogActor {
 		getContentTable().clear();
 		partnertsboxes.clear();
 		
-		Game game = AppMain.user.getGame();
 		int numberPartners = task.getNumberPartners();
 		Array<String> partnerts = task.getPartners();
 		for(int index = 0; index < numberPartners; ++index) {
 			SelectBox<String> partnertsBox = new SelectBox<String>(Resources.skin);
-			partnertsBox.setItems(game.getUsers());
+			partnertsBox.setItems(users);
 			if(partnerts.size > index) {
 				String partnerString = partnerts.get(index);
 				partnertsBox.setSelected(partnerString);
@@ -80,6 +84,7 @@ public class SetTaskInCalendarDialog extends DialogActor {
 		else {
 			task.setLocation(locationText.getText());
 			int numberPartners = partnertsboxes.size;
+			task.clearPartners();
 			for(int index = 0; index < numberPartners; ++index) {
 				SelectBox<String> partnertsBox = partnertsboxes.get(index);
 				task.addPartner(partnertsBox.getSelected());

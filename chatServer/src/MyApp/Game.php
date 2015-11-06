@@ -5,6 +5,8 @@ use MyApp\Chat;
 use MyApp\TaskCalendar;
 
 class Game {
+    const POINTSPLIT = ":";
+    const DATASPLIT = ";";
     const TASKLIMITSPLIT = "-";
     const SPLIT = ",";
 
@@ -163,6 +165,37 @@ class Game {
         }
         return false;
     }
+    public function getTasksDataFromUser($userName) {
+        $tasks = "";
+        foreach($this->tasksData as $task) {
+            $taskUser = $task->getUserTaskDataByRealName($userName);
+            if($taskUser !== "NotFound") {
+                $tasks = $tasks . $task->getName() . Game::DATASPLIT . $taskUser["location"] . Game::DATASPLIT . $taskUser["position"]["x"] . Game::SPLIT . $taskUser["position"]["y"] . Game::DATASPLIT . $task->partnersToString($taskUser["partners"]) . Game::POINTSPLIT;
+            }
+        }
+        return $tasks;
+    }
+    public function validateTasksDataFromUser($userUserName) {
+        $wrongTasks = "";
+        foreach($this->tasksData as $task) {
+            $taskUser = $task->getUserTaskDataByUserName($userUserName);
+            if(!$this->validate($task, $taskUser)) {
+                $wrongTasks = $wrongTasks . $task->getName() . Game::POINTSPLIT;
+            }
+        }
+        return $wrongTasks;
+    }
+    private function validate($task, $taskUser) {
+        if(!empty($taskUser["partners"])) {
+            foreach($taskUser["partners"] as $partner) {
+                $taskPartner = $task->getUserTaskDataByUserName($partner);
+                if($taskPartner !== "NotFound" && ($taskUser["position"]["x"] !== $taskPartner["position"]["x"] || $taskUser["position"]["y"] !== $taskPartner["position"]["y"])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     public function pickUpData() {
         return $this->pickUpChatData() . "\n\n" . $this->pickUpCalendarData();
@@ -202,8 +235,8 @@ class Game {
     public function getChats() {
         return $this->chats;
     }
-    public function getCalendars() {
-        return $this->calendars;
+    public function getTasksData() {
+        return $this->tasksData;
     }
 }
 

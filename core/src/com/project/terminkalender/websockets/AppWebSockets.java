@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.AppMain;
 import com.project.terminkalender.Resources;
 import com.project.terminkalender.chat.Room;
+import com.project.terminkalender.screens.CalendarScreen;
 import com.project.terminkalender.screens.LoginGamesScreen;
 import com.project.terminkalender.screens.LoginScreen;
 import com.project.terminkalender.userdata.User;
@@ -27,10 +28,14 @@ public class AppWebSockets extends WebSockets {
 			updateUsers(message);
 		else if(action.equals(CHAT))
 			updateChat(message);
+		else if(action.equals(TASKS))
+			updateCalendar(message);
+		else if(action.equals(TASKVALIDATE))
+			validatedTask(message);
 	}
 	
 	public void teacherGamesActive(String message) {
-		Array<String> games = constructArrayGames(message);
+		Array<String> games = constructArrayData(message);
 		LoginScreen loginScreen = (LoginScreen) AppMain.loginScreen;
 		LoginGamesScreen loginGamesScreen = (LoginGamesScreen) AppMain.loginGamesScreen;
 		loginScreen.login();
@@ -69,10 +74,23 @@ public class AppWebSockets extends WebSockets {
 			room.updateChatFromUser(userWithMessages[0], userWithMessages[1]);
 		}
 	}
-	private Array<String> constructArrayGames(String gamesData) {
-		String [] games = gamesData.split(POINTSPLIT);
-		if(!games[0].equals("")) {
-			return new Array<String>(games);
+	public void updateCalendar(String message) {
+		Array<String> tasks = constructArrayData(message);
+		if(tasks.size > 0) {
+			AppMain.finishLoadingGameScreens();
+			CalendarScreen calendarScreen = (CalendarScreen) AppMain.calendarScreen;
+			calendarScreen.updateTasks(tasks);
+		}
+	}
+	public void validatedTask(String message) {
+		String [] wrongTasks = message.split(POINTSPLIT);
+		CalendarScreen calendarScreen = (CalendarScreen) AppMain.calendarScreen;
+		calendarScreen.validateTasks(new Array<String>(wrongTasks));
+	}
+	private Array<String> constructArrayData(String stringData) {
+		String [] array = stringData.split(POINTSPLIT);
+		if(!array[0].equals("")) {
+			return new Array<String>(array);
 		}
 		else return new Array<String>();
 	}
@@ -91,10 +109,10 @@ public class AppWebSockets extends WebSockets {
 		}
 		else return false;
 	}
-	/*public boolean askUsers() {
+	public boolean askUsers() {
 		User user = AppMain.user;
 		return sendMessage(USERSROOM + POINTSPLIT + user.getName() + POINTSPLIT + user.getGame().getName() + POINTSPLIT + user.getTeacher());
-	}*/
+	}
 	public boolean askChatFromUser(String userDestination, int messagesSize) {
 		User user = AppMain.user;
 		return sendMessage(CHAT + POINTSPLIT + user.getUserName() + POINTSPLIT + user.getGame().getName() + 
@@ -105,9 +123,10 @@ public class AppWebSockets extends WebSockets {
 		return sendMessage(TASK + POINTSPLIT + user.getUserName() + POINTSPLIT + user.getGame().getName() + 
 				POINTSPLIT + user.getTeacher() + POINTSPLIT + description + POINTSPLIT + location + POINTSPLIT + position + POINTSPLIT + partners);
 	}
-	public boolean sendCalendarInformation() {
+	public boolean validateCalendarData() {
 		User user = AppMain.user;
-		return sendMessage(TASKVALIDATE + POINTSPLIT);
+		return sendMessage(TASKVALIDATE + POINTSPLIT + user.getUserName() + POINTSPLIT + user.getGame().getName() + 
+				POINTSPLIT + user.getTeacher());
 	}
 	
 	public void setRoom(Room room) {

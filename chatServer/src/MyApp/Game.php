@@ -24,10 +24,13 @@ class Game {
         $taksSplit = explode(Game::SPLIT, $tasks);
         $usersSplit = explode(Game::SPLIT, $users);
 
-        $userName = 0;
+        $file = fopen("src/MyApp/names.csv","r");
+        $userNames = fgetcsv($file);
+        fclose($file);
+        shuffle($userNames);
         foreach($usersSplit as $user) {
+            $userName = array_pop($userNames);
             array_push($this->users, array("name"=>$user, "userName"=>$userName, "id"=>"NoID"));
-            ++$userName;
         }
 
         foreach($taksSplit as $task) {

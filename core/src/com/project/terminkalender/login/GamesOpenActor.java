@@ -2,6 +2,7 @@ package com.project.terminkalender.login;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -23,12 +24,12 @@ public class GamesOpenActor extends Table {
 		
 		games = new GamesOpen();
 		gamesWindow = new ScrollWindow("Games", skin, games.getGamesTable());
-		TextButton backButton = new TextButton("Back", Resources.skin);
+		ImageButton backButton = new ImageButton(skin, "imageButtonBack");
 		
 		setFillParent(true);
 		
 		add(gamesWindow).width(800).height(TeacherMain.HEIGHT - 16).expand().left().pad(8);
-		add(backButton).width(150).height(75).getTable().pad(8);
+		add(backButton).width(135).height(125).getTable().pad(16);
 		
 		backButton.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
@@ -48,9 +49,18 @@ public class GamesOpenActor extends Table {
 			int actualColumn = 0;
 			games.getGamesTable().clear();
 			for(final Game game : gamesArray) {
+				float width = 200;
+				float height = 125;
+				
 				final TextButton gameButton = new TextButton(game.getName(), Resources.skin);
-				final GameSelectionDialog gameSelectionDialog = new GameSelectionDialog("Hola", game, Resources.skin);
-				gamesTable.add(gameButton).width(200).height(100).pad(30);
+				float labelHeight = (gameButton.getLabel().getWidth() / gameButton.getWidth() * gameButton.getLabel().getHeight() + height);
+				gameButton.getLabel().setWrap(true);
+				if(gameButton.getLabel().getWidth() > width) {
+					height = labelHeight;
+				}
+				
+				final GameSelectionDialog gameSelectionDialog = new GameSelectionDialog("", game, Resources.skin);
+				gamesTable.add(gameButton).width(200).height(125).pad(30);
 				
 				++actualColumn;
 				if(actualColumn % 3 == 0) {

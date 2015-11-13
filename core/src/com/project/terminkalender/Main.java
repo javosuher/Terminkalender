@@ -24,7 +24,6 @@ abstract class Main extends Game {
 		camera = new OrthographicCamera();
 		viewport = new FitViewport(WIDTH, HEIGHT, camera);
 		viewport.update(WIDTH, HEIGHT, true);
-		Resources.load();
 		Gdx.input.setCatchBackKey(true);
 	}
 	

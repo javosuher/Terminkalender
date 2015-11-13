@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.AppMain;
 import com.project.terminkalender.Resources;
 import com.project.terminkalender.chat.Room;
+import com.project.terminkalender.login.Login;
 import com.project.terminkalender.screens.CalendarScreen;
 import com.project.terminkalender.screens.LoginGamesScreen;
 import com.project.terminkalender.screens.LoginScreen;
@@ -11,6 +12,7 @@ import com.project.terminkalender.userdata.User;
 
 public class AppWebSockets extends WebSockets {
 	private Room room;
+	private Login login;
 	
 	public AppWebSockets(String serverDirection) {
 		super(serverDirection);
@@ -18,7 +20,9 @@ public class AppWebSockets extends WebSockets {
 	
 	@Override
 	protected void options(String action, String message) {
-		if(action.equals(LOGIN))
+		if(action.equals(TEACHERS))
+			teachers(message);
+		else if(action.equals(LOGIN))
 			teacherGamesActive(message);
 		else if(action.equals(ENTERGAME))
 			enterGame(message);
@@ -34,6 +38,10 @@ public class AppWebSockets extends WebSockets {
 			validatedTask(message);
 	}
 	
+	public void teachers(String message) {
+		Array<String> teachers = new Array<String>(message.split(POINTSPLIT));
+		login.updateTeachersFromServer(teachers);
+	}
 	public void teacherGamesActive(String message) {
 		Array<String> games = constructArrayData(message);
 		LoginScreen loginScreen = (LoginScreen) AppMain.loginScreen;
@@ -95,6 +103,12 @@ public class AppWebSockets extends WebSockets {
 		else return new Array<String>();
 	}
 	
+	public boolean askTeachers() {
+		if(connected) {
+			return sendMessage(TEACHERS + POINTSPLIT);
+		}
+		else return false;
+	}
 	public boolean login(String teacher) {
 		return sendMessage(LOGIN + POINTSPLIT + teacher);
 	}
@@ -131,5 +145,8 @@ public class AppWebSockets extends WebSockets {
 	
 	public void setRoom(Room room) {
 		this.room = room;
+	}
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 }

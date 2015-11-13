@@ -35,8 +35,13 @@ public class TeacherGame extends Game {
 	}
 	
 	public void openGamePetition() {
-		TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;
-		TeacherMain.teacherWebSockets.openGame(name, teacherGamesScreen.getTeacher(), password, tasksToString(), usersToString());
+		if(tasks.size == 0 || users.size == 0) {
+			Resources.warningDialog.show("You must add at least one task and one user", TeacherMain.teacherGamesScreen.getStage());
+		}
+		else {
+			TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;
+			TeacherMain.teacherWebSockets.openGame(name, teacherGamesScreen.getTeacher(), password, tasksToString(), usersToString());
+		}
 	}
 	public void closeGamePetition() {
 		TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;

@@ -17,12 +17,8 @@ public class User {
 	}
 	
 	public void login(String teacher) {
-		if(teacher.equals("")) {
-			Resources.warningDialog.show("You must fill the gaps", AppMain.loginScreen.getStage());
-		}
-		else if(teacher.contains(TeacherWebSockets.DATASPLIT) || 
-				teacher.contains(TeacherWebSockets.POINTSPLIT) || teacher.contains(TeacherWebSockets.TASKSPLIT)) {
-			Resources.warningDialog.show("you musn't use ',', ';' or ':'", AppMain.loginScreen.getStage());
+		if(teacher == null) {
+			Resources.warningDialog.show("Select a Teacher", AppMain.loginScreen.getStage());
 		}
 		else {
 			this.teacher = teacher.toLowerCase();
@@ -31,12 +27,12 @@ public class User {
 	}
 	public void enterGame(String name, String gameName, String password) {
 		if(name.equals("") || password.equals("")) {
-			Resources.warningDialog.show("You must fill the gaps", AppMain.loginScreen.getStage());
+			Resources.warningDialog.show("You must fill the gaps", AppMain.loginGamesScreen.getStage());
 		}
 		else if(name.contains(TeacherWebSockets.DATASPLIT) || name.contains(TeacherWebSockets.POINTSPLIT) || 
 				name.contains(TeacherWebSockets.TASKSPLIT) || password.contains(TeacherWebSockets.DATASPLIT) || password.contains(TeacherWebSockets.POINTSPLIT) || 
 				password.contains(TeacherWebSockets.TASKSPLIT)) {
-			Resources.warningDialog.show("you musn't use ',', ';' or ':'", AppMain.loginScreen.getStage());
+			Resources.warningDialog.show("you musn't use ',', ';' or ':'", AppMain.loginGamesScreen.getStage());
 		}
 		else {
 			this.name = name.toLowerCase();

@@ -1,18 +1,19 @@
 package com.project.terminkalender.tools;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.project.terminkalender.AppMain;
+import com.project.terminkalender.Resources;
 import com.project.terminkalender.TeacherMain;
 
-public class ReconnectButton extends TextButton {
+public class ReconnectButton extends ImageButton {
 	
 	public ReconnectButton(Skin skin) {
-		super("Reconnect", skin);
+		super(skin, "imageButtonReconnect");
 		
-		setBounds(AppMain.WIDTH - 118, 8, 110, 50);
+		setBounds(AppMain.WIDTH - 108, 8, 100, 75);
 		
 		this.addListener(new ClickListener() {
 
@@ -22,5 +23,12 @@ public class ReconnectButton extends TextButton {
 				catch(Exception exception) { TeacherMain.reconnect(); }
 			}
 		});
+	}
+	
+	public void setOrangeStyle() {
+		setStyle(Resources.skin.get("orangeImageButtonReconnect", ImageButtonStyle.class));
+	}
+	public void setDefaultStyle() {
+		setStyle(Resources.skin.get("imageButtonReconnect", ImageButtonStyle.class));
 	}
 }

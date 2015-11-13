@@ -377,3 +377,10 @@ dialogBackground
   orig: 3, 3
   offset: 0, 0
   index: -1
+transparency
+  rotate: false
+  xy: 700, 15
+  size: 3, 3
+  orig: 3, 3
+  offset: 0, 0
+  index: -1

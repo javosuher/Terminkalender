@@ -27,20 +27,31 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.project.terminkalender.Resources;
 
-public class kennySkin extends Skin {
+public class KennySkin extends Skin {
+	public static final String TEACHER = "Teacher";
+	public static final String APP = "App";
 
-	public kennySkin() {
+	public KennySkin(String application) {
 		TextureAtlas blueAtlas = new TextureAtlas("skins/ui-blue.atlas");
 		TextureAtlas redAtlas = new TextureAtlas("skins/ui-red.atlas");
 		TextureAtlas greenAtlas = new TextureAtlas("skins/ui-green.atlas");
 		TextureAtlas orangeAtlas = new TextureAtlas("skins/ui-orange.atlas");
 		TextureAtlas whiteAtlas = new TextureAtlas("skins/ui-white.atlas");
 		
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/babyblue.ttf"));
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Blogger_Sans.otf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 20;
+		int medSize = 10, bigSize = 20;
+		if(application.equals(APP)) {
+			medSize = 35;
+			bigSize = 50;
+		}
+		else if(application.equals(TEACHER)) {
+			medSize = 20;
+			bigSize = 50;
+		}
+		parameter.size = medSize;
 		BitmapFont fontMed = generator.generateFont(parameter);
-		parameter.size = 40;
+		parameter.size = bigSize;
 		BitmapFont fontBig = generator.generateFont(parameter);
 		generator.dispose();
 		
@@ -68,7 +79,7 @@ public class kennySkin extends Skin {
 																	getDrawable("button_04"), 
 																	getFont("FontMed"));
 		
-		final TextButtonStyle textButtonStyle32 = new TextButtonStyle(getDrawable("button_04"), 
+		final TextButtonStyle textButtonStyleBig = new TextButtonStyle(getDrawable("button_04"), 
 																	  getDrawable("button_02"), 
 																	  getDrawable("button_04"), 
 																	  getFont("FontBig"));
@@ -79,7 +90,32 @@ public class kennySkin extends Skin {
 																			 getDrawable("button_04"), 
 																			 new TextureRegionDrawable(image), 
 																			 new TextureRegionDrawable(image), 
-																			 new TextureRegionDrawable(image));															 
+																			 new TextureRegionDrawable(image));
+		
+		image = new TextureRegion(Resources.assets.get("arrowLeft.png", Texture.class));														 
+		final ImageButtonStyle imageButtonStyleArrowLeft = new ImageButtonStyle(getDrawable("button_04"), 
+																			 getDrawable("button_02"), 
+																			 getDrawable("button_04"), 
+																			 new TextureRegionDrawable(image), 
+																			 new TextureRegionDrawable(image), 
+																			 new TextureRegionDrawable(image));
+		
+		image = new TextureRegion(Resources.assets.get("reconnect.png", Texture.class));														 
+		final ImageButtonStyle imageButtonStyleReconnect = new ImageButtonStyle(getDrawable("button_04"), 
+																			 getDrawable("button_02"), 
+																			 getDrawable("button_04"), 
+																			 new TextureRegionDrawable(image), 
+																			 new TextureRegionDrawable(image), 
+																			 new TextureRegionDrawable(image));	
+		
+		image = new TextureRegion(Resources.assets.get("return.png", Texture.class));														 
+		final ImageButtonStyle imageButtonStyleBack = new ImageButtonStyle(getDrawable("button_04"), 
+																			 getDrawable("button_02"), 
+																			 getDrawable("button_04"), 
+																			 new TextureRegionDrawable(image), 
+																			 new TextureRegionDrawable(image), 
+																			 new TextureRegionDrawable(image));	
+			
 		
 		final ScrollPaneStyle scrollPaneStyle = new ScrollPaneStyle(getDrawable("color_widgettext"), 
 																	getDrawable("scroll_back_hor"), 
@@ -118,6 +154,12 @@ public class kennySkin extends Skin {
 														getDrawable("window_03"));
 		
 		windowDialogStyle.stageBackground = newDrawable("dialogBackground", new Color(0, 0, 0, 0.45f));
+		
+		final WindowStyle windowDialogTextFieldStyle = new WindowStyle(getFont("FontMed"), 
+															  		   Color.BLACK, 
+															  		   getDrawable("transparency"));
+		
+		windowDialogTextFieldStyle.stageBackground = newDrawable("dialogBackground", new Color(0, 0, 0, 0.45f));
 		
 		final WindowStyle windowDescriptionStyle = new WindowStyle(getFont("FontMed"), 
 				 										 	  	   Color.BLACK, 
@@ -164,8 +206,11 @@ public class kennySkin extends Skin {
 		add("default", buttonStyle);
 		add("calender", calenderButtonStyle);
 		add("default", textButtonStyle);
-		add("default32", textButtonStyle32);
-		add("imageButtonFolder", imageButtonStyleFolder);
+		add("defaultBig", textButtonStyleBig);
+		add("imageButtonFolder", imageButtonStyleFolder); 
+		add("imageButtonArrowLeft", imageButtonStyleArrowLeft); 
+		add("imageButtonReconnect", imageButtonStyleReconnect);
+		add("imageButtonBack", imageButtonStyleBack);
 		add("default", scrollPaneStyle);
 		add("window", scrollPaneWindowStyle);
 		add("default", splitPaneStyle);
@@ -173,6 +218,7 @@ public class kennySkin extends Skin {
 		add("window2", window2Style);
 		add("window3", window3Style);
 		add("windowDialog", windowDialogStyle);
+		add("windowDialogTextField", windowDialogTextFieldStyle);
 		add("windowDescription", windowDescriptionStyle);
 		add("default", progressBarStyle);
 		add("default", sliderStyle);
@@ -186,17 +232,29 @@ public class kennySkin extends Skin {
         
         addRegions(redAtlas);
         
-        final ButtonStyle closeRedButtonStyle = new ButtonStyle(getDrawable("button_cross_red"), 
-				 											 getDrawable("icon_circle_red"), 
-				 											 getDrawable("button_cross_red"));
+        TextureRegion cross = new TextureRegion(Resources.assets.get("cross.png", Texture.class));
+        TextureRegion redCircle = new TextureRegion(Resources.assets.get("redCircle.png", Texture.class));
+        
+        final ButtonStyle closeRedButtonStyle = new ButtonStyle(new TextureRegionDrawable(cross), 
+        														new TextureRegionDrawable(redCircle), 
+        														new TextureRegionDrawable(cross));
         
         final TextButtonStyle redTextButtonStyle = new TextButtonStyle(getDrawable("button_04_red"), 
 																	getDrawable("button_02_red"), 
 																	getDrawable("button_04_red"), 
 																	getFont("FontMed"));
         
+        image = new TextureRegion(Resources.assets.get("return.png", Texture.class));													 
+		final ImageButtonStyle imageButtonStylehideKeyboard = new ImageButtonStyle(getDrawable("button_04_red"), 
+																			 	getDrawable("button_02_red"), 
+																			 	getDrawable("button_04_red"), 
+																			 	new TextureRegionDrawable(image), 
+																			 	new TextureRegionDrawable(image), 
+																			 	new TextureRegionDrawable(image));	
+        
         add("closeRedButton", closeRedButtonStyle);
         add("redTextButton", redTextButtonStyle);
+        add("imageButtonhideKeyboard", imageButtonStylehideKeyboard);
         
         addRegions(whiteAtlas);
         
@@ -234,6 +292,15 @@ public class kennySkin extends Skin {
 			     														 getDrawable("button_04_orange"), 
 			     														 getFont("FontMed"));
         
+        image = new TextureRegion(Resources.assets.get("reconnect.png", Texture.class));														 
+		final ImageButtonStyle orangeImageButtonStyleReconnect = new ImageButtonStyle(getDrawable("button_04_orange"), 
+																			 getDrawable("button_02_orange"), 
+																			 getDrawable("button_04_orange"), 
+																			 new TextureRegionDrawable(image), 
+																			 new TextureRegionDrawable(image), 
+																			 new TextureRegionDrawable(image));	
+        
         add("orangeTextButton", orangeTextButtonStyle);
+        add("orangeImageButtonReconnect", orangeImageButtonStyleReconnect);
 	}
 }

@@ -13,10 +13,7 @@ public class DialogActor extends Dialog {
 	public DialogActor(String title, Skin skin) {
 		super("", skin, "windowDialog");
 		
-		Button closeButton;
-		try { closeButton = new Button(Resources.skin.get("closeRedButton", ButtonStyle.class)); }
-		catch(Exception exception) { closeButton = new Button(Resources.skin.get("closeRedButton", ButtonStyle.class)); }
-		
+		Button closeButton = new Button(Resources.skin.get("closeRedButton", ButtonStyle.class));
 		
 		center();
 		setMovable(false);

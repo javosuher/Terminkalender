@@ -13,6 +13,7 @@ import com.project.terminkalender.tools.ReconnectButton;
 
 public class LoginScreen extends AbstractScreen {
 	private Background background;
+	private Title logo; 
 	private ReconnectButton reconnectButton;
 	private LoginActor loginActor;
 	private boolean changeScreen;
@@ -24,12 +25,13 @@ public class LoginScreen extends AbstractScreen {
 		
 		changeScreen = false;
 		background = new Background(backgroundTexture);
-		reconnectButton = new ReconnectButton(Resources.skin);
+		reconnectButton = Resources.reconnectButton;
 		loginActor = new LoginActor(Resources.skin);
+		logo = new Title();
 		
 		stage.addActor(background);
-		stage.addActor(reconnectButton);
 		stage.addActor(loginActor);
+		stage.addActor(logo);
 	}
 	
 	public void login() {
@@ -39,11 +41,13 @@ public class LoginScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
+		stage.addActor(reconnectButton);
 	} 
 	
 	@Override
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
+		reconnectButton.remove();
 	}
 	
 	@Override

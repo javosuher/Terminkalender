@@ -22,16 +22,17 @@ public class TeacherLoginRegisterScreen extends AbstractScreen {
 		
 		background = new Background(backgroundTexture);
 		teacherLoginRegisterActor = new TeacherLoginRegisterActor(Resources.skin);
-		reconnectButton = new ReconnectButton(Resources.skin);
+		reconnectButton = Resources.reconnectButton;
 		
 		stage.addActor(background);
 		stage.addActor(teacherLoginRegisterActor);
-		stage.addActor(reconnectButton);
+		
 	}
 	
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
+		stage.addActor(reconnectButton);
 	} 
 	
 	@Override

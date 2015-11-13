@@ -25,12 +25,11 @@ public class LoginGamesScreen extends AbstractScreen {
 		TextureRegion backgroundTexture = new TextureRegion(Resources.assets.get("background.png", Texture.class));
 		
 		background = new Background(backgroundTexture);
-		reconnectButton = new ReconnectButton(Resources.skin);
+		reconnectButton = Resources.reconnectButton;
 		teacherGames = new GamesOpenActor(Resources.skin);
 		enterGame = false;
 		
 		stage.addActor(background);
-		stage.addActor(reconnectButton);
 		stage.addActor(teacherGames);	
 	}  
 	public void updateGames(Array<String> games) {
@@ -47,11 +46,13 @@ public class LoginGamesScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
+		stage.addActor(reconnectButton);
 	} 
 	
 	@Override
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
+		reconnectButton.remove();
 	}
 	
 	@Override

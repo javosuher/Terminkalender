@@ -19,7 +19,7 @@ public class WarningDialogActor extends Dialog {
 		setMovable(false);
 		setResizable(false);
 		setModal(true);
-		getButtonTable().defaults().width(100).height(50);
+		getButtonTable().defaults().width(175).height(100);
 		pad(20);
 		
 		getContentTable().padTop(40);

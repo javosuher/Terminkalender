@@ -11,6 +11,7 @@ class Main implements MessageComponentInterface {
     const TASKLIMITSPLIT = "-";
     const TASKSPLIT = ",";
 
+    const TEACHERS = "Teachers";
 	const LOGIN = "Login";
     const ENTERGAME = "EnterGame";
 	const MESSAGE = "Message";
@@ -40,7 +41,11 @@ class Main implements MessageComponentInterface {
         $this->token = sem_get(0);
         echo "Init Server!\n";
 
-        $this->games->attach(new Game("dodo", "sandra", "f", "zoo-2,beber-2,aletear-2,pescar-3,leer un libro-1", "juan,pepe,maria,andrés,perico,taquiato")); // Example OpenGame
+        $this->games->attach(new Game("dodo", "sandra", "f", "zoo-2,beber-2,aletear-2,pescar-3,leer un libro-1", "juan,pepe,maria,andrés,perico,taquiato,pedro,camilo,afterwak,petanca,casimiro,pafer,hyeri,lontu.vetertu,calsd,fewjwd,sadkjda,dasjdja,das,dsa")); // Example OpenGame
+        $this->games->attach(new Game("banca", "sandra", "f", "zoo-2,beber-2,aletear-2,pescar-3,leer un libro-1", "juan,pepe,maria,andrés,perico,taquiato,pedro,camilo,afterwak,petanca,casimiro,pafer,hyeri,lontu.vetertu,calsd,fewjwd,sadkjda,dasjdja,das,dsa"));
+        $this->games->attach(new Game("prueba", "sandra", "f", "zoo-2,beber-2,aletear-2,pescar-3,leer un libro-1", "juan,pepe,maria,andrés,perico,taquiato,pedro,camilo,afterwak,petanca,casimiro,pafer,hyeri,lontu.vetertu,calsd,fewjwd,sadkjda,dasjdja,das,dsa"));
+        $this->games->attach(new Game("otro", "sandra", "f", "zoo-2,beber-2,aletear-2,pescar-3,leer un libro-1", "juan,pepe,maria,andrés,perico,taquiato,pedro,camilo,afterwak,petanca,casimiro,pafer,hyeri,lontu.vetertu,calsd,fewjwd,sadkjda,dasjdja,das,dsa"));
+        $this->games->attach(new Game("Cansino tu no crees", "sandra", "f", "zoo-2,beber-2,aletear-2,pescar-3,leer un libro-1", "juan,pepe,maria,andrés,perico,taquiato,pedro,camilo,afterwak,petanca,casimiro,pafer,hyeri,lontu.vetertu,calsd,fewjwd,sadkjda,dasjdja,das,dsa"));
     }
 
     public function onOpen(ConnectionInterface $conn) {
@@ -52,7 +57,10 @@ class Main implements MessageComponentInterface {
     public function onMessage(ConnectionInterface $from, $msg) {
         $action = explode(Main::POINTSPLIT, $msg)[0];
 
-        if(strcmp($action, Main::LOGIN) == 0) {
+        if(strcmp($action, Main::TEACHERS) == 0) {
+            $this->sendTeachers($from, $msg);
+        }
+        else if(strcmp($action, Main::LOGIN) == 0) {
             $this->login($from, $msg);
         }
         else if(strcmp($action, Main::ENTERGAME) == 0) {
@@ -116,6 +124,17 @@ class Main implements MessageComponentInterface {
 
     // ------------------------------- Client Functions ------------------------------- 
 
+    private function sendTeachers(ConnectionInterface $from, $msg) {
+        echo sprintf('Connection %d want teachers' . "\n", $from->resourceId);
+
+        $teachers = $this->searchTeachersInDataBase();
+        $trueMessage = Main::TEACHERS . Main::POINTSPLIT;
+        foreach($teachers as $teacher) {
+            $trueMessage = $trueMessage . $teacher["username"] . Main::POINTSPLIT;
+        }
+        $from->send($trueMessage);
+
+    }
     private function login(ConnectionInterface $from, $msg) {
     	$teacher = explode(Main::POINTSPLIT, $msg)[1];
         echo sprintf('Connection %d want Open Games from teacher: "%s"' . "\n", $from->resourceId, $teacher);
@@ -425,6 +444,17 @@ class Main implements MessageComponentInterface {
 
     // ------------------------------- Data Base Functions -------------------------------
 
+    private function searchTeachersInDataBase() {
+        try {
+            $sql = $this->dataBase->prepare("SELECT username FROM teachers");
+            $sql->execute();
+            $result = $sql->fetchAll();
+            //print_r($result);
+            return $result;
+        } catch(PDOException $e) {
+            echo $sql . "<br>" . $e->getMessage();
+        }
+    }
     private function searchTeacherInDataBase($userTeacher) {
     	try {
     		$sql = $this->dataBase->prepare("SELECT * FROM teachers WHERE username =:username");

@@ -6,6 +6,7 @@ import com.project.terminkalender.screens.CalendarScreen;
 import com.project.terminkalender.screens.ChatScreen;
 import com.project.terminkalender.screens.LoginGamesScreen;
 import com.project.terminkalender.screens.LoginScreen;
+import com.project.terminkalender.tools.KennySkin;
 import com.project.terminkalender.userdata.User;
 import com.project.terminkalender.websockets.AppWebSockets;
 import com.project.terminkalender.websockets.ServerDirection;
@@ -19,6 +20,7 @@ public class AppMain extends Main {
 	@Override
 	public void create() {
 		super.create();
+		Resources.load(KennySkin.APP);
 		webSockets = new AppWebSockets(ServerDirection.serverDirection);
 		main = this;
 		user = new User();

@@ -27,7 +27,7 @@ public class ScrollWindow extends Window {
 		mainValues(scrollTable);
 	}
 	private void mainValues(ScrollPane scrollTable) {
-		getTitleTable().padTop(20);
+		getTitleTable().padTop(35);
 		setMovable(false);
 		
 		add(scrollTable).expand().fill().padTop(50);

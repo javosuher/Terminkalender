@@ -3,6 +3,7 @@ package com.project.terminkalender;
 import com.project.terminkalender.screens.AbstractScreen;
 import com.project.terminkalender.screens.TeacherGamesScreen;
 import com.project.terminkalender.screens.TeacherLoginRegisterScreen;
+import com.project.terminkalender.tools.KennySkin;
 import com.project.terminkalender.websockets.ServerDirection;
 import com.project.terminkalender.websockets.TeacherWebSockets;
 
@@ -14,6 +15,7 @@ public class TeacherMain extends Main {
 	@Override
 	public void create() {
 		super.create();
+		Resources.load(KennySkin.TEACHER);
 		teacherWebSockets = new TeacherWebSockets(ServerDirection.serverDirection);
 		main = this;
 		

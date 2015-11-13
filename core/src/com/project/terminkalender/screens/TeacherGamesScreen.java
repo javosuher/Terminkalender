@@ -32,7 +32,7 @@ public class TeacherGamesScreen extends AbstractScreen {
 		background = new Background(backgroundTexture);
 		gamesActor = new GamesActor(skin);
 		changeToLoginRegisterButton = new TextButton("Log out", skin);
-		reconnectButton = new ReconnectButton(skin);
+		reconnectButton = Resources.reconnectButton;
 		
 		stage.addActor(background);
 		stage.addActor(gamesActor);

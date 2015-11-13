@@ -170,6 +170,7 @@ public class GameDialogActor extends GameDialog {
 			public void changed (ChangeEvent event, Actor actor) {
 				Array<Task> tasks = TaskBoxToTask(tasksBox.getItems());
 				Array<String> users = usersBox.getItems();
+				
 				if(isTaskRepeat(tasks)) {
 					Resources.warningDialog.show("You mustn't have two or more tasks with the same name", TeacherMain.teacherGamesScreen.getStage());
 				}

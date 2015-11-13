@@ -9,6 +9,7 @@ import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
 
 import com.badlogic.gdx.Gdx;
+import com.project.terminkalender.Resources;
 
 public abstract class WebSockets {
 	public final static String POINTSPLIT = ":";
@@ -17,6 +18,7 @@ public abstract class WebSockets {
 	public final static String TASKLIMITSPLIT = "-";
 	public final static String CHATSPLIT = "=";
 	
+	public final static String TEACHERS = "Teachers";
 	public final static String LOGIN = "Login";
 	public final static String ENTERGAME = "EnterGame";
 	public final static String MESSAGE = "Message";
@@ -57,6 +59,7 @@ public abstract class WebSockets {
 			public void onOpen(ServerHandshake handshake) {
 				Gdx.app.log("WebSocket", "WSClient Conected.");
 				connected = true;
+				Resources.reconnectButton.setDefaultStyle();
 			}
 
 			@Override
@@ -78,6 +81,7 @@ public abstract class WebSockets {
 			public void onClose(int code, String reason, boolean remote) {
 				Gdx.app.log("WebSocket", "WSClient closed.");
 				connected = false;
+				Resources.reconnectButton.setOrangeStyle();
 			}
 		};
 		

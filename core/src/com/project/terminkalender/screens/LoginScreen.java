@@ -1,13 +1,17 @@
 package com.project.terminkalender.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.AppMain;
 import com.project.terminkalender.Resources;
+import com.project.terminkalender.login.ExitDialog;
 import com.project.terminkalender.login.LoginActor;
 import com.project.terminkalender.tools.ReconnectButton;
 
@@ -16,6 +20,7 @@ public class LoginScreen extends AbstractScreen {
 	private Title logo; 
 	private ReconnectButton reconnectButton;
 	private LoginActor loginActor;
+	private ExitDialog exitDialog;
 	private boolean changeScreen;
 	
 	public LoginScreen(Viewport viewport, SpriteBatch batch) {
@@ -27,11 +32,23 @@ public class LoginScreen extends AbstractScreen {
 		background = new Background(backgroundTexture);
 		reconnectButton = Resources.reconnectButton;
 		loginActor = new LoginActor(Resources.skin);
+		exitDialog = new ExitDialog(Resources.skin);
 		logo = new Title();
 		
 		stage.addActor(background);
 		stage.addActor(loginActor);
 		stage.addActor(logo);
+		
+		stage.addListener(new InputListener() {
+
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				if(keycode == Keys.BACK || keycode == Keys.ESCAPE) {
+					exitDialog.show(stage);
+				}
+				return true;
+			}
+		});
 	}
 	
 	public void login() {

@@ -1,6 +1,7 @@
 package com.project.terminkalender.tools;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,17 +11,22 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.project.terminkalender.AppMain;
 import com.project.terminkalender.Resources;
+import com.project.terminkalender.chat.ChatActor;
 
 public class DialogTextField extends Dialog {
 	private static final TextField textField = new TextField("", Resources.skin);
 	private static final ImageButton sendButton = new ImageButton(Resources.skin, "imageButtonArrowLeft");
 	private static final ImageButton cancelButton = new ImageButton(Resources.skin, "imageButtonhideKeyboard");
-	private TextFieldActor textFieldSource;
+	private TextField textFieldSource;
 	private boolean keyboardActive;
+	
+	private ChatActor chatActor;
+	private boolean isInChat;
 
 	public DialogTextField(Skin skin) {
 		super("", skin, "windowDialogTextField");
 		keyboardActive = false;
+		isInChat = false;
 		
 		setMovable(false);
 		setResizable(false);
@@ -36,12 +42,7 @@ public class DialogTextField extends Dialog {
 
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				keyboardActive = false;
-				
-				textFieldSource.setText(textField.getText());
-				textField.setText("");
-				hide();
-				
+				sendText();
 				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
@@ -49,14 +50,38 @@ public class DialogTextField extends Dialog {
 
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				keyboardActive = false;
-				
-				textField.setText("");
-				hide();
-				
+				cancelText();
 				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
+		
+		addListener(new InputListener() {
+
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				if(keycode == Keys.ENTER) {
+					sendText();
+				}
+				return true;
+			}
+		});
+	}
+	
+	private void sendText() {
+		textFieldSource.setText(textField.getText());
+		if(isInChat && AppMain.chatScreen.getStage() == getStage()) {
+			chatActor.sendMessageActor();
+		}
+		else {
+			keyboardActive = false;
+			hide();
+		}
+		textField.setText("");
+	}
+	private void cancelText() {
+		keyboardActive = false;
+		textField.setText("");
+		hide();
 	}
 
 	@Override
@@ -80,11 +105,16 @@ public class DialogTextField extends Dialog {
 		Gdx.input.setOnscreenKeyboardVisible(keyboardActive);
 	}
 
-	public void setTextFieldSource(TextFieldActor textFieldSource) {
+	public void setTextFieldSource(TextField textFieldSource) {
 		this.textFieldSource = textFieldSource;
 	}
 
 	public static TextField getTextfield() {
 		return textField;
+	}
+	
+	public void setChatActor(ChatActor chatActor) {
+		this.chatActor = chatActor;
+		isInChat = true;
 	}
 }

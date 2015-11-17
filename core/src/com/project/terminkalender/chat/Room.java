@@ -1,5 +1,6 @@
 package com.project.terminkalender.chat;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.AppMain;
@@ -22,7 +23,7 @@ public class Room {
 		chats.clear();
 		for(String user : users) {
 			if(!user.equals(AppMain.user.getUserName())) {
-				chats.add(new Chat(user));
+				chats.add(new Chat(user, this));
 			}
 		}
 		update = true;
@@ -38,15 +39,32 @@ public class Room {
 		chat.addMessages(splitMessages);
 	}
 	
-	public void updateMessageUser(String user, String message) {
+	public void updateMessageUserIfUserNoExist(String user, String message) {
 		int indexUser = indexUser(user);
 		if(indexUser == chats.size) {
-			Chat chat = new Chat(user);
+			Chat chat = new Chat(user, this);
 			chat.addMessageServer(message);
 			chats.add(chat);
 			update = true;
 		}
 		else chats.get(indexUser).addMessageServer(message);
+	}
+	public void updateMessageUser(String user, String message) {
+		int indexUser = indexUser(user);
+		Chat chat = chats.get(indexUser);
+		chat.addMessageServer(message);
+		setFirstChat(chat, indexUser);
+	}
+	public void setFirstChat(Chat chat) {
+		int index = indexUser(chat.getUser());
+		setFirstChat(chat, index);
+	}
+	public void setFirstChat(Chat chat, int index) {
+		if(index > 0) {
+			chats.removeIndex(index);
+			chats.insert(0, chat);
+			update = true;
+		}
 	}
 	private int indexUser(String user) {
 		boolean find = false;

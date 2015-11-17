@@ -23,7 +23,10 @@ public class ScrollWindow extends Window {
 	}
 	
 	public void setTable(Skin skin, Table table) {
-		scrollTable = new ScrollPane(table, skin, "window");
+		setTable(skin, table, "window");
+	}
+	public void setTable(Skin skin, Table table, String StyleScroll) { 
+		scrollTable = new ScrollPane(table, skin, StyleScroll);
 		mainValues(scrollTable);
 	}
 	private void mainValues(ScrollPane scrollTable) {

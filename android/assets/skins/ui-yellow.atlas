@@ -1,9 +1,9 @@
 
-ui-blue.png
+ui-yellow.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-button_01
+button_01_yellow
   rotate: false
   xy: 444, 94
   size: 64, 32
@@ -11,7 +11,7 @@ button_01
   orig: 64, 32
   offset: 0, 0
   index: -1
-button_02
+button_02_yellow
   rotate: false
   xy: 306, 58
   size: 64, 32
@@ -19,7 +19,7 @@ button_02
   orig: 64, 32
   offset: 0, 0
   index: -1
-button_03
+button_03_yellow
   rotate: false
   xy: 174, 25
   size: 64, 35
@@ -27,7 +27,7 @@ button_03
   orig: 64, 35
   offset: 0, 0
   index: -1
-button_04
+button_04_yellow
   rotate: false
   xy: 240, 55
   size: 64, 35
@@ -35,7 +35,7 @@ button_04
   orig: 64, 35
   offset: 0, 0
   index: -1
-button_05
+button_05_yellow
   rotate: false
   xy: 510, 94
   size: 64, 32
@@ -43,7 +43,7 @@ button_05
   orig: 64, 32
   offset: 0, 0
   index: -1
-button_06
+button_06_yellow
   rotate: false
   xy: 2, 18
   size: 64, 40
@@ -52,203 +52,196 @@ button_06
   orig: 64, 40
   offset: 0, 0
   index: -1
-button_cross
+button_cross_yellow
   rotate: false
   xy: 68, 26
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-checkbox_cross
+checkbox_cross_yellow
   rotate: false
   xy: 372, 58
   size: 42, 32
   orig: 42, 32
   offset: 0, 0
   index: -1
-checkbox_off
+checkbox_off_yellow
   rotate: false
   xy: 576, 94
   size: 42, 32
   orig: 42, 32
   offset: 0, 0
   index: -1
-checkbox_on
+checkbox_on_yellow
   rotate: false
   xy: 620, 94
   size: 42, 32
   orig: 42, 32
   offset: 0, 0
   index: -1
-color_basetext
+color_basetext_yellow
   rotate: false
   xy: 1014, 118
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
-color_lightwidgettext
+color_lightwidgettext_yellow
   rotate: false
   xy: 1014, 108
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
-color_widgettext
+color_widgettext_yellow
   rotate: false
   xy: 1014, 98
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
-color_window
-  rotate: false
-  xy: 141, 81
-  size: 8, 8
-  orig: 8, 8
-  offset: 0, 0
-  index: -1
-combobox_button
+combobox_button_yellow
   rotate: false
   xy: 664, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_arrow_down
+icon_arrow_down_yellow
   rotate: false
   xy: 698, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_arrow_left
+icon_arrow_left_yellow
   rotate: false
   xy: 732, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_arrow_right
+icon_arrow_right_yellow
   rotate: false
   xy: 766, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_arrow_up
+icon_arrow_up_yellow
   rotate: false
   xy: 800, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_back
+icon_back_yellow
   rotate: false
   xy: 834, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_check
+icon_check_yellow
   rotate: false
   xy: 868, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_circle
+icon_circle_yellow
   rotate: false
   xy: 902, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_cross
+icon_cross_yellow
   rotate: false
   xy: 936, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_music
+icon_music_yellow
   rotate: false
   xy: 970, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_pause
+icon_pause_yellow
   rotate: false
   xy: 240, 21
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_play
+icon_play_yellow
   rotate: false
   xy: 274, 21
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_sound_off
+icon_sound_off_yellow
   rotate: false
   xy: 308, 24
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_sound_on
+icon_sound_on_yellow
   rotate: false
   xy: 342, 24
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_star
+icon_star_yellow
   rotate: false
   xy: 376, 24
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_tools
+icon_tools_yellow
   rotate: false
   xy: 416, 58
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-knob_01
+knob_01_yellow
   rotate: false
   xy: 484, 60
   size: 22, 32
   orig: 22, 32
   offset: 0, 0
   index: -1
-knob_02
+knob_02_yellow
   rotate: false
   xy: 68, 2
   size: 32, 22
   orig: 32, 22
   offset: 0, 0
   index: -1
-knob_03
+knob_03_yellow
   rotate: false
   xy: 508, 60
   size: 22, 32
   orig: 22, 32
   offset: 0, 0
   index: -1
-knob_04
+knob_04_yellow
   rotate: false
   xy: 532, 70
   size: 32, 22
   orig: 32, 22
   offset: 0, 0
   index: -1
-knob_05
+knob_05_yellow
   rotate: false
   xy: 566, 70
   size: 12, 22
@@ -256,7 +249,7 @@ knob_05
   orig: 12, 22
   offset: 0, 0
   index: -1
-knob_06
+knob_06_yellow
   rotate: false
   xy: 114, 10
   size: 22, 12
@@ -264,37 +257,21 @@ knob_06
   orig: 22, 12
   offset: 0, 0
   index: -1
-Hor_Scroll_tasks
-  rotate: false
-  xy: 138, 2
-  size: 40, 20
-  split: 3, 3, 4, 4
-  orig: 10, 20
-  offset: 0, 0
-  index: -1
-knob_Scroll_tasks
-  rotate: false
-  xy: 444, 94
-  size: 64, 32
-  split: 6, 6, 6, 6
-  orig: 64, 32
-  offset: 0, 0
-  index: -1
-radiobox_off
+radiobox_off_yellow
   rotate: false
   xy: 410, 24
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-radiobox_on
+radiobox_on_yellow
   rotate: false
   xy: 450, 60
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-scroll_back_hor
+scroll_back_hor_yellow
   rotate: false
   xy: 580, 82
   size: 20, 10
@@ -302,7 +279,7 @@ scroll_back_hor
   orig: 20, 10
   offset: 0, 0
   index: -1
-scroll_back_ver
+scroll_back_ver_yellow
   rotate: false
   xy: 102, 2
   size: 10, 20
@@ -310,7 +287,7 @@ scroll_back_ver
   orig: 10, 20
   offset: 0, 0
   index: -1
-selectbox_01
+selectbox_01_yellow
   rotate: false
   xy: 240, 92
   size: 66, 34
@@ -319,7 +296,7 @@ selectbox_01
   orig: 66, 34
   offset: 0, 0
   index: -1
-slider_back_hor
+slider_back_hor_yellow
   rotate: false
   xy: 2, 8
   size: 32, 8
@@ -327,7 +304,7 @@ slider_back_hor
   orig: 32, 8
   offset: 0, 0
   index: -1
-slider_back_ver
+slider_back_ver_yellow
   rotate: false
   xy: 1004, 94
   size: 8, 32
@@ -335,7 +312,7 @@ slider_back_ver
   orig: 8, 32
   offset: 0, 0
   index: -1
-textbox_01
+textbox_01_yellow
   rotate: false
   xy: 308, 92
   size: 66, 34
@@ -343,7 +320,7 @@ textbox_01
   orig: 66, 34
   offset: 0, 0
   index: -1
-textbox_02
+textbox_02_yellow
   rotate: false
   xy: 376, 92
   size: 66, 34
@@ -351,7 +328,7 @@ textbox_02
   orig: 66, 34
   offset: 0, 0
   index: -1
-textbox_cursor_02
+textbox_cursor_02_yellow
   rotate: false
   xy: 444, 30
   size: 2, 26
@@ -359,7 +336,7 @@ textbox_cursor_02
   orig: 2, 26
   offset: 0, 0
   index: -1
-window_01
+window_01_yellow
   rotate: false
   xy: 108, 24
   size: 64, 102
@@ -368,7 +345,7 @@ window_01
   orig: 64, 102
   offset: 0, 0
   index: -1
-window_02
+window_02_yellow
   rotate: false
   xy: 2, 60
   size: 104, 66
@@ -377,26 +354,12 @@ window_02
   orig: 104, 66
   offset: 0, 0
   index: -1
-window_03
+window_03_yellow
   rotate: false
   xy: 174, 62
   size: 64, 64
   split: 17, 16, 42, 17
   pad: 4, 4, 4, 28
   orig: 64, 64
-  offset: 0, 0
-  index: -1
-dialogBackground
-  rotate: false
-  xy: 129, 31
-  size: 3, 3
-  orig: 3, 3
-  offset: 0, 0
-  index: -1
-transparency
-  rotate: false
-  xy: 700, 15
-  size: 3, 3
-  orig: 3, 3
   offset: 0, 0
   index: -1

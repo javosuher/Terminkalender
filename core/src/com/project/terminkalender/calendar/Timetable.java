@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 public class Timetable {
-	public static final int COLUMN = 5;
+	public static final int COLUMN = 4;
 	public static final int NPOSITION = 20;
 		
 	private Array<Slot> slots;

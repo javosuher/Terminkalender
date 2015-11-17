@@ -16,7 +16,7 @@ public class TWindow extends Window {
 		defaultConfiguration();
 	}
 	private void defaultConfiguration() {
-		padTop(50);
+		padTop(40);
 		setMovable(false);
 	}
 }

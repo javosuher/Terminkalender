@@ -1,10 +1,13 @@
 package com.project.terminkalender.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.AppMain;
@@ -30,7 +33,18 @@ public class LoginGamesScreen extends AbstractScreen {
 		enterGame = false;
 		
 		stage.addActor(background);
-		stage.addActor(teacherGames);	
+		stage.addActor(teacherGames);
+		
+		stage.addListener(new InputListener() {
+
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				if(keycode == Keys.BACK || keycode == Keys.ESCAPE) {
+					AppMain.setNewScreen(AppMain.loginScreen);
+				}
+				return true;
+			}
+		});
 	}  
 	public void updateGames(Array<String> games) {
 		teacherGames.updateGames(games);

@@ -1,11 +1,13 @@
 package com.project.terminkalender.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -14,12 +16,14 @@ import com.project.terminkalender.AppMain;
 import com.project.terminkalender.Resources;
 import com.project.terminkalender.chat.ChatActor;
 import com.project.terminkalender.chat.RoomActor;
+import com.project.terminkalender.tools.ReconnectButton;
 
 public class ChatScreen extends AbstractScreen {
 	private Background background;
 	private RoomActor roomActor;
 	private ChatActor chatActor;
 	private TextButton changeToCalendarButton;
+	private ReconnectButton reconnectButton;
 	
 	public ChatScreen(Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
@@ -27,21 +31,17 @@ public class ChatScreen extends AbstractScreen {
 		TextureRegion backgroundTexture = new TextureRegion(Resources.assets.get("background.png", Texture.class));
 		
 		background = new Background(backgroundTexture);
-		Table table = new Table(Resources.skin);
 		chatActor = new ChatActor(Resources.skin);
 		roomActor = new RoomActor(Resources.skin, chatActor);
-		changeToCalendarButton = new TextButton("Calendar", Resources.skin);
-		
-		table.add(roomActor);
-		table.add(chatActor);
-		table.add(changeToCalendarButton).top().width(100).height(50).pad(8);
-		
-		table.setFillParent(true);
+		changeToCalendarButton = new TextButton("Kalender", Resources.skin);
+		reconnectButton = Resources.reconnectButton;
 		
 		stage.addActor(background);
-		stage.addActor(table);
+		stage.addActor(roomActor);
+		stage.addActor(chatActor);
+		stage.addActor(changeToCalendarButton);
 		
-		changeToCalendarButton.setBounds(AppMain.WIDTH - 108, 8, 100, 50);
+		changeToCalendarButton.setBounds(AppMain.WIDTH - 137, AppMain.HEIGHT - 68, 135, 66);
 		
 		changeToCalendarButton.addListener(new ClickListener() {
 
@@ -50,16 +50,30 @@ public class ChatScreen extends AbstractScreen {
 				AppMain.setNewScreen(AppMain.calendarScreen);
 			}
 		});
+		
+		stage.addListener(new InputListener() {
+
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				if(keycode == Keys.BACK || keycode == Keys.ESCAPE) {
+					AppMain.setNewScreen(AppMain.loginGamesScreen);
+					AppMain.setFalseLoadGameScreens();
+				}
+				return true;
+			}
+		});
 	}
 	
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
+		stage.addActor(reconnectButton);
 	}
 	
 	@Override
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
+		reconnectButton.remove();
 	}
 	
 	@Override

@@ -1,11 +1,10 @@
 package com.project.terminkalender.tools;
 
 
-import com.badlogic.gdx.Application.ApplicationType;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.project.terminkalender.Resources;
+import com.project.terminkalender.chat.ChatActor;
 
 public class TextFieldActor extends TextField {
 	private static final DialogTextField dialog = new DialogTextField(Resources.skin);
@@ -14,12 +13,19 @@ public class TextFieldActor extends TextField {
 
 	public TextFieldActor(String text, Skin skin) {
 		super(text, skin);
-
-		if(Gdx.app.getType() == ApplicationType.Android) {
-			loadSoftKeyboard();
-		}
+		isInAndroid();
 	}
-
+	public TextFieldActor(String text, Skin skin, ChatActor chatActor) {
+		super(text, skin);
+		dialog.setChatActor(chatActor);
+		isInAndroid();
+	}
+	
+	private void isInAndroid() {
+		//if(Gdx.app.getType() == ApplicationType.Android) {
+			loadSoftKeyboard();
+		//}
+	}
 	private void loadSoftKeyboard() {
 		thisTextField  = this;
 		setOnscreenKeyboard(new OnscreenKeyboard() {

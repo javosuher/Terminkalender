@@ -53,14 +53,14 @@ public class GamesOpenActor extends Table {
 				float height = 125;
 				
 				final TextButton gameButton = new TextButton(game.getName(), Resources.skin);
-				float labelHeight = (gameButton.getLabel().getWidth() / gameButton.getWidth() * gameButton.getLabel().getHeight() + height);
 				gameButton.getLabel().setWrap(true);
-				if(gameButton.getLabel().getWidth() > width) {
-					height = labelHeight;
+				int widthDiference = (int) (gameButton.getLabel().getWidth() / (width * 2));
+				if(widthDiference > 0) {
+					++widthDiference;
+					height = widthDiference * height;
 				}
-				
 				final GameSelectionDialog gameSelectionDialog = new GameSelectionDialog("", game, Resources.skin);
-				gamesTable.add(gameButton).width(200).height(125).pad(30);
+				gamesTable.add(gameButton).width(width).height(height).pad(30);
 				
 				++actualColumn;
 				if(actualColumn % 3 == 0) {

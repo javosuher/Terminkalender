@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.project.terminkalender.AppMain;
 import com.project.terminkalender.Resources;
+import com.project.terminkalender.screens.CalendarScreen;
 
 public class SlotSource extends Source {
 	private Slot sourceSlot;
@@ -32,8 +33,8 @@ public class SlotSource extends Source {
 			payload.setObject(payloadSlot);
 			
 			TextButton button = new TextButton(payloadSlot.getTask().getShortDescription(), Resources.skin, "fullTextButtonDescription");
-			button.setWidth(80);
-			button.setHeight(80);
+			button.setWidth(CalendarScreen.WIDTHTASK);
+			button.setHeight(CalendarScreen.HEIGHTTASK);
 
 			Actor dragActor = button;
 			payload.setDragActor(dragActor);

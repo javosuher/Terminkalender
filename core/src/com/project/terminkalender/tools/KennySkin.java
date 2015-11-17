@@ -37,13 +37,14 @@ public class KennySkin extends Skin {
 		TextureAtlas greenAtlas = new TextureAtlas("skins/ui-green.atlas");
 		TextureAtlas orangeAtlas = new TextureAtlas("skins/ui-orange.atlas");
 		TextureAtlas whiteAtlas = new TextureAtlas("skins/ui-white.atlas");
+		TextureAtlas yellowAtlas = new TextureAtlas("skins/ui-yellow.atlas");
 		
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Blogger_Sans.otf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		int medSize = 10, bigSize = 20;
 		if(application.equals(APP)) {
 			medSize = 35;
-			bigSize = 50;
+			bigSize = 60;
 		}
 		else if(application.equals(TEACHER)) {
 			medSize = 20;
@@ -53,6 +54,8 @@ public class KennySkin extends Skin {
 		BitmapFont fontMed = generator.generateFont(parameter);
 		parameter.size = bigSize;
 		BitmapFont fontBig = generator.generateFont(parameter);
+		parameter.size = 50;
+		BitmapFont fontLarge = generator.generateFont(parameter);
 		generator.dispose();
 		
 		//BitmapFont font12 = new BitmapFont(Gdx.files.internal("skins/kenvector_future-12.fnt"));
@@ -65,6 +68,7 @@ public class KennySkin extends Skin {
 		//add("FontBig", font32);
 		add("FontMed", fontMed);
 		add("FontBig", fontBig);
+		add("FontLarge", fontLarge);
 		
 		final ButtonStyle buttonStyle = new ButtonStyle(getDrawable("button_04"), 
 														getDrawable("button_02"), 
@@ -135,6 +139,12 @@ public class KennySkin extends Skin {
 																	getDrawable("scroll_back_ver"), 
 																	getDrawable("knob_05"));
 		
+		final ScrollPaneStyle scrollPaneWindowTasksCalendarStyle = new ScrollPaneStyle(getDrawable("color_window"), 
+																		  getDrawable("scroll_back_hor"), 
+																		  getDrawable("knob_06"), 
+																		  getDrawable("Hor_Scroll_tasks"), 
+																		  getDrawable("knob_Scroll_tasks"));
+		
 		final SplitPaneStyle splitPaneStyle = new SplitPaneStyle(getDrawable("slider_back_hor"));
 		
 		final WindowStyle windowStyle = new WindowStyle(getFont("FontMed"), 
@@ -173,6 +183,9 @@ public class KennySkin extends Skin {
 		
 		final LabelStyle labelStyle = new LabelStyle(getFont("FontMed"), 
 													 Color.BLACK);
+		
+		final LabelStyle labelBigStyle = new LabelStyle(getFont("FontLarge"), 
+				 											 Color.BLACK);
 		
 		final TextFieldStyle textFieldStyle = new TextFieldStyle(getFont("FontMed"), 
 													 			 Color.BLACK, 
@@ -213,6 +226,7 @@ public class KennySkin extends Skin {
 		add("imageButtonBack", imageButtonStyleBack);
 		add("default", scrollPaneStyle);
 		add("window", scrollPaneWindowStyle);
+		add("scrollPaneWindowTasksCalendar", scrollPaneWindowTasksCalendarStyle);
 		add("default", splitPaneStyle);
 		add("default", windowStyle);
 		add("window2", window2Style);
@@ -223,6 +237,7 @@ public class KennySkin extends Skin {
 		add("default", progressBarStyle);
 		add("default", sliderStyle);
 		add("default", labelStyle);
+		add("labelBig", labelBigStyle);
 		add("default", textFieldStyle);
         add("default", checkBoxStyle);
         add("default", selectBoxStyle);
@@ -277,9 +292,10 @@ public class KennySkin extends Skin {
 				 																   getDrawable("button_01_green"), 
 				 																   getFont("FontMed"));
         
+        
         final WindowStyle windowDescriptionGreenStyle = new WindowStyle(getFont("FontMed"), 
-														Color.BLACK, 
-														getDrawable("button_01_green"));
+																		Color.BLACK, 
+																		getDrawable("button_01_green"));
         
         add("greenTextButton", greenTextButtonStyle);
         add("windowDescriptionGreen", windowDescriptionGreenStyle);
@@ -298,9 +314,24 @@ public class KennySkin extends Skin {
 																			 getDrawable("button_04_orange"), 
 																			 new TextureRegionDrawable(image), 
 																			 new TextureRegionDrawable(image), 
-																			 new TextureRegionDrawable(image));	
+																			 new TextureRegionDrawable(image));
+		
+		final TextButtonStyle chatUserStyleOrange = new TextButtonStyle(getDrawable("button_01_orange"), 
+					  													getDrawable("button_01_orange"), 
+					  													getDrawable("button_01_orange"), 
+					  													getFont("FontMed"));
         
         add("orangeTextButton", orangeTextButtonStyle);
         add("orangeImageButtonReconnect", orangeImageButtonStyleReconnect);
+        add("chatUserOrange", chatUserStyleOrange);
+        
+        addRegions(yellowAtlas);
+        
+        final TextButtonStyle chatUserStyleYellow = new TextButtonStyle(getDrawable("button_01_yellow"), 
+				   												  		getDrawable("button_01_yellow"), 
+				   												  		getDrawable("button_01_yellow"), 
+				   												  		getFont("FontMed"));
+        
+        add("chatUserYellow", chatUserStyleYellow);
 	}
 }

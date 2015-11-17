@@ -18,27 +18,30 @@ public class Chat {
 	private Array<Pair<String>> messages;
 	private boolean updateMessage, updateMessages;
 	
+	private Room room;
 	private TextButton textButton;
 	private boolean inChat;
 	
-	public Chat(String user) {
+	public Chat(String user, Room room) {
 		this.user = user;
 		messageTable = new Table(Resources.skin);
 		this.messages = new Array<Pair<String>>();
 		updateMessage = false;
 		messageTable.padBottom(20);
 		
+		this.room = room;
 		textButton = new TextButton(user, Resources.skin);
 		inChat = false;
 	}
-	public Chat(String user, Array<String> messages) {
-		this(user);
+	public Chat(String user, Room room, Array<String> messages) {
+		this(user, room);
 		
 		addMessages(messages);
 	}
 	
 	public void addMessage(String message) {
 		messages.add(new Pair<String>(YOU, message));
+		room.setFirstChat(this);
 		AppMain.webSockets.sendMessageChat(message, user);
 	}
 	public void addMessages(Array<String> messages) {

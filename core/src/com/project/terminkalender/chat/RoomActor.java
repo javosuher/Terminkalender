@@ -18,22 +18,10 @@ public class RoomActor extends Table {
 		this.chatActor = chatActor;
 		
 		ScrollWindow usersWindow = new ScrollWindow("Users", skin, room.getUsersTable());
-		//TextButton updateUsersButton = new TextButton("Update Users", skin);
 		
 		usersWindow.setMovable(false);
-		
-		add(usersWindow).width(150).height(AppMain.HEIGHT - 80).expand().pad(8).row();
-		//add(updateUsersButton).width(135).height(65).padBottom(10);
-		
-		//room.refreshUsers();
-		
-		/*updateUsersButton.addListener(new ClickListener() {
-
-			@Override 
-			public void clicked(InputEvent event, float x, float y){
-				room.refreshUsers();
-			}
-		});*/
+		add(usersWindow).width(210).height(AppMain.HEIGHT - 4);
+		setBounds(2, 2, 210, AppMain.HEIGHT - 4);
 	}
 	
 	@Override
@@ -47,16 +35,16 @@ public class RoomActor extends Table {
 			usersTable.clear();
 			
 			for(final Chat chat : chats) {
-				float width = 115;
+				float width = 175;
 				float height = 100;
 				
 				final TextButton userButton = chat.getTextButton();
-				float labelHeight = (userButton.getLabel().getWidth() / userButton.getWidth() * userButton.getLabel().getHeight() + height);
 				userButton.getLabel().setWrap(true);
-				if(userButton.getLabel().getWidth() > width) {
-					height = labelHeight;
-				}
-				
+				int widthDiference = (int) (userButton.getLabel().getWidth() / (width * 2));
+				if(widthDiference > 0) {
+					++widthDiference;
+					height = widthDiference * height;
+				}		
 				usersTable.add(userButton).width(width).height(height).pad(5);
 				usersTable.row();
 				
@@ -65,6 +53,7 @@ public class RoomActor extends Table {
 					@Override 
 					public void clicked(InputEvent event, float x, float y) {
 						chatActor.setChat(chat);
+						chatActor.updateScroll();
 						chat.setTextButton(userButton);
 						AppMain.webSockets.askChatFromUser(chat.getUser(), chat.getMessagesSize());
 					}

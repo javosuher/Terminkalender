@@ -6,11 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.AppMain;
 import com.project.terminkalender.Resources;
 import com.project.terminkalender.tools.DialogActor;
+import com.project.terminkalender.tools.TextFieldActor;
 import com.project.terminkalender.userdata.Game;
 import com.project.terminkalender.websockets.AppWebSockets;
 
@@ -18,27 +18,27 @@ public class SetTaskInCalendarDialog extends DialogActor {
 	private TaskCalendar task;
 	private Label partnerLabel, locationLabel;
 	private Array<SelectBox<String>> partnertsboxes;
-	private TextField locationText;
+	private TextFieldActor locationText;
 	private Array<String> users;
 
 	public SetTaskInCalendarDialog(String title, Skin skin) {
 		super(title, skin);
 		
 		task = new TaskCalendar();
-		partnerLabel = new Label("Partner: ", skin);
-		locationLabel = new Label("Place: ", skin);
+		partnerLabel = new Label("Mit: ", skin);
+		locationLabel = new Label("Wo: ", skin);
 		partnertsboxes = new Array<SelectBox<String>>();
-		locationText = new TextField("", skin);
-		TextButton acceptButton = new TextButton("Accept", skin);
+		locationText = new TextFieldActor("", skin);
+		TextButton acceptButton = new TextButton("OK", skin);
 		
 		Game game = AppMain.user.getGame();
 		users = new Array<String>(game.getUsers());
 		users.removeValue(AppMain.user.getUserName(), false);
 		
-		getButtonTable().defaults().width(150).height(50);
+		getButtonTable().defaults().width(175).height(100);
 		getContentTable().padTop(40);
 		getContentTable().padBottom(40);
-		button(acceptButton, "accept");
+		button(acceptButton, "OK");
 	}
 	
 	@Override
@@ -53,26 +53,23 @@ public class SetTaskInCalendarDialog extends DialogActor {
 		
 		int numberPartners = task.getNumberPartners();
 		Array<String> partnerts = task.getPartners();
-		for(int index = 0; index < numberPartners; ++index) {
-			SelectBox<String> partnertsBox = new SelectBox<String>(Resources.skin);
-			partnertsBox.setItems(users);
-			if(partnerts.size > index) {
-				String partnerString = partnerts.get(index);
-				partnertsBox.setSelected(partnerString);
-			}
-			partnertsboxes.add(partnertsBox);
-		}
-		locationText.setText(task.getLocation());
-
 		if(numberPartners > 0) {
 			getContentTable().add(partnerLabel);
-			for(SelectBox<String> partnertsBox : partnertsboxes) {
+			for(int index = 0; index < numberPartners; ++index) {
+				SelectBox<String> partnertsBox = new SelectBox<String>(Resources.skin);
+				partnertsBox.setItems(users);
+				if(partnerts.size > index) {
+					String partnerString = partnerts.get(index);
+					partnertsBox.setSelected(partnerString);
+				}
+				partnertsboxes.add(partnertsBox);
 				getContentTable().add(partnertsBox).right();
 			}
-			getContentTable().row();
 		}
+		getContentTable().row();
+		locationText.setText(task.getLocation());
 		getContentTable().add(locationLabel);
-		getContentTable().add(locationText);
+		getContentTable().add(locationText).width(226);
 	}
 	
 	protected void result(Object object) {

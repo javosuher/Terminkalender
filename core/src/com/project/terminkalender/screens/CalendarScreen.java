@@ -21,14 +21,19 @@ import com.project.terminkalender.calendar.TaskCalendar;
 import com.project.terminkalender.calendar.TasktableActor;
 import com.project.terminkalender.calendar.Timetable;
 import com.project.terminkalender.calendar.TimetableActor;
+import com.project.terminkalender.tools.ReconnectButton;
 import com.project.terminkalender.websockets.WebSockets;
 
 public class CalendarScreen extends AbstractScreen {
+	public static final float WIDTHTASK = 120;
+	public static final float HEIGHTTASK = 75;
+	
 	private Background background;
 	private TimetableActor timetableActor;
 	private TasktableActor tasktableActor;
 	private Array<TaskCalendar> tasks;
 	private TextButton changeToChatButton, validateButton;
+	private ReconnectButton reconnectButton;
 
 	public CalendarScreen(Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
@@ -39,6 +44,7 @@ public class CalendarScreen extends AbstractScreen {
 		background = new Background(backgroundTexture);
 		timetableActor = new TimetableActor(dragAndDrop, Resources.skin);
 		tasktableActor = new TasktableActor(dragAndDrop, Resources.skin);
+		reconnectButton = Resources.reconnectButton;
 		tasks = new Array<TaskCalendar>();
 		Array<Slot> slots = tasktableActor.getTasktable().getSlots();
 		for(Slot slot : slots) {
@@ -53,8 +59,8 @@ public class CalendarScreen extends AbstractScreen {
 		stage.addActor(changeToChatButton);
 		stage.addActor(validateButton);
 		
-		changeToChatButton.setBounds(8, 8, 100, 50);
-		validateButton.setBounds(750, 8, 100, 50);
+		changeToChatButton.setBounds(15, 2, 135, 66);
+		validateButton.setBounds(640, 2, 125, 66);
 		
 		changeToChatButton.addListener(new ClickListener() {
 
@@ -73,9 +79,10 @@ public class CalendarScreen extends AbstractScreen {
 		});
 		
 		stage.addListener(new InputListener() {
+
 			@Override
 			public boolean keyDown(InputEvent event, int keycode) {
-				if(keycode == Keys.ESCAPE) {
+				if(keycode == Keys.BACK || keycode == Keys.ESCAPE) {
 					AppMain.setNewScreen(AppMain.loginGamesScreen);
 					AppMain.setFalseLoadGameScreens();
 				}
@@ -135,11 +142,13 @@ public class CalendarScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
+		stage.addActor(reconnectButton);
 	} 
 	
 	@Override
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
+		reconnectButton.remove();
 	}
 	
 	@Override

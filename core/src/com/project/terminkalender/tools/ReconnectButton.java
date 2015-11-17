@@ -13,7 +13,7 @@ public class ReconnectButton extends ImageButton {
 	public ReconnectButton(Skin skin) {
 		super(skin, "imageButtonReconnect");
 		
-		setBounds(AppMain.WIDTH - 108, 8, 100, 75);
+		setBounds(AppMain.WIDTH - 102, 2, 100, 66);
 		
 		this.addListener(new ClickListener() {
 

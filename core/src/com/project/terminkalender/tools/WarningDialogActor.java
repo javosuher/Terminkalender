@@ -13,7 +13,7 @@ public class WarningDialogActor extends Dialog {
 		super("", skin, "windowDialog");
 		
 		messageLabel = new Label("", skin);
-		TextButton closeButton = new TextButton("OK", skin);
+		TextButton closeButton = new TextButton("OK", skin, "textButtonLarge");
 		
 		center();
 		setMovable(false);

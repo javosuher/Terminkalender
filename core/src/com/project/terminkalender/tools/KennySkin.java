@@ -41,20 +41,22 @@ public class KennySkin extends Skin {
 		
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Blogger_Sans.otf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		int medSize = 10, bigSize = 20;
+		int medSize = 10, bigSize = 20, largeSize = 15;
 		if(application.equals(APP)) {
 			medSize = 35;
 			bigSize = 60;
+			largeSize = 50;
 		}
 		else if(application.equals(TEACHER)) {
 			medSize = 20;
-			bigSize = 50;
+			bigSize = 70;
+			largeSize = 30;
 		}
 		parameter.size = medSize;
 		BitmapFont fontMed = generator.generateFont(parameter);
 		parameter.size = bigSize;
 		BitmapFont fontBig = generator.generateFont(parameter);
-		parameter.size = 50;
+		parameter.size = largeSize;
 		BitmapFont fontLarge = generator.generateFont(parameter);
 		generator.dispose();
 		
@@ -82,6 +84,11 @@ public class KennySkin extends Skin {
 																	getDrawable("button_02"), 
 																	getDrawable("button_04"), 
 																	getFont("FontMed"));
+		
+		final TextButtonStyle textButtonStyleLarge = new TextButtonStyle(getDrawable("button_04"), 
+																 	getDrawable("button_02"), 
+																 	getDrawable("button_04"), 
+																 	getFont("FontLarge"));
 		
 		final TextButtonStyle textButtonStyleBig = new TextButtonStyle(getDrawable("button_04"), 
 																	  getDrawable("button_02"), 
@@ -219,7 +226,8 @@ public class KennySkin extends Skin {
 		add("default", buttonStyle);
 		add("calender", calenderButtonStyle);
 		add("default", textButtonStyle);
-		add("defaultBig", textButtonStyleBig);
+		add("defaultBig", textButtonStyleBig); 
+		add("textButtonLarge", textButtonStyleLarge);
 		add("imageButtonFolder", imageButtonStyleFolder); 
 		add("imageButtonArrowLeft", imageButtonStyleArrowLeft); 
 		add("imageButtonReconnect", imageButtonStyleReconnect);
@@ -254,6 +262,11 @@ public class KennySkin extends Skin {
         														new TextureRegionDrawable(redCircle), 
         														new TextureRegionDrawable(cross));
         
+        final TextButtonStyle textButtonStyleLargeRed = new TextButtonStyle(getDrawable("button_04_red"), 
+			 	  															  getDrawable("button_02_red"), 
+			 	  															  getDrawable("button_04_red"), 
+			 	  															  getFont("FontLarge"));
+        
         final TextButtonStyle redTextButtonStyle = new TextButtonStyle(getDrawable("button_04_red"), 
 																	getDrawable("button_02_red"), 
 																	getDrawable("button_04_red"), 
@@ -268,6 +281,7 @@ public class KennySkin extends Skin {
 																			 	new TextureRegionDrawable(image));	
         
         add("closeRedButton", closeRedButtonStyle);
+        add("textButtonLargeRed", textButtonStyleLargeRed);
         add("redTextButton", redTextButtonStyle);
         add("imageButtonhideKeyboard", imageButtonStylehideKeyboard);
         
@@ -287,6 +301,11 @@ public class KennySkin extends Skin {
 																	     getDrawable("button_04_green"), 
 																	     getFont("FontMed"));
         
+        final TextButtonStyle textButtonStyleLargeGreen = new TextButtonStyle(getDrawable("button_04_green"), 
+			 															 	  getDrawable("button_02_green"), 
+			 															 	  getDrawable("button_04_green"), 
+			 															 	  getFont("FontLarge"));
+        
         final TextButtonStyle fullTextButtonDescriptionStyle = new TextButtonStyle(getDrawable("button_01_green"), 
 				 																   getDrawable("button_01_green"), 
 				 																   getDrawable("button_01_green"), 
@@ -298,6 +317,7 @@ public class KennySkin extends Skin {
 																		getDrawable("button_01_green"));
         
         add("greenTextButton", greenTextButtonStyle);
+        add("textButtonLargeGreen", textButtonStyleLargeGreen);
         add("windowDescriptionGreen", windowDescriptionGreenStyle);
         add("fullTextButtonDescription", fullTextButtonDescriptionStyle);
         

@@ -16,7 +16,7 @@ public class TeacherRegisterDialogActor extends DialogActor {
 		super("", skin);
 		teacherRegisterDialog = new TeacherRegisterDialog(); 
 
-		TextButton registerButton = new TextButton("Register", skin);
+		TextButton registerButton = new TextButton("Register", skin, "textButtonLarge");
 		Label userLabel = new Label("Username", skin);
 		Label passwordLabel = new Label("Password", skin);
 		Label passwordRepeatLabel = new Label("Repeat password", skin);
@@ -25,7 +25,7 @@ public class TeacherRegisterDialogActor extends DialogActor {
 		final TextField passwordRepeatText = teacherRegisterDialog.getPasswordRepeatText();
 		CheckBox showPasswordCheckBox = new CheckBox("  Show Password", skin);
 		
-		getButtonTable().defaults().width(100).height(50);
+		getButtonTable().defaults().width(175).height(100);
 		
 		getContentTable().padTop(40);
 		getContentTable().add(userLabel);

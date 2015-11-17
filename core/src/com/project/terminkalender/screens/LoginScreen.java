@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.AppMain;
 import com.project.terminkalender.Resources;
-import com.project.terminkalender.login.ExitDialog;
 import com.project.terminkalender.login.LoginActor;
 import com.project.terminkalender.tools.ReconnectButton;
 

@@ -71,6 +71,7 @@ public class DialogTextField extends Dialog {
 		textFieldSource.setText(textField.getText());
 		if(isInChat && AppMain.chatScreen.getStage() == getStage()) {
 			chatActor.sendMessageActor();
+			getStage().setKeyboardFocus(textField);
 		}
 		else {
 			keyboardActive = false;

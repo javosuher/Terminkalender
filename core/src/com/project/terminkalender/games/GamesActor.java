@@ -21,8 +21,8 @@ public class GamesActor extends Table {
 		
 		gamesWindow = new ScrollWindow("Games", skin, games.getGamesTable());
 		Table buttonsTable = new Table(skin);
-		TextButton newGameButton = new TextButton("New Game", skin);
-		TextButton updateGamesButton = new TextButton("Update Games", skin);
+		TextButton newGameButton = new TextButton("New Game", skin, "textButtonLarge");
+		TextButton updateGamesButton = new TextButton("Update Games", skin, "textButtonLarge");
 		
 		final CreateGameDialogActor createGameDialogActor = new CreateGameDialogActor(skin);
 		
@@ -58,8 +58,8 @@ public class GamesActor extends Table {
 			Array<TeacherGame> gamesOpenArray = games.getOpenGames();
 			
 			games.getGamesTable().clear();
-			int column = createGamesButtons(gamesArray, Resources.skin.get("default", TextButtonStyle.class), "Game", 0);
-			createGamesButtons(gamesOpenArray, Resources.skin.get("greenTextButton", TextButtonStyle.class), "OpenGame", column);
+			int column = createGamesButtons(gamesArray, Resources.skin.get("textButtonLarge", TextButtonStyle.class), "Game", 0);
+			createGamesButtons(gamesOpenArray, Resources.skin.get("textButtonLargeGreen", TextButtonStyle.class), "OpenGame", column);
 			
 			games.finishUpdate();
 		}
@@ -70,8 +70,17 @@ public class GamesActor extends Table {
 		int actualColumn = column;
 		
 		for(final TeacherGame game : games) {
+			float width = 200;
+			float height = 125;
+			
 			final TextButton gameButton = new TextButton(game.getName(), textButtonStyle);
-			gamesTable.add(gameButton).width(200).height(100).pad(30);
+			gameButton.getLabel().setWrap(true);
+			int widthDiference = (int) (gameButton.getLabel().getWidth() / (width * 2));
+			if(widthDiference > 0) {
+				++widthDiference;
+				height = widthDiference * height;
+			}
+			gamesTable.add(gameButton).width(width).height(height).pad(30);
 			
 			++actualColumn;
 			if(actualColumn % 3 == 0) {
@@ -87,7 +96,7 @@ public class GamesActor extends Table {
 						dialogActor = new GameDialogActor(Resources.skin, game, gameButton);
 					}
 					else if(typeGame.equals("OpenGame")) {
-						dialogActor = new OpenGameDialog(Resources.skin, game, gameButton);
+						dialogActor = new OpenGameDialogActor(Resources.skin, game, gameButton);
 					}
 					dialogActor.show(getStage());
 				}

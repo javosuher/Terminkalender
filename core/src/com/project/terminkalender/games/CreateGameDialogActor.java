@@ -18,7 +18,7 @@ public class CreateGameDialogActor extends DialogActor {
 		super("", skin);
 		createGameDialog = new CreateGameDialog();
 		
-		TextButton createGameButton = new TextButton("Create Game", skin);
+		TextButton createGameButton = new TextButton("Create Game", skin, "textButtonLarge");
 		Label gameNameLabel = new Label("Game Name", skin);
 		Label gamePasswordLabel = new Label("Password", skin);
 		Label gamePasswordRepeatLabel = new Label("Repeat password", skin);
@@ -27,7 +27,7 @@ public class CreateGameDialogActor extends DialogActor {
 		final TextField gamePasswordRepeatText = createGameDialog.getGamePasswordRepeatText();
 		CheckBox showPasswordCheckBox = new CheckBox("  Show Password", skin);
 		
-		getButtonTable().defaults().width(150).height(75);
+		getButtonTable().defaults().width(175).height(100);
 		
 		getContentTable().padTop(40);
 		getContentTable().add(gameNameLabel);

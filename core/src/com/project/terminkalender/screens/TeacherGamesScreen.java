@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.AppMain;
@@ -20,7 +20,7 @@ public class TeacherGamesScreen extends AbstractScreen {
 	private Background background;
 	private String teacher;
 	private GamesActor gamesActor;
-	private TextButton changeToLoginRegisterButton;
+	private ImageButton changeToLoginRegisterButton;
 	private ReconnectButton reconnectButton;
 
 	public TeacherGamesScreen(Viewport viewport, SpriteBatch batch) {
@@ -31,15 +31,14 @@ public class TeacherGamesScreen extends AbstractScreen {
 		
 		background = new Background(backgroundTexture);
 		gamesActor = new GamesActor(skin);
-		changeToLoginRegisterButton = new TextButton("Log out", skin);
+		changeToLoginRegisterButton = new ImageButton(skin, "imageButtonBack");
 		reconnectButton = Resources.reconnectButton;
 		
 		stage.addActor(background);
 		stage.addActor(gamesActor);
 		stage.addActor(changeToLoginRegisterButton);
-		stage.addActor(reconnectButton);
 		
-		changeToLoginRegisterButton.setBounds(AppMain.WIDTH - 108, AppMain.HEIGHT - 58, 100, 50);
+		changeToLoginRegisterButton.setBounds(AppMain.WIDTH - 102, AppMain.HEIGHT - 102, 100, 100);
 		
 		changeToLoginRegisterButton.addListener(new ClickListener() {
 
@@ -60,11 +59,13 @@ public class TeacherGamesScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
+		stage.addActor(reconnectButton);
 	} 
 	
 	@Override
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
+		reconnectButton.remove();
 	}
 	
 	@Override

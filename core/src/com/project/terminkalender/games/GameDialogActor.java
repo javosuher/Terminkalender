@@ -55,7 +55,7 @@ public class GameDialogActor extends GameDialog {
 		Table taskParametersTable = new Table(skin);
 		Table userParametersTable = new Table(skin);
 		
-		TextButton applyChangesButton = new TextButton("Apply Changes", skin);
+		TextButton applyChangesButton = new TextButton("Apply Changes", skin, "textButtonLarge");
 		Label essentialDataLabel = new Label("ESSENTIAL DATA", skin);
 		Label nameLabel = new Label("Game name: ", skin);
 		Label nameGameLabel = new Label(game.getName(), skin);
@@ -81,8 +81,8 @@ public class GameDialogActor extends GameDialog {
 		ScrollWindow usersBoxWindow = new ScrollWindow("USERS LIST", skin, usersBoxTable);
 		tasksBox.setItems(tasksToTaskBox(game.getTasks()));
 		usersBox.setItems(game.getUsers());
-		actionButton = new TextButton("Open", Resources.skin.get("greenTextButton", TextButtonStyle.class));
-		TextButton deleteGameButton = new TextButton("Delete", skin, "redTextButton");
+		actionButton = new TextButton("Open", Resources.skin.get("textButtonLargeGreen", TextButtonStyle.class));
+		TextButton deleteGameButton = new TextButton("Delete", skin, "textButtonLargeRed");
 		
 		Array<String> tasksLimitRange = new Array<String>();
 		tasksLimitRange.add("1");
@@ -104,7 +104,7 @@ public class GameDialogActor extends GameDialog {
 		usersBoxTable.add(usersBox).expand().fill();
 		
 		getContentTable().padTop(40);
-		getButtonTable().defaults().width(150).height(50);
+		getButtonTable().defaults().width(185).height(60);
 		
 		mainParemetersTable.add(essentialDataLabel).colspan(2).row();
 		mainParemetersTable.add(nameLabel);

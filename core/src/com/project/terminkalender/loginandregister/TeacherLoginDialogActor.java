@@ -18,7 +18,7 @@ public class TeacherLoginDialogActor extends DialogActor {
 		super("", skin);
 		teacherLoginDialog = new TeacherLoginDialog(); 
 
-		TextButton registerButton = new TextButton("Login", skin);
+		TextButton registerButton = new TextButton("Login", skin, "textButtonLarge");
 		Label userLabel = new Label("Username", skin);
 		Label passwordLabel = new Label("Password", skin);
 		TextField userText = teacherLoginDialog.getUserText();
@@ -26,7 +26,7 @@ public class TeacherLoginDialogActor extends DialogActor {
 		CheckBox showPasswordCheckBox = new CheckBox("  Show Password", skin);
 		showPasswordCheckBox.right();
 		
-		getButtonTable().defaults().width(100).height(50);
+		getButtonTable().defaults().width(175).height(100);
 		
 		getContentTable().padTop(40);
 		getContentTable().add(userLabel);

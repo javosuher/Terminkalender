@@ -1,4 +1,4 @@
-package com.project.terminkalender.login;
+package com.project.terminkalender.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -19,8 +19,8 @@ public class ExitDialog extends DialogActor {
 		isShow = false;
 		
 		Label messageLabel = new Label("Do you want to exit?", skin);
-		TextButton exitButton = new TextButton("Exit", skin);
-		TextButton cancelButton = new TextButton("Cancel", skin);
+		TextButton exitButton = new TextButton("Exit", skin, "textButtonLarge");
+		TextButton cancelButton = new TextButton("Cancel", skin, "textButtonLarge");
 				
 		center();
 		setMovable(false);

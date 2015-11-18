@@ -97,6 +97,8 @@ public class TeacherWebSockets extends WebSockets {
 	}
 	public void closeGameProcess(String message) {
 		Resources.warningDialog.show(message + " Closed", TeacherMain.teacherGamesScreen.getStage());
+		
+		
 	}
 	
 	public boolean loginTeacher(String teacherUser, String password) {

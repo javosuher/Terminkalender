@@ -22,15 +22,13 @@ public class GamesActor extends Table {
 		gamesWindow = new ScrollWindow("Games", skin, games.getGamesTable());
 		Table buttonsTable = new Table(skin);
 		TextButton newGameButton = new TextButton("New Game", skin, "textButtonLarge");
-		TextButton updateGamesButton = new TextButton("Update Games", skin, "textButtonLarge");
 		
 		final CreateGameDialogActor createGameDialogActor = new CreateGameDialogActor(skin);
 		
 		setFillParent(true);
 		
 		add(gamesWindow).width(800).height(TeacherMain.HEIGHT - 16).expand().left().pad(8);
-		buttonsTable.add(newGameButton).width(150).height(75).getTable().pad(8).row();
-		buttonsTable.add(updateGamesButton).width(150).height(75).pad(8);
+		buttonsTable.add(newGameButton).width(175).height(100).getTable().pad(8).row();
 		add(buttonsTable);
 		
 		newGameButton.addListener(new ClickListener() {
@@ -40,13 +38,13 @@ public class GamesActor extends Table {
 				createGameDialogActor.show(getStage());
 			}
 		});
-		updateGamesButton.addListener(new ClickListener() {
+		/*updateGamesButton.addListener(new ClickListener() {
 
 			@Override 
 			public void clicked(InputEvent event, float x, float y){
 				games.askGames();
 			}
-		});
+		});*/
 	}
 	
 	@Override

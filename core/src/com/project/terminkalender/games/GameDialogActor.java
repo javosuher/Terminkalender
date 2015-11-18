@@ -284,25 +284,6 @@ public class GameDialogActor extends GameDialog {
 		}
 	}
 	
-	private Array<String> tasksToTaskBox(Array<Task> tasks) {
-		Array<String> tasksArray = new Array<String>();
-		for(Task task : tasks) {
-			String taskArray = task.getName() + " [" + task.getLimit() + "]";
-			tasksArray.add(taskArray);
-		}
-		return tasksArray;
-	}
-	private Array<Task> TaskBoxToTask(Array<String> tasksArray) {
-		Array<Task> tasks = new Array<Task>();
-		for(String taskArray : tasksArray) {
-			String taskLimit = taskArray.substring(taskArray.length() - 2, taskArray.length() - 1);
-			String taskName = taskArray.substring(0, taskArray.length() - 4);
-			Task task = new Task(taskName, taskLimit);
-			tasks.add(task);
-		}
-		return tasks;
-	}
-	
 	private boolean isTaskRepeat(Array<Task> tasks) {
 		int index = 0;
 		for(Task task : tasks) {

@@ -114,6 +114,14 @@ class Game {
     public function getStringUserNames() {
         return $this->getStringUserFields("userName");
     }
+    public function getStringUserBothNames() {
+        $usersString = "";
+        foreach ($this->users as $user) {
+            $usersString = $usersString . $user["name"] . " - " . $user["userName"] . Game::SPLIT;
+        }
+        $usersString = rtrim($usersString, ",");
+        return $usersString;
+    }
     private function getUserField($userField, $field, $fieldReturn) {
         foreach($this->users as $user) {
             if($user[$field] == $userField) {

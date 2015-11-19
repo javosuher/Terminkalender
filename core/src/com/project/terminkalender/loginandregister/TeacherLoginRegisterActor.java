@@ -17,6 +17,8 @@ public class TeacherLoginRegisterActor extends Table {
 		final TeacherRegisterDialogActor teacherRegisterDialogActor = new TeacherRegisterDialogActor(skin);
 		
 		setFillParent(true);
+		bottom();
+		padBottom(100);
 		
 		float width = 400, height = 250;
 		add(loginButton).width(width).height(height).pad(10);

@@ -6,6 +6,17 @@ import com.project.terminkalender.AppMain;
 import com.project.terminkalender.websockets.WebSockets;
 
 public class TaskCalendar {
+	public final static String MITTWOCH = "Mittwoch";
+	public final static String DONNERSTAG = "Donnerstag";
+	public final static String FREITAG = "Freitag";
+	public final static String SAMSTAG = "Samstag";
+	public final static String SONNTAG = "Sonntag";
+	
+	public final static String MORGENS = "Morgens";
+	public final static String MITTAGS = "Mittags";
+	public final static String NACHMITTAGS = "Nachmittags";
+	public final static String ABENDS = "Abends";
+	
 	private Slot slot;
 	private String description, location;
 	private int numberPartners;
@@ -49,7 +60,22 @@ public class TaskCalendar {
 		else return "";
 	}
 	private String positionToString() {
-		if(hasPosition()) return position.x + WebSockets.TASKSPLIT + position.y;
+		if(hasPosition()) {
+			String x = "", y = "";
+			
+			if(position.x == 0) x = MITTWOCH;
+			else if(position.x == 1) x = DONNERSTAG;
+			else if(position.x == 2) x = FREITAG;
+			else if(position.x == 3) x = SAMSTAG;
+			else if(position.x == 4) x = SONNTAG;
+			
+			if(position.y == 0) y = MORGENS;
+			else if(position.y == 1) y = MITTAGS;
+			else if(position.y == 2) y = NACHMITTAGS;
+			else if(position.y == 3) y = ABENDS;
+			
+			return x + WebSockets.TASKSPLIT + y;
+		}
 		else return "NoPosition";
 	}
 	private boolean hasPosition() {

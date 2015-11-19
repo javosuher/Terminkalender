@@ -34,8 +34,8 @@ public class OpenGameDialogActor extends GameDialog {
 		getContentTable().padTop(40);
 		getContentTable().add(nameLabel).colspan(2).row();
 		getContentTable().add(passwordLabel).colspan(2).padBottom(10).row();
-		getContentTable().add(tasksBoxWindow).padTop(8).width(300).height(200).padRight(15);
-		getContentTable().add(usersBoxWindow).padTop(8).width(300).height(200);
+		getContentTable().add(tasksBoxWindow).padTop(8).width(300).height(250).padRight(15);
+		getContentTable().add(usersBoxWindow).padTop(8).width(300).height(250);
 		getButtonTable().padTop(30);
 		button(actionButton, "OK");
 	}

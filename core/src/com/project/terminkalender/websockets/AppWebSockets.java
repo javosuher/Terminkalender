@@ -36,6 +36,8 @@ public class AppWebSockets extends WebSockets {
 			updateCalendar(message);
 		else if(action.equals(TASKVALIDATE))
 			validatedTask(message);
+		else if(action.equals(CLOSEGAMES))
+			closeGame(message);
 	}
 	
 	public void teachers(String message) {
@@ -94,6 +96,11 @@ public class AppWebSockets extends WebSockets {
 		String [] wrongTasks = message.split(POINTSPLIT);
 		CalendarScreen calendarScreen = (CalendarScreen) AppMain.calendarScreen;
 		calendarScreen.validateTasks(new Array<String>(wrongTasks));
+	}
+	public void closeGame(String message) {
+		AppMain.setNewScreen(AppMain.loginGamesScreen);
+		Resources.warningDialog.show("Game Closed", AppMain.loginGamesScreen.getStage());
+		login(AppMain.user.getTeacher());
 	}
 	private Array<String> constructArrayData(String stringData) {
 		String [] array = stringData.split(POINTSPLIT);

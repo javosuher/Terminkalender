@@ -1,5 +1,8 @@
 package com.project.terminkalender.websockets;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Resources;
 import com.project.terminkalender.TeacherMain;
@@ -96,9 +99,16 @@ public class TeacherWebSockets extends WebSockets {
 		Resources.warningDialog.show(message + " Deleted", TeacherMain.teacherGamesScreen.getStage());
 	}
 	public void closeGameProcess(String message) {
-		Resources.warningDialog.show(message + " Closed", TeacherMain.teacherGamesScreen.getStage());
+		String gameName = message.split(POINTSPLIT)[0];
+		String teacher = message.split(POINTSPLIT)[1];
+		String data = message.substring(gameName.length() + teacher.length() + 2);
 		
-		
+		Resources.warningDialog.show(gameName + " Closed", TeacherMain.teacherGamesScreen.getStage());
+		try {
+			PrintWriter writer = new PrintWriter(gameName + " (" + teacher + ")" + ".txt", "UTF-8");
+			writer.println(data);
+			writer.close();
+		} catch (IOException exception) { exception.printStackTrace(); }
 	}
 	
 	public boolean loginTeacher(String teacherUser, String password) {

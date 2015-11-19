@@ -15,6 +15,7 @@ import com.project.terminkalender.tools.ReconnectButton;
 
 public class TeacherLoginRegisterScreen extends AbstractScreen {
 	private Background background;
+	private Title logo; 
 	private TeacherLoginRegisterActor teacherLoginRegisterActor;
 	private ExitDialog exitDialog;
 	private ReconnectButton reconnectButton;
@@ -25,11 +26,13 @@ public class TeacherLoginRegisterScreen extends AbstractScreen {
 		TextureRegion backgroundTexture = new TextureRegion(Resources.assets.get("background.png", Texture.class));
 		
 		background = new Background(backgroundTexture);
+		logo = new Title();
 		teacherLoginRegisterActor = new TeacherLoginRegisterActor(Resources.skin);
 		exitDialog = new ExitDialog(Resources.skin);
 		reconnectButton = Resources.reconnectButton;
 		
 		stage.addActor(background);
+		stage.addActor(logo);
 		stage.addActor(teacherLoginRegisterActor);
 		
 		stage.addListener(new InputListener() {

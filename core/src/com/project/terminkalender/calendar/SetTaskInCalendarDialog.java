@@ -63,7 +63,7 @@ public class SetTaskInCalendarDialog extends DialogActor {
 					partnertsBox.setSelected(partnerString);
 				}
 				partnertsboxes.add(partnertsBox);
-				getContentTable().add(partnertsBox).right();
+				getContentTable().add(partnertsBox).width(226).right();
 			}
 		}
 		getContentTable().row();

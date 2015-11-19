@@ -29,6 +29,9 @@ class Main implements MessageComponentInterface {
 	const OPENGAMES = "OpenGames";
     const REMOVEGAMES = "RemoveGames";
     const CLOSEGAMES = "CloseGames";
+
+    const NAME = "Name";
+    const NAMEADUSERNAME = "NameAndUserName";
 	
     protected $clients, $dataBase, $games;
 
@@ -42,6 +45,7 @@ class Main implements MessageComponentInterface {
         echo "Init Server!\n";
 
         $this->games->attach(new Game("dodo", "sandra", "f", "zoo-2,beber-2,aletear-2,pescar-3,leer un libro-1,migrar-4,tomar un tentempie-2,jugar videojuegos-3,jugar al futbol-4,hacer la comida-1,estudiar-2", "juan,pepe,maria,andrés,perico,taquiato,pedro,camilo,afterwak,petanca,casimiro,pafer,hyeri,lontu.vetertu,calsd,fewjwd,sadkjda,dasjdja,das,dsa")); // Example OpenGame
+        $this->games->attach(new Game("otro", "sandra", "f", "zoo-2,beber-2,aletear-2,pescar-3,leer un libro-1,migrar-4,tomar un tentempie-2,jugar videojuegos-3,jugar al futbol-4,hacer la comida-1,estudiar-2", "juan,pepe,maria,andrés,perico,taquiato,pedro,camilo,afterwak,petanca,casimiro,pafer,hyeri,lontu.vetertu,calsd,fewjwd,sadkjda,dasjdja,das,dsa")); // Example OpenGame
     }
 
     public function onOpen(ConnectionInterface $conn) {
@@ -135,7 +139,7 @@ class Main implements MessageComponentInterface {
     	$teacher = explode(Main::POINTSPLIT, $msg)[1];
         echo sprintf('Connection %d want Open Games from teacher: "%s"' . "\n", $from->resourceId, $teacher);
 
-        $openGames = $this->searchOpenGames($teacher);
+        $openGames = $this->searchOpenGames($teacher, Main::NAME);
         $trueMessage = Main::LOGIN . Main::POINTSPLIT;
         foreach($openGames as $game) {
             $trueMessage = $trueMessage . $game["name"] . Main::DATASPLIT . $game["password"] . Main::DATASPLIT . $game["tasks"] . Main::DATASPLIT . $game["users"] . Main::POINTSPLIT;
@@ -345,7 +349,7 @@ class Main implements MessageComponentInterface {
     	echo sprintf('Connection %d from teacher: "%s" need games' . "\n", $from->resourceId, $teacher);
 
     	$gamesDB = $this->searchGamesInDataBase($teacher);
-    	$openGames = $this->searchOpenGames($teacher);
+    	$openGames = $this->searchOpenGames($teacher, Main::NAMEADUSERNAME);
 
     	$msg = Main::GAMES . Main::POINTSPLIT;
     	foreach ($gamesDB as $game) {
@@ -387,25 +391,40 @@ class Main implements MessageComponentInterface {
         $gameName = explode(Main::POINTSPLIT, $msg)[1];
         $teacher = explode(Main::POINTSPLIT, $msg)[2];
 
-        $this->pickUpOpenGameData($teacher, $gameName);
+        $game = $this->getOpenGame($teacher, $gameName);
+        $users = $game->getUsers();
+        foreach ($users as $user) {
+            if($user["id"] !== "NoID") {
+                $message = Main::CLOSEGAMES . Main::POINTSPLIT;
+                $user["id"]->send($message);
+            }
+        }
+
+        $data = $this->pickUpOpenGameData($teacher, $gameName);
         $this->deleteOpenGame($teacher, $gameName);
         $message = Main::GAMES . Main::POINTSPLIT . $teacher;
         $this->sendGamesTeacher($from, $message);
-        $message = Main::CLOSEGAMES . Main::POINTSPLIT . $gameName;
-        echo "Close Game: Success" . "\n";
+        $message = Main::CLOSEGAMES . Main::POINTSPLIT . $gameName . Main::POINTSPLIT . $teacher . Main::POINTSPLIT . $data;
+        echo "Close Game" . $gameName . ": Success" . "\n";
         $from->send($message);
     }
 
     // ------------------------------- Open Games Functions -------------------------------
 
-    private function searchOpenGames($teacher) {
+    private function searchOpenGames($teacher, $typeUser) {
     	$openGames = array();
     	foreach($this->games as $game) {
             if ($game->getTeacher() == $teacher) {
             	$name = $game->getGameName();
             	$password = $game->getPassword();
             	$tasks = $game->getStringTasks();
-                $users = $game->getStringUserNames();
+                $users = "";
+                if($typeUser == Main::NAME) {
+                    $users = $game->getStringUserNames();
+                }
+                else if($typeUser == Main::NAMEADUSERNAME) {
+                    $users = $game->getStringUserBothNames();
+                }
             	array_push($openGames, array("name"=>$name, "password"=>$password, "tasks"=>$tasks, "users"=>$users));
             }
         }
@@ -432,10 +451,12 @@ class Main implements MessageComponentInterface {
     private function pickUpOpenGameData($teacher, $gameName) {
         $game = $this->getOpenGame($teacher, $gameName);
         $data = $game->pickUpData();
-        $gameDataFile = fopen($gameName ." (" . $teacher . ").txt", "w");
+        echo $gameName . "closed" . "\n";
+        return $data;
+        /*$gameDataFile = fopen($gameName ." (" . $teacher . ").txt", "w");
         fwrite($gameDataFile, $data);
         fclose($gameDataFile);
-        echo $gameName . " (" . $teacher . ").txt" . " Created" . "\n";
+        echo $gameName . " (" . $teacher . ").txt" . " Created" . "\n";*/
     }
 
     // ------------------------------- Data Base Functions -------------------------------

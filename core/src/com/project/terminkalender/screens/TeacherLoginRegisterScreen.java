@@ -17,7 +17,7 @@ public class TeacherLoginRegisterScreen extends AbstractScreen {
 	private Background background;
 	private Title logo; 
 	private TeacherLoginRegisterActor teacherLoginRegisterActor;
-	private ExitDialog exitDialog;
+	private ExitDialogApp exitDialog;
 	private ReconnectButton reconnectButton;
 
 	public TeacherLoginRegisterScreen(Viewport viewport, SpriteBatch batch) {
@@ -28,7 +28,7 @@ public class TeacherLoginRegisterScreen extends AbstractScreen {
 		background = new Background(backgroundTexture);
 		logo = new Title();
 		teacherLoginRegisterActor = new TeacherLoginRegisterActor(Resources.skin);
-		exitDialog = new ExitDialog(Resources.skin);
+		exitDialog = new ExitDialogApp(Resources.skin);
 		reconnectButton = Resources.reconnectButton;
 		
 		stage.addActor(background);

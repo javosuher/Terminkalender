@@ -114,6 +114,21 @@ public class TaskCalendar {
 	public void setPosition(Vector2 position) {
 		this.position = position;
 	}
+	public void setPositionCalendar(String x, String y) {
+		Vector2 position = new Vector2();
+		if(x.equals(MITTWOCH)) position.x = 0;
+		else if(x.equals(DONNERSTAG)) position.x = 1;
+		else if(x.equals(FREITAG)) position.x = 2;
+		else if(x.equals(SAMSTAG)) position.x = 3;
+		else if(x.equals(SONNTAG)) position.x = 4;
+		
+		if(y.equals(MORGENS)) position.y = 0;
+		else if(y.equals(MITTAGS)) position.y = 1;
+		else if(y.equals(NACHMITTAGS)) position.y = 2;
+		else if(y.equals(ABENDS)) position.y = 3;
+		
+		this.position = position;
+	}
 	
 	public String getLocation() {
 		return location;

@@ -1,6 +1,5 @@
 package com.project.terminkalender.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -8,17 +7,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.project.terminkalender.tools.DialogActor;
 
-public class ExitDialog extends DialogActor {
+abstract public class ExitDialog extends DialogActor {
 	public static final String EXIT = "Exit";
 	public static final String CANCEL = "Cancel";
 	
 	private boolean isShow;
 
-	public ExitDialog(Skin skin) {
+	public ExitDialog(Skin skin, String text) {
 		super("", skin);
 		isShow = false;
 		
-		Label messageLabel = new Label("Do you want to exit?", skin);
+		Label messageLabel = new Label(text, skin);
 		TextButton exitButton = new TextButton("Exit", skin, "textButtonLarge");
 		TextButton cancelButton = new TextButton("Cancel", skin, "textButtonLarge");
 				
@@ -54,10 +53,11 @@ public class ExitDialog extends DialogActor {
 	@Override
 	protected void result(Object object) {
 		if(object.equals(EXIT)) {
-			Gdx.app.exit();
+			exit();
 		}
 		else if(object.equals(CANCEL)) {
 			hide();
 		}
 	}
+	abstract public void exit();
 }

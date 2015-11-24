@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.AppMain;
 import com.project.terminkalender.Resources;
+import com.project.terminkalender.screens.CalendarScreen;
 import com.project.terminkalender.tools.Pair;
 import com.project.terminkalender.websockets.AppWebSockets;
 
@@ -58,6 +59,10 @@ public class Chat {
 		messages.add(new Pair<String>(user, message));
 		if(!isInChat()) {
 			buttonNotification();
+		}
+		CalendarScreen calendarScreen = (CalendarScreen) AppMain.calendarScreen;
+		if(calendarScreen.inCalendar()) {
+			calendarScreen.ChatNotification();
 		}
 		updateMessage = true;
 	}

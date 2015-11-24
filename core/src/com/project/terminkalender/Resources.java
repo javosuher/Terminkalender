@@ -3,14 +3,18 @@ package com.project.terminkalender;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.project.terminkalender.tools.WarningDialogActor;
+import com.project.terminkalender.screens.ExitDialogApp;
+import com.project.terminkalender.screens.ExitDialogGame;
 import com.project.terminkalender.tools.KennySkin;
 import com.project.terminkalender.tools.ReconnectButton;
+import com.project.terminkalender.tools.WarningDialogActor;
 
 final public class Resources {
 	public static final AssetManager assets = new AssetManager();
 	public static WarningDialogActor warningDialog;
 	public static ReconnectButton reconnectButton;
+	public static ExitDialogApp exitDialog;
+	public static ExitDialogGame exitDialogGame;
 	public static Skin skin;
 	
 	public static void load(String application) {
@@ -26,5 +30,7 @@ final public class Resources {
 		skin = new KennySkin(application);
 		warningDialog = new WarningDialogActor(skin);
 		reconnectButton = new ReconnectButton(skin);
+		exitDialog = new ExitDialogApp(skin);
+		exitDialogGame = new ExitDialogGame(skin);
 	}
 }

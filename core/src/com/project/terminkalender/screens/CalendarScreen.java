@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
@@ -34,6 +34,7 @@ public class CalendarScreen extends AbstractScreen {
 	private Array<TaskCalendar> tasks;
 	private TextButton changeToChatButton, validateButton;
 	private ReconnectButton reconnectButton;
+	private boolean closeGame, inCalendar;
 
 	public CalendarScreen(Viewport viewport, SpriteBatch batch) {
 		super(viewport, batch);
@@ -52,6 +53,8 @@ public class CalendarScreen extends AbstractScreen {
 		}
 		changeToChatButton = new TextButton("Chat", Resources.skin);
 		validateButton = new TextButton("Validate", Resources.skin, "greenTextButton");
+		closeGame = false;
+		inCalendar = false;
 		
 		stage.addActor(background);
 		stage.addActor(timetableActor);
@@ -66,6 +69,7 @@ public class CalendarScreen extends AbstractScreen {
 
 			@Override 
 			public void clicked(InputEvent event, float x, float y){
+				ChatNormal();
 				AppMain.setNewScreen(AppMain.chatScreen);
 			}
 		});
@@ -83,8 +87,7 @@ public class CalendarScreen extends AbstractScreen {
 			@Override
 			public boolean keyDown(InputEvent event, int keycode) {
 				if(keycode == Keys.BACK || keycode == Keys.ESCAPE) {
-					AppMain.setNewScreen(AppMain.loginGamesScreen);
-					AppMain.setFalseLoadGameScreens();
+					Resources.exitDialogGame.show(stage);
 				}
 				return true;
 			}
@@ -102,7 +105,7 @@ public class CalendarScreen extends AbstractScreen {
 				if(taskSplit[0].equals(originalTask.getDescription())) {
 					originalTask.setLocation(taskSplit[1]);
 					String [] taskPosition = taskSplit[2].split(WebSockets.TASKSPLIT);
-					originalTask.setPosition(new Vector2(Float.parseFloat(taskPosition[0]), Float.parseFloat(taskPosition[1])));
+					originalTask.setPositionCalendar(taskPosition[0], taskPosition[1]);
 					if(taskSplit.length > 3) {
 						Array<String> taskPartners = new Array<String>(taskSplit[3].split(WebSockets.TASKSPLIT));
 						originalTask.setPartners(taskPartners);
@@ -143,12 +146,14 @@ public class CalendarScreen extends AbstractScreen {
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
 		stage.addActor(reconnectButton);
+		inCalendar = true;
 	} 
 	
 	@Override
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
 		reconnectButton.remove();
+		inCalendar = false;
 	}
 	
 	@Override
@@ -156,7 +161,33 @@ public class CalendarScreen extends AbstractScreen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		if(closeGame) {
+			AppMain.setNewScreen(AppMain.loginScreen);
+			Resources.warningDialog.show("Game Closed", AppMain.loginGamesScreen.getStage());
+			ChatScreen chatScreen = (ChatScreen) AppMain.chatScreen;
+			chatScreen.closeGameFalse();
+			closeGame = false;
+		}
+		
 		stage.act(delta);
 		stage.draw();
+	}
+	
+	public void closeGame() {
+		closeGame = true;
+	}
+	public void closeGameFalse() {
+		closeGame = false;
+	}
+	
+	public boolean inCalendar() {
+		return inCalendar;
+	}
+	
+	public void ChatNotification() {
+		changeToChatButton.setStyle(Resources.skin.get("orangeTextButton", TextButtonStyle.class));
+	}
+	public void ChatNormal() {
+		changeToChatButton.setStyle(Resources.skin.get("default", TextButtonStyle.class));
 	}
 }

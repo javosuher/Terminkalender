@@ -73,10 +73,8 @@ public class DialogTextField extends Dialog {
 			chatActor.sendMessageActor();
 			getStage().setKeyboardFocus(textField);
 		}
-		else {
-			keyboardActive = false;
-			hide();
-		}
+		keyboardActive = false;
+		hide();
 		textField.setText("");
 	}
 	private void cancelText() {

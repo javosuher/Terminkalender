@@ -1,6 +1,5 @@
 package com.project.terminkalender.chat;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.AppMain;
@@ -10,13 +9,14 @@ import com.project.terminkalender.websockets.AppWebSockets;
 public class Room {
 	private Table usersTable;
 	private Array<Chat> chats;
-	private boolean update;
+	private boolean update, setScrollUp;
 
 	public Room() {
 		usersTable = new Table(Resources.skin);
 		chats = new Array<Chat>();
 		updateUsers(AppMain.user.getGame().getUsers());
 		AppMain.webSockets.setRoom(this);
+		setScrollUp = false;
 	}
 	
 	public void updateUsers(Array<String> users) {
@@ -64,6 +64,7 @@ public class Room {
 			chats.removeIndex(index);
 			chats.insert(0, chat);
 			update = true;
+			setScrollUp = true;
 		}
 	}
 	private int indexUser(String user) {
@@ -96,5 +97,12 @@ public class Room {
 	}
 	public void finishUpdate() {
 		update = false;
+	}
+	
+	public boolean ScrollUp() {
+		return setScrollUp;
+	}
+	public void finishScrollUp() {
+		setScrollUp = false;
 	}
 }

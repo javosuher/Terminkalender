@@ -11,13 +11,15 @@ import com.project.terminkalender.tools.ScrollWindow;
 
 public class RoomActor extends Table {
 	private final Room room = new Room();
+	private final Chat defaultChat = new Chat("", room);
 	private ChatActor chatActor;
+	private ScrollWindow usersWindow;
 	
 	public RoomActor(Skin skin, ChatActor chatActor) {
 		super(skin);
 		this.chatActor = chatActor;
 		
-		ScrollWindow usersWindow = new ScrollWindow("Users", skin, room.getUsersTable());
+		usersWindow = new ScrollWindow("Users", skin, room.getUsersTable());
 		
 		usersWindow.setMovable(false);
 		add(usersWindow).width(210).height(AppMain.HEIGHT - 4);
@@ -52,15 +54,33 @@ public class RoomActor extends Table {
 
 					@Override 
 					public void clicked(InputEvent event, float x, float y) {
-						chatActor.setChat(chat);
-						chatActor.updateScroll();
 						chat.setTextButton(userButton);
-						AppMain.webSockets.askChatFromUser(chat.getUser(), chat.getMessagesSize());
+						setChatData(chat);
 					}
 				});
 			}
 			
 			room.finishUpdate();
 		}
+		
+		if(room.ScrollUp()) {
+			usersWindow.getScrollTable().setScrollY(0);
+			room.finishScrollUp();
+		}
+	 }
+	
+	public void setFirstChat() {
+		Chat chat = room.getChats().first();
+		setChatData(chat);
+	}
+	
+	private void setChatData(Chat chat) {
+		chatActor.setChat(chat);
+		chatActor.updateScroll();
+		AppMain.webSockets.askChatFromUser(chat.getUser(), chat.getMessagesSize());
+	}
+	
+	public void setDefaultChat() {
+		setChatData(defaultChat);
 	}
 }

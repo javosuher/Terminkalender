@@ -205,12 +205,18 @@ class Main implements MessageComponentInterface {
         echo sprintf('"%s" sending message "%s" to "%s"' . "\n", $userSender, $message, $userDestination);
 
         $game = $this->getOpenGame($teacher, $gameName);
-        $game->addMessage($userSender, $userDestination, $message);
-        $userID = $game->getUserID2($userDestination);
+        if($game !== "Empty") {
+            $game->addMessage($userSender, $userDestination, $message);
+            $userID = $game->getUserID2($userDestination);
 
-        if($userID !== "NoID") {
-            $trueMessage = Main::MESSAGE . Main::POINTSPLIT . $userSender . Main::POINTSPLIT . $message;
-            $userID->send($trueMessage);
+            if($userID !== "NoID") {
+                $trueMessage = Main::MESSAGE . Main::POINTSPLIT . $userSender . Main::POINTSPLIT .  $message;
+                $userID->send($trueMessage);
+            }
+        }
+        else {
+            $message = Main::CLOSEGAMES . Main::POINTSPLIT;
+            $from->send($message);
         }
     }
     private function sendChatConversation(ConnectionInterface $from, $msg) {
@@ -222,10 +228,16 @@ class Main implements MessageComponentInterface {
         echo sprintf('"%s" search messages from "%s" chat' . "\n", $name, $name2);
 
         $game = $this->getOpenGame($teacher, $gameName);
-        $conversation = $game->getChatFromUsers($name, $name2, $messagesSize);
+        if($game !== "Empty") {
+            $conversation = $game->getChatFromUsers($name, $name2, $messagesSize);
 
-        if($conversation !== "") {
-            $message = Main::CHAT . Main::POINTSPLIT . $name2 . Main::POINTSPLIT . $conversation;
+            if($conversation !== "") {
+                $message = Main::CHAT . Main::POINTSPLIT . $name2 . Main::POINTSPLIT . $conversation;
+                $from->send($message);
+            }
+        }
+        else {
+            $message = Main::CLOSEGAMES . Main::POINTSPLIT;
             $from->send($message);
         }
     }
@@ -240,7 +252,13 @@ class Main implements MessageComponentInterface {
         echo sprintf('"%s" add Task Data: Description: "%s", Location: "%s", Position: "%s", Partners: "%s"' . "\n", $userUserName, $description, $location, $position, $partners);
 
         $game = $this->getOpenGame($teacher, $gameName);
-        $game->addTaskCalendar($description, $userUserName, $location, $position, $partners);
+        if($game !== "Empty") {
+            $game->addTaskCalendar($description, $userUserName, $location, $position, $partners);
+        }
+        else {
+            $message = Main::CLOSEGAMES . Main::POINTSPLIT;
+            $from->send($message);
+        }
     }
     private function sendTaskCalendar(ConnectionInterface $from, $msg) {
         $userName = explode(Main::POINTSPLIT, $msg)[1];
@@ -249,10 +267,16 @@ class Main implements MessageComponentInterface {
         echo sprintf('"%s" search Tasks Data' . "\n", $userName);
 
         $game = $this->getOpenGame($teacher, $gameName);
-        $tasks = $game->getTasksDataFromUser($userName);
+        if($game !== "Empty") {
+            $tasks = $game->getTasksDataFromUser($userName);
 
-        $message = Main::TASKS . Main::POINTSPLIT . $tasks;
-        $from->send($message);
+            $message = Main::TASKS . Main::POINTSPLIT . $tasks;
+            $from->send($message);
+        }
+        else {
+            $message = Main::CLOSEGAMES . Main::POINTSPLIT;
+            $from->send($message);
+        }
     }
     private function userValidateTask(ConnectionInterface $from, $msg) {
         $userUserName = explode(Main::POINTSPLIT, $msg)[1];
@@ -261,11 +285,17 @@ class Main implements MessageComponentInterface {
         echo sprintf('"%s" want validate their Tasks' . "\n", $userUserName);
 
         $game = $this->getOpenGame($teacher, $gameName);
-        $tasks = $game->validateTasksDataFromUser($userUserName);
+        if($game !== "Empty") {
+            $tasks = $game->validateTasksDataFromUser($userUserName);
 
-        echo "Validate Calendar: Success" . "\n";
-        $message = Main::TASKVALIDATE . Main::POINTSPLIT . $tasks;
-        $from->send($message);
+            echo "Validate Calendar: Success" . "\n";
+            $message = Main::TASKVALIDATE . Main::POINTSPLIT . $tasks;
+            $from->send($message);
+        }
+        else {
+            $message = Main::CLOSEGAMES . Main::POINTSPLIT;
+            $from->send($message);
+        }
     }
 
     // ------------------------------- Teacher Functions ------------------------------- 

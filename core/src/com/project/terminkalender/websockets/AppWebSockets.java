@@ -6,6 +6,7 @@ import com.project.terminkalender.Resources;
 import com.project.terminkalender.chat.Room;
 import com.project.terminkalender.login.Login;
 import com.project.terminkalender.screens.CalendarScreen;
+import com.project.terminkalender.screens.ChatScreen;
 import com.project.terminkalender.screens.LoginGamesScreen;
 import com.project.terminkalender.screens.LoginScreen;
 import com.project.terminkalender.userdata.User;
@@ -98,8 +99,10 @@ public class AppWebSockets extends WebSockets {
 		calendarScreen.validateTasks(new Array<String>(wrongTasks));
 	}
 	public void closeGame(String message) {
-		AppMain.setNewScreen(AppMain.loginGamesScreen);
-		Resources.warningDialog.show("Game Closed", AppMain.loginGamesScreen.getStage());
+		CalendarScreen calendarScreen = (CalendarScreen) AppMain.calendarScreen;
+		ChatScreen chatScreen = (ChatScreen) AppMain.chatScreen;
+		calendarScreen.closeGame();
+		chatScreen.closeGame();
 		login(AppMain.user.getTeacher());
 	}
 	private Array<String> constructArrayData(String stringData) {

@@ -19,7 +19,6 @@ public class LoginScreen extends AbstractScreen {
 	private Title logo; 
 	private ReconnectButton reconnectButton;
 	private LoginActor loginActor;
-	private ExitDialog exitDialog;
 	private boolean changeScreen;
 	
 	public LoginScreen(Viewport viewport, SpriteBatch batch) {
@@ -31,7 +30,6 @@ public class LoginScreen extends AbstractScreen {
 		background = new Background(backgroundTexture);
 		reconnectButton = Resources.reconnectButton;
 		loginActor = new LoginActor(Resources.skin);
-		exitDialog = new ExitDialog(Resources.skin);
 		logo = new Title();
 		
 		stage.addActor(background);
@@ -43,7 +41,7 @@ public class LoginScreen extends AbstractScreen {
 			@Override
 			public boolean keyDown(InputEvent event, int keycode) {
 				if(keycode == Keys.BACK || keycode == Keys.ESCAPE) {
-					exitDialog.show(stage);
+					Resources.exitDialog.show(stage);
 				}
 				return true;
 			}

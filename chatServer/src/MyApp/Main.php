@@ -33,7 +33,7 @@ class Main implements MessageComponentInterface {
     const NAME = "Name";
     const NAMEADUSERNAME = "NameAndUserName";
 	
-    protected $clients, $dataBase, $games;
+    protected $clients, $dataBase, $games, $semaphore;
 
     public function __construct() {
     	include_once("Config.php"); // Include database config file
@@ -41,7 +41,13 @@ class Main implements MessageComponentInterface {
         $this->clients = new \SplObjectStorage;
         $this->dataBase = $dbh;
         $this->games = new \SplObjectStorage;
-        $this->token = sem_get(0);
+
+        $key = 123321;
+        $maxAcquire = 1;
+        $permissions =0666;
+        $autoRelease = 1;
+        $this->semaphore = sem_get($key, $maxAcquire, $permissions, $autoRelease);
+
         echo "Init Server!\n";
 
         $this->games->attach(new Game("dodo", "sandra", "f", "zoo-2,beber-2,aletear-2,pescar-3,leer un libro-1,migrar-4,tomar un tentempie-2,jugar videojuegos-3,jugar al futbol-4,hacer la comida-1,estudiar-2", "juan,pepe,maria,andrés,perico,taquiato,pedro,camilo,afterwak,petanca,casimiro,pafer,hyeri,lontu.vetertu,calsd,fewjwd,sadkjda,dasjdja,das,dsa")); // Example OpenGame
@@ -49,7 +55,6 @@ class Main implements MessageComponentInterface {
     }
 
     public function onOpen(ConnectionInterface $conn) {
-        // Store the new connection to send messages to later
         $this->clients->attach($conn);
         echo "New connection! ({$conn->resourceId})\n";
     }
@@ -112,7 +117,6 @@ class Main implements MessageComponentInterface {
     }
 
     public function onClose(ConnectionInterface $conn) {
-        // The connection is closed, remove it, as we can no longer send it messages
         $this->clients->detach($conn);
         echo "Connection {$conn->resourceId} has disconnected\n";
     }
@@ -156,7 +160,9 @@ class Main implements MessageComponentInterface {
         $game = $this->getOpenGame($teacher, $gameName);
 
         if($game->getPassword() == $password) {
+            sem_acquire($this->semaphore);
             $enter = $game->enterInGame($userName, $from);
+            sem_release($this->semaphore);
             
             if($enter) {
                 echo "Enter Game: Success" . "\n";
@@ -206,8 +212,10 @@ class Main implements MessageComponentInterface {
 
         $game = $this->getOpenGame($teacher, $gameName);
         if($game !== "Empty") {
+            sem_acquire($this->semaphore);
             $game->addMessage($userSender, $userDestination, $message);
             $userID = $game->getUserID2($userDestination);
+            sem_release($this->semaphore);
 
             if($userID !== "NoID") {
                 $trueMessage = Main::MESSAGE . Main::POINTSPLIT . $userSender . Main::POINTSPLIT .  $message;
@@ -253,7 +261,9 @@ class Main implements MessageComponentInterface {
 
         $game = $this->getOpenGame($teacher, $gameName);
         if($game !== "Empty") {
+            sem_acquire($this->semaphore);
             $game->addTaskCalendar($description, $userUserName, $location, $position, $partners);
+            sem_release($this->semaphore);
         }
         else {
             $message = Main::CLOSEGAMES . Main::POINTSPLIT;
@@ -286,7 +296,9 @@ class Main implements MessageComponentInterface {
 
         $game = $this->getOpenGame($teacher, $gameName);
         if($game !== "Empty") {
+            sem_acquire($this->semaphore);
             $tasks = $game->validateTasksDataFromUser($userUserName);
+            sem_release($this->semaphore);
 
             echo "Validate Calendar: Success" . "\n";
             $message = Main::TASKVALIDATE . Main::POINTSPLIT . $tasks;
@@ -431,7 +443,9 @@ class Main implements MessageComponentInterface {
         }
 
         $data = $this->pickUpOpenGameData($teacher, $gameName);
+        sem_acquire($this->semaphore);
         $this->deleteOpenGame($teacher, $gameName);
+        sem_release($this->semaphore);
         $message = Main::GAMES . Main::POINTSPLIT . $teacher;
         $this->sendGamesTeacher($from, $message);
         $message = Main::CLOSEGAMES . Main::POINTSPLIT . $gameName . Main::POINTSPLIT . $teacher . Main::POINTSPLIT . $data;
@@ -483,10 +497,6 @@ class Main implements MessageComponentInterface {
         $data = $game->pickUpData();
         echo $gameName . "closed" . "\n";
         return $data;
-        /*$gameDataFile = fopen($gameName ." (" . $teacher . ").txt", "w");
-        fwrite($gameDataFile, $data);
-        fclose($gameDataFile);
-        echo $gameName . " (" . $teacher . ").txt" . " Created" . "\n";*/
     }
 
     // ------------------------------- Data Base Functions -------------------------------
@@ -496,7 +506,6 @@ class Main implements MessageComponentInterface {
             $sql = $this->dataBase->prepare("SELECT username FROM teachers");
             $sql->execute();
             $result = $sql->fetchAll();
-            //print_r($result);
             return $result;
         } catch(PDOException $e) {
             echo $sql . "<br>" . $e->getMessage();
@@ -508,7 +517,6 @@ class Main implements MessageComponentInterface {
     		$sql->bindValue(":username", $userTeacher);
     		$sql->execute();
  			$result = $sql->fetchAll();
- 			//print_r($result);
  			return $result;
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
@@ -527,7 +535,6 @@ class Main implements MessageComponentInterface {
     		$sql = $this->dataBase->prepare("SELECT * FROM games WHERE teacher =:teacher");
     		$sql->execute(array(":teacher" => $teacher));
  			$result = $sql->fetchAll();
- 			//print_r($result);
  			return $result;
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
@@ -538,7 +545,6 @@ class Main implements MessageComponentInterface {
     		$sql = $this->dataBase->prepare("SELECT * FROM games WHERE name =:gameName AND teacher =:teacher");
     		$sql->execute(array(":gameName" => $gameName, ":teacher" => $teacher));
  			$result = $sql->fetchAll();
- 			//print_r($result);
  			return $result;
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();

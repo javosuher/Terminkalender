@@ -1,4 +1,6 @@
-# Terminkalender
+<center>
+<img src="http://i.imgur.com/0GoIWlz.png" alt="1">
+</center>
 
 Es una aplicación que sirve de herramienta para la enseñanza de idiomas a un grupo de alumnos que interactuarán entre si mediante dicha aplicación. Dicha herramienta se presenta como un juego que tendrá un calendario de lunes a domingo y un chat. Los alumnos tendrán diferentes tareas que realizar conjuntamente a lo largo de la semana y deberán hablar entre ellos en el chat, así podrán ponerse de acuerdo entre ellos y anotar esas tareas en el calendario. El método de aprendizaje se basará en el uso del calendario que representa un sistema del tiempo real, del día a día; y un chat con el que se pretende que mediante el sistema de comunicación verbal escrito, el alumno tenga una mayor inmersión en el uso del idioma cotidiano.
 

@@ -2,9 +2,9 @@
 
 $host = "localhost"; // Hostname
 $port = "3306"; // MySQL Port : Default : 3306
-$user = "chatUser"; // Username Here
-$pass = "1475"; //Password Here
-$db   = "Chat"; // Database Name
+$user = "kalenderUser"; // Username
+$pass = "1475"; //Password
+$db   = "Terminkalender"; // Database Name
 
 try {
 	$dbh = new PDO('mysql:dbname=' . $db . ';host=' . $host . ';port=' . $port, $user, $pass);

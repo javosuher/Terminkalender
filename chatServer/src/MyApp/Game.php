@@ -24,7 +24,7 @@ class Game {
         $taksSplit = explode(Game::SPLIT, $tasks);
         $usersSplit = explode(Game::SPLIT, $users);
 
-        $file = fopen("src/MyApp/names.csv","r");
+        $file = fopen("src/MyApp/Names.csv","r");
         $userNames= fgetcsv($file);
         fclose($file);
         shuffle($userNames);   

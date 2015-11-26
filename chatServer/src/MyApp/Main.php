@@ -472,7 +472,6 @@ class Main implements MessageComponentInterface {
             	array_push($openGames, array("name"=>$name, "password"=>$password, "tasks"=>$tasks, "users"=>$users));
             }
         }
-        //print_r($openGames);
         return $openGames;
     }
     private function getOpenGame($teacher, $gameName) {

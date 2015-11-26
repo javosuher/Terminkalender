@@ -40,7 +40,8 @@ public class RoomActor extends Table {
 				float width = 175;
 				float height = 100;
 				
-				final TextButton userButton = chat.getTextButton();
+				final TextButton userButton = chat.getTextButton();//new TextButton(chat.getUser(), chat.getTextButton().getStyle());
+				userButton.clearListeners();
 				userButton.getLabel().setWrap(true);
 				int widthDiference = (int) (userButton.getLabel().getWidth() / (width * 2));
 				if(widthDiference > 0) {

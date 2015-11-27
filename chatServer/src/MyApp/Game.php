@@ -190,7 +190,7 @@ class Game {
         $wrongTasks = "";
         foreach($this->tasksData as $task) {
             $taskUser = $task->getUserTaskDataByUserName($userUserName);
-            if(!$this->validate($task, $taskUser)) {
+            if($taskUser !== "NotFound" && !$this->validate($task, $taskUser)) {
                 $wrongTasks = $wrongTasks . $task->getName() . Game::POINTSPLIT;
             }
         }
@@ -200,7 +200,7 @@ class Game {
         if(!empty($taskUser["partners"])) {
             foreach($taskUser["partners"] as $partner) {
                 $taskPartner = $task->getUserTaskDataByUserName($partner);
-                if($taskPartner !== "NotFound" && ($taskUser["position"]["x"] !== $taskPartner["position"]["x"] || $taskUser["position"]["y"] !== $taskPartner["position"]["y"])) {
+                if($taskPartner == "NotFound" || ($taskUser["position"]["x"] !== $taskPartner["position"]["x"] || $taskUser["position"]["y"] !== $taskPartner["position"]["y"])) {
                     return false;
                 }
             }

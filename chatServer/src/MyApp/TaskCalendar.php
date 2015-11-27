@@ -34,7 +34,11 @@ class TaskCalendar {
         return $positionArray;
     }
     private function stringPartnersToPartners($partners) {
-        return explode(TaskCalendar::SPLIT, $partners);
+        $users = explode(TaskCalendar::SPLIT, $partners);
+        if($users[0] !== "") {
+            return $users;
+        }
+        else return array();
     }
 
     public function getUserTaskDataByUserName($userName) {

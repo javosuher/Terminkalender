@@ -48,9 +48,6 @@ class Main implements MessageComponentInterface {
         $this->semaphore = sem_get($key, $maxAcquire, $permissions, $autoRelease);
 
         echo "Init Server!\n";
-
-        $this->games->attach(new Game("dodo", "sandra", "f", "zoo-2,beber-2,aletear-2,pescar-3,leer un libro-1,migrar-4,tomar un tentempie-2,jugar videojuegos-3,jugar al futbol-4,hacer la comida-1,estudiar-2", "juan,pepe,maria,andrés,perico,taquiato,pedro,camilo,afterwak,petanca,casimiro,pafer,hyeri,lontu.vetertu,calsd,fewjwd,sadkjda,dasjdja,das,dsa")); // Example OpenGame
-        $this->games->attach(new Game("otro", "sandra", "f", "zoo-2,beber-2,aletear-2,pescar-3,leer un libro-1,migrar-4,tomar un tentempie-2,jugar videojuegos-3,jugar al futbol-4,hacer la comida-1,estudiar-2", "juan,pepe,maria,andrés,perico,taquiato,pedro,camilo,afterwak,petanca,casimiro,pafer,hyeri,lontu.vetertu,calsd,fewjwd,sadkjda,dasjdja,das,dsa")); // Example OpenGame
     }
 
     public function onOpen(ConnectionInterface $conn) {

@@ -1,5 +1,8 @@
 package com.project.terminkalender.calendar;
 
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -9,12 +12,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.AppMain;
 import com.project.terminkalender.Resources;
-import com.project.terminkalender.tools.DialogActor;
+import com.project.terminkalender.screens.CalendarScreen;
 import com.project.terminkalender.tools.TextFieldActor;
 import com.project.terminkalender.userdata.Game;
 import com.project.terminkalender.websockets.AppWebSockets;
 
-public class SetTaskInCalendarDialog extends DialogActor {
+public class SetTaskInCalendarDialog extends Dialog {
+	public static final String OK = "Ok";
+	public static final String CANCEL = "CANCEL";
+	
 	private TaskCalendar task;
 	private Label partnerLabel, locationLabel;
 	private Array<SelectBox<String>> partnertsboxes;
@@ -22,7 +28,13 @@ public class SetTaskInCalendarDialog extends DialogActor {
 	private Array<String> users;
 
 	public SetTaskInCalendarDialog(String title, Skin skin) {
-		super(title, skin);
+		super("", skin, "windowDialog");
+		
+		center();
+		setMovable(false);
+		setResizable(false);
+		setModal(true);
+		pad(20);
 		
 		task = new TaskCalendar();
 		partnerLabel = new Label("Mit: ", skin);
@@ -30,6 +42,7 @@ public class SetTaskInCalendarDialog extends DialogActor {
 		partnertsboxes = new Array<SelectBox<String>>();
 		locationText = new TextFieldActor("", skin);
 		TextButton acceptButton = new TextButton("OK", skin);
+		TextButton cancelButton = new TextButton("Cancel", skin, "redTextButton");
 		
 		Game game = AppMain.user.getGame();
 		users = new Array<String>(game.getUsers());
@@ -38,7 +51,20 @@ public class SetTaskInCalendarDialog extends DialogActor {
 		getButtonTable().defaults().width(175).height(100);
 		getContentTable().padTop(40);
 		getContentTable().padBottom(40);
-		button(acceptButton, "OK");
+		button(acceptButton, OK);
+		button(cancelButton, CANCEL);
+		
+		addListener(new InputListener() {
+
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				if(keycode == Keys.BACK || keycode == Keys.ESCAPE) {
+					cancelTask();
+					hide();
+				}
+				return true;
+			}
+		});
 	}
 	
 	@Override
@@ -73,6 +99,14 @@ public class SetTaskInCalendarDialog extends DialogActor {
 	}
 	
 	protected void result(Object object) {
+		if(object.equals(OK)) {
+			sendTaskData();
+		}
+		else if(object.equals(CANCEL)) {
+			cancelTask();
+		}
+	}
+	private void sendTaskData() {
 		String location = locationText.getText();
 		if(location.contains(AppWebSockets.POINTSPLIT) || location.contains(AppWebSockets.DATASPLIT) || 
 		   location.contains(AppWebSockets.TASKSPLIT)) {
@@ -88,6 +122,10 @@ public class SetTaskInCalendarDialog extends DialogActor {
 			}
 			task.addDataServer();
 		}
+	}
+	private void cancelTask() {
+		CalendarScreen calendarScreen = (CalendarScreen) AppMain.calendarScreen;
+		calendarScreen.setTaskInSlotEmpty(task);
 	}
 
 	public void setTask(TaskCalendar task) {

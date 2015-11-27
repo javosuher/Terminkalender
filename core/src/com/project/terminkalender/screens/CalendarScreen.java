@@ -125,21 +125,27 @@ public class CalendarScreen extends AbstractScreen {
 		for(String wrongTaskDescription : wrongTasks) {
 			for(int index = 0; index < tasks.size; ++index) {
 				TaskCalendar task = tasks.get(index);
-				if(wrongTaskDescription.equals(task.getDescription())) {
-					Array<Slot> tasksTableSlots = tasktableActor.getTasktable().getSlots();
-					for(int taskTableIndex = 0; taskTableIndex < tasksTableSlots.size; ++taskTableIndex) {
-						Slot slot = tasksTableSlots.get(taskTableIndex);
-						if(slot.isEmpty()) {
-							Slot emptySlot = task.getSlot();
-							slot.copy(task.getSlot().isEmpty(), task);
-							emptySlot.setEmpty();
-							index = tasks.size;
-							taskTableIndex = tasksTableSlots.size;
-						}
+				if(wrongTaskDescription.equals(task.getDescription()) && task.getSlot().hasPosition()) {
+					if(setTaskInSlotEmpty(task)) {
+						index = tasks.size;
 					}
 				}
 			}
 		}
+	}
+	
+	public boolean setTaskInSlotEmpty(TaskCalendar task) {
+		Array<Slot> tasksTableSlots = tasktableActor.getTasktable().getSlots();
+		for(int taskTableIndex = 0; taskTableIndex < tasksTableSlots.size; ++taskTableIndex) {
+			Slot slot = tasksTableSlots.get(taskTableIndex);
+			if(slot.isEmpty()) {
+				Slot emptySlot = task.getSlot();
+				slot.copy(task.getSlot().isEmpty(), task);
+				emptySlot.setEmpty();
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

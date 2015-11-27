@@ -111,6 +111,7 @@ public class SetTaskInCalendarDialog extends Dialog {
 		if(location.contains(AppWebSockets.POINTSPLIT) || location.contains(AppWebSockets.DATASPLIT) || 
 		   location.contains(AppWebSockets.TASKSPLIT)) {
 			Resources.warningDialog.show("you musn't use ',', ';', or ':'", getStage());
+			cancelTask();
 		}
 		else {
 			task.setLocation(locationText.getText());

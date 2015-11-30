@@ -8,7 +8,6 @@ import com.project.terminkalender.games.TeacherGame;
 import com.project.terminkalender.userdata.Game;
 import com.project.terminkalender.userdata.Task;
 import com.project.terminkalender.websockets.TeacherWebSockets;
-import com.project.terminkalender.websockets.AppWebSockets;
 
 public class GamesOpen {
 	private Table gamesTable;

@@ -20,9 +20,9 @@ public class LoginActor extends Table {
 		login = new Login();
 		
 		Window loginWindow = new TWindow("", skin, "window2");
-		Label teacherName = new Label("Teacher", skin);
+		Label teacherName = new Label("Lehrer", skin);
 		teachersSelectBox = new SelectBox<String>(skin);
-		TextButton loginButton = new TextButton("Enter", skin, "defaultBig");
+		TextButton loginButton = new TextButton("Start", skin, "defaultBig");
 
 		setPosition(AppMain.WIDTH / 2, 225);
 		

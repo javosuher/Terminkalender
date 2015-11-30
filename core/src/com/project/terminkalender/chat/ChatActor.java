@@ -31,8 +31,10 @@ public class ChatActor extends Table {
 		
 		final Table messageTable = new Table(Resources.skin);
 		scrollMessagesTable = new ScrollWindow("", skin, messageTable);
-		TWindow sendWindow = new TWindow(AppMain.user.getName() + " Send:", skin);
+		Label YouLabel = new Label("Du ", Resources.skin);
+		scrollMessagesTable.getTitleTable().add(YouLabel).right();
 		
+		TWindow sendWindow = new TWindow("", skin);
 		textMessage = new TextFieldActor("", skin, this);
 		ImageButton sendButton = new ImageButton(skin, "imageButtonArrowLeft");
 

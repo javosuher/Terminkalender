@@ -11,7 +11,7 @@ public class TasktableActor extends ScrollWindow {
 	private final Tasktable tasktable = new Tasktable();
 	
 	public TasktableActor(DragAndDrop dragAndDrop, Skin skin) {
-		super("Tasks", skin);
+		super("Aktivitäten", skin);
 		
 		Table table = new Table();
 		setTable(skin, table, "scrollPaneWindowTasksCalendar");

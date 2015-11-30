@@ -19,7 +19,7 @@ public class RoomActor extends Table {
 		super(skin);
 		this.chatActor = chatActor;
 		
-		usersWindow = new ScrollWindow("Users", skin, room.getUsersTable());
+		usersWindow = new ScrollWindow("Benutzer", skin, room.getUsersTable());
 		
 		usersWindow.setMovable(false);
 		add(usersWindow).width(210).height(AppMain.HEIGHT - 4);

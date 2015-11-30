@@ -11,7 +11,7 @@ import com.project.terminkalender.tools.Pair;
 import com.project.terminkalender.websockets.AppWebSockets;
 
 public class Chat {
-	public final static String YOU = "You";
+	public final static String YOU = "Du";
 	public final static String CHATSPACE = ": ";
 	
 	private String user;

@@ -30,7 +30,7 @@ public class TimetableActor extends TWindow {
 		add(new Label("Morgens", skin));
 		add(new Label(" Mittags", skin));
 		add(new Label("Nachmittags", skin));
-		add(new Label("  Abens", skin));
+		add(new Label(" Abends", skin));
 		row();
 		add(new Label(dayTime.get(dayTimeIndex), skin));
 		++dayTimeIndex;

@@ -23,7 +23,7 @@ public class GamesOpenActor extends Table {
 		super(skin);
 		
 		games = new GamesOpen();
-		gamesWindow = new ScrollWindow("Games", skin, games.getGamesTable());
+		gamesWindow = new ScrollWindow("Spiele", skin, games.getGamesTable());
 		ImageButton backButton = new ImageButton(skin, "imageButtonBack");
 		
 		setFillParent(true);

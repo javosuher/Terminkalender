@@ -54,10 +54,10 @@ public class AppWebSockets extends WebSockets {
 	}
 	public void enterGame(String message) {
 		if(message.equals("WrongPassword")) {
-			Resources.warningDialog.show("Wrong Password", AppMain.loginGamesScreen.getStage());
+			Resources.warningDialog.show("Falsches Passwort", AppMain.loginGamesScreen.getStage());
 		}
 		else if(message.equals("UserNoExist")) {
-			Resources.warningDialog.show("User no Exist", AppMain.loginGamesScreen.getStage());
+			Resources.warningDialog.show("Benutzer existiert nicht", AppMain.loginGamesScreen.getStage());
 		}
 		else {
 			String gameName = message.split(POINTSPLIT)[0];

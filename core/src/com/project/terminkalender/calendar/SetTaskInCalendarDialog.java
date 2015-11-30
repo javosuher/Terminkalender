@@ -35,10 +35,14 @@ public class SetTaskInCalendarDialog extends Dialog {
 		setResizable(false);
 		setModal(true);
 		pad(20);
+		padTop(35);
 		
 		task = new TaskCalendar();
-		partnerLabel = new Label("Mit: ", skin);
-		locationLabel = new Label("Wo: ", skin);
+		partnerLabel = new Label("Mit? ", skin);
+		locationLabel = new Label("Wo? ", skin);
+		
+		
+		
 		partnertsboxes = new Array<SelectBox<String>>();
 		locationText = new TextFieldActor("", skin);
 		TextButton acceptButton = new TextButton("OK", skin);
@@ -77,6 +81,7 @@ public class SetTaskInCalendarDialog extends Dialog {
 		getContentTable().clear();
 		partnertsboxes.clear();
 		
+		getTitleLabel().setText(task.getDescription());
 		int numberPartners = task.getNumberPartners();
 		Array<String> partnerts = task.getPartners();
 		if(numberPartners > 0) {
@@ -84,9 +89,14 @@ public class SetTaskInCalendarDialog extends Dialog {
 			for(int index = 0; index < numberPartners; ++index) {
 				SelectBox<String> partnertsBox = new SelectBox<String>(Resources.skin);
 				partnertsBox.setItems(users);
+				partnertsBox.setSelectedIndex(index);
 				if(partnerts.size > index) {
 					String partnerString = partnerts.get(index);
 					partnertsBox.setSelected(partnerString);
+				}
+				if(index > 0) {
+					Label otherPartnerLabel = new Label("und", Resources.skin);
+					getContentTable().add(otherPartnerLabel);
 				}
 				partnertsboxes.add(partnertsBox);
 				getContentTable().add(partnertsBox).width(226).right();

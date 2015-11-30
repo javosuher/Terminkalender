@@ -18,8 +18,8 @@ abstract public class ExitDialog extends DialogActor {
 		isShow = false;
 		
 		Label messageLabel = new Label(text, skin);
-		TextButton exitButton = new TextButton("Exit", skin, "textButtonLargeRed");
-		TextButton cancelButton = new TextButton("Cancel", skin, "textButtonLarge");
+		TextButton exitButton = new TextButton("Beenden", skin, "textButtonLargeRed");
+		TextButton cancelButton = new TextButton("Löschen", skin, "textButtonLarge");
 				
 		center();
 		setMovable(false);

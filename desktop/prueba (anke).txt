@@ -1,0 +1,68 @@
+CHATS 
+================================================= 
+
+------------ juan and maria ------------ 
+juan: hola Hanna
+juan: Me gustaria ir al zoo contigo
+juan: estas?
+maria: si
+maria: claro
+maria: cuando podriamos
+juan: quiero ir al zoo
+maria: vale
+maria: que dia te viene bien
+juan: estaria bien lines por la mañana
+maria: pues je viene perfecto
+maria: donde vamos al zoo
+juan: podriamos ir a jere<
+maria: vale
+
+------------ juan and pepe ------------ 
+juan: vamos al cine
+juan: ok
+
+
+
+CALENDAR TASKS 
+================================================= 
+
+------------ Ir a zoo ------------ 
+-----> juan
+Location: Jerez
+Position: Mittwoch, Morgens
+Partners: maria
+
+-----> maria
+Location: Jerez
+Position: Mittwoch, Morgens
+Partners: juan
+
+
+------------ Ver una película en el cine ------------ 
+
+------------ Besar ranas en el estanque ------------ 
+-----> juan
+Location: jerez
+Position: Mittwoch, Mittags
+
+
+------------ Jugar juego de mesa ------------ 
+-----> juan
+Location: Cadiz
+Position: Donnerstag, Mittags
+Partners: pepe, maria, sandra
+
+
+------------ Declarar la independencia de Cádiz ------------ 
+
+------------ Beber agua ------------ 
+
+------------ Practicar alemán ------------ 
+
+------------ Estudiar ------------ 
+
+------------ Hacer la comida ------------ 
+
+------------ Ir de compras ------------ 
+
+

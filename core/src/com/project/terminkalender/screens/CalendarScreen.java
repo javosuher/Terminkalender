@@ -52,7 +52,7 @@ public class CalendarScreen extends AbstractScreen {
 			tasks.add(slot.getTask());
 		}
 		changeToChatButton = new TextButton("Chat", Resources.skin);
-		validateButton = new TextButton("Validate", Resources.skin, "greenTextButton");
+		validateButton = new TextButton("Aktivität beendet!", Resources.skin, "greenTextButton");
 		closeGame = false;
 		inCalendar = false;
 		
@@ -125,15 +125,13 @@ public class CalendarScreen extends AbstractScreen {
 		for(String wrongTaskDescription : wrongTasks) {
 			for(int index = 0; index < tasks.size; ++index) {
 				TaskCalendar task = tasks.get(index);
-				if(wrongTaskDescription.equals(task.getDescription()) && task.getSlot().hasPosition()) {
-					if(setTaskInSlotEmpty(task)) {
-						index = tasks.size;
-					}
+				if(wrongTaskDescription.equals(task.getDescription())) {
+					// Rojo
+					index = tasks.size;
 				}
 			}
 		}
-	}
-	
+	}	
 	public boolean setTaskInSlotEmpty(TaskCalendar task) {
 		Array<Slot> tasksTableSlots = tasktableActor.getTasktable().getSlots();
 		for(int taskTableIndex = 0; taskTableIndex < tasksTableSlots.size; ++taskTableIndex) {

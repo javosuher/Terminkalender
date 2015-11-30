@@ -20,12 +20,12 @@ public class GameSelectionDialog extends DialogActor {
 		
 		this.game = game;
 		
-		TextButton enterGameButton = new TextButton("Enter", skin);
-		Label nameLabel = new Label("Your name", skin);
-		Label passwordLabel = new Label("Password", skin);
+		TextButton enterGameButton = new TextButton("Start", skin);
+		Label nameLabel = new Label("Dein Name", skin);
+		Label passwordLabel = new Label("Passwort", skin);
 		nameText = new TextFieldActor("", skin);
 		passwordText = new TextFieldActor("", skin);
-		CheckBox showPasswordCheckBox = new CheckBox("Show Password", skin);
+		CheckBox showPasswordCheckBox = new CheckBox("Passwort anzeigen", skin);
 		showPasswordCheckBox.right();
 		
 		getButtonTable().defaults().width(175).height(100);
@@ -37,7 +37,7 @@ public class GameSelectionDialog extends DialogActor {
 		getContentTable().add(passwordText).width(200).center().row();
 		getContentTable().add(showPasswordCheckBox).center().colspan(2).center();
 		getButtonTable().padTop(30);
-		button(enterGameButton, "Enter");
+		button(enterGameButton, "Start");
 		
 		passwordText.setPasswordCharacter('*');
 		passwordText.setPasswordMode(true);

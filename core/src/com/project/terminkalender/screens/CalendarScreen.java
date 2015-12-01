@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.AppMain;
 import com.project.terminkalender.Resources;
 import com.project.terminkalender.calendar.Slot;
+import com.project.terminkalender.calendar.SlotActor;
 import com.project.terminkalender.calendar.TaskCalendar;
 import com.project.terminkalender.calendar.TasktableActor;
 import com.project.terminkalender.calendar.Timetable;
@@ -63,7 +64,7 @@ public class CalendarScreen extends AbstractScreen {
 		stage.addActor(validateButton);
 		
 		changeToChatButton.setBounds(15, 2, 135, 66);
-		validateButton.setBounds(640, 2, 125, 66);
+		validateButton.setBounds(510, 2, 260, 66);
 		
 		changeToChatButton.addListener(new ClickListener() {
 
@@ -122,12 +123,15 @@ public class CalendarScreen extends AbstractScreen {
 		}
 	}
 	public void validateTasks(Array<String> wrongTasks) {
-		for(String wrongTaskDescription : wrongTasks) {
-			for(int index = 0; index < tasks.size; ++index) {
-				TaskCalendar task = tasks.get(index);
-				if(wrongTaskDescription.equals(task.getDescription())) {
-					// Rojo
-					index = tasks.size;
+		Array <SlotActor> slotActors = timetableActor.getSlotActors();
+		if(!wrongTasks.get(0).equals("")) {
+			for(String wrongTaskDescription : wrongTasks) {
+				for(int index = 0; index < slotActors.size; ++index) {
+					SlotActor slotActor = slotActors.get(index);
+					if(wrongTaskDescription.equals(slotActor.getSlot().getTask().getDescription())) {
+						slotActor.setStyle(Resources.skin.get("textButtonTaskRed", TextButtonStyle.class));
+						index = slotActors.size;
+					}
 				}
 			}
 		}

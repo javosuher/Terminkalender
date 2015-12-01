@@ -26,6 +26,7 @@ final public class Resources {
 		assets.load("arrowLeft.png", Texture.class);
 		assets.load("return.png", Texture.class);
 		assets.load("reconnect.png", Texture.class);
+		assets.load("connect.png", Texture.class);
 		assets.finishLoading();
 		skin = new KennySkin(application);
 		warningDialog = new WarningDialogActor(skin);

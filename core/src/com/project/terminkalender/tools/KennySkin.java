@@ -111,7 +111,7 @@ public class KennySkin extends Skin {
 																			 new TextureRegionDrawable(image), 
 																			 new TextureRegionDrawable(image));
 		
-		image = new TextureRegion(Resources.assets.get("reconnect.png", Texture.class));														 
+		image = new TextureRegion(Resources.assets.get("connect.png", Texture.class));														 
 		final ImageButtonStyle imageButtonStyleReconnect = new ImageButtonStyle(getDrawable("button_04"), 
 																			 getDrawable("button_02"), 
 																			 getDrawable("button_04"), 
@@ -278,12 +278,18 @@ public class KennySkin extends Skin {
 																			 	getDrawable("button_04_red"), 
 																			 	new TextureRegionDrawable(image), 
 																			 	new TextureRegionDrawable(image), 
-																			 	new TextureRegionDrawable(image));	
+																			 	new TextureRegionDrawable(image));
+		
+		final TextButtonStyle textButtonTaskRedStyle = new TextButtonStyle(getDrawable("button_01_red"), 
+				   														   getDrawable("button_01_red"), 
+				   														   getDrawable("button_01_red"), 
+				   														   getFont("FontMed"));
         
         add("closeRedButton", closeRedButtonStyle);
         add("textButtonLargeRed", textButtonStyleLargeRed);
         add("redTextButton", redTextButtonStyle);
         add("imageButtonhideKeyboard", imageButtonStylehideKeyboard);
+        add("textButtonTaskRed", textButtonTaskRedStyle);
         
         addRegions(whiteAtlas);
         

@@ -12,7 +12,6 @@ public class SlotDescriptionListener extends DragListener {
 	private Actor tooltip;
 	private boolean followCursor;
 
-	private Vector2 position = new Vector2();
 	private Vector2 tmp = new Vector2();
 	private Vector2 offset = new Vector2(10, 10);
 
@@ -24,8 +23,7 @@ public class SlotDescriptionListener extends DragListener {
 	@Override
 	public boolean mouseMoved(InputEvent event, float x, float y) {
 		if (inside && followCursor) {
-			event.getListenerActor().localToStageCoordinates(tmp.set(x, y));
-			tooltip.setPosition(AppMain.WIDTH / 2 - tooltip.getWidth() / 2, AppMain.HEIGHT - 80);
+			setBasicDescription(event, x, y);
 		}
 		return true;
 	}
@@ -64,14 +62,10 @@ public class SlotDescriptionListener extends DragListener {
 		inside = true;
 		tooltip.setVisible(true);
 		tmp.set(x, y);
-		event.getListenerActor().localToStageCoordinates(tmp);
-		//tooltip.setPosition(tmp.x + position.x + offset.x, tmp.y + position.y + offset.y);
-		tooltip.setPosition(AppMain.WIDTH / 2 - tooltip.getWidth() / 2, AppMain.HEIGHT - 80);
-		tooltip.toFront();
+		setBasicDescription(event, x, y);
 	}
-	public void setDescriptionVisible() {
-		inside = true;
-		tooltip.setVisible(true);
+	private void setBasicDescription(InputEvent event, float x, float y) {
+		event.getListenerActor().localToStageCoordinates(tmp.set(x, y));
 		tooltip.setPosition(AppMain.WIDTH / 2 - tooltip.getWidth() / 2, AppMain.HEIGHT - 80);
 		tooltip.toFront();
 	}

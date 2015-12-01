@@ -220,7 +220,7 @@ class Game {
         return $chatsConversation;
     }
     private function pickUpCalendarData() {
-        $calendarData = "CALENDAR TASKS \n================================================= \n\n";
+        $calendarData = "TASKS \n================================================= \n\n";
         foreach($this->tasksData as $taskData) {
             $calendarData = $calendarData . "------------ " . $taskData->getName() . " ------------ \n";
             $calendarData = $calendarData . $taskData->pickUpTaskCalendar() . "\n";

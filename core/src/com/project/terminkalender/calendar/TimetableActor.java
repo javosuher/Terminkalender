@@ -9,9 +9,11 @@ import com.project.terminkalender.tools.TWindow;
 
 public class TimetableActor extends TWindow {
 	private final Timetable timetable = new Timetable();
+	private Array<SlotActor> slotActors; 
 
 	public TimetableActor(DragAndDrop dragAndDrop, Skin skin) {
 		super("Kalender", skin);
+		slotActors = new Array<SlotActor>();
 		
 		setPosition(2, 70);
 		setMovable(false);
@@ -38,6 +40,7 @@ public class TimetableActor extends TWindow {
 		int index = 0;
 		for (Slot slot : timetable.getSlots()) {
 			SlotActor slotActor = new SlotActor(skin, slot);
+			slotActors.add(slotActor);
 			dragAndDrop.addSource(new SlotSource(slotActor));
 			dragAndDrop.addTarget(new SlotTarget(slotActor));
 			if(index % Timetable.COLUMN == 0) {
@@ -59,5 +62,9 @@ public class TimetableActor extends TWindow {
 
 	public Timetable getTimetable() {
 		return timetable;
+	}
+
+	public Array<SlotActor> getSlotActors() {
+		return slotActors;
 	}
 }

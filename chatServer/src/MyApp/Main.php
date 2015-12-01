@@ -447,7 +447,7 @@ class Main implements MessageComponentInterface {
         $message = Main::GAMES . Main::POINTSPLIT . $teacher;
         $this->sendGamesTeacher($from, $message);
         $message = Main::CLOSEGAMES . Main::POINTSPLIT . $gameName . Main::POINTSPLIT . $teacher . Main::POINTSPLIT . $data;
-        echo "Close Game" . $gameName . ": Success" . "\n";
+        echo "Close Game " . $gameName . ": Success" . "\n";
         $from->send($message);
     }
 
@@ -492,7 +492,7 @@ class Main implements MessageComponentInterface {
     private function pickUpOpenGameData($teacher, $gameName) {
         $game = $this->getOpenGame($teacher, $gameName);
         $data = $game->pickUpData();
-        echo $gameName . "closed" . "\n";
+        echo $gameName . " closed" . "\n";
         return $data;
     }
 }

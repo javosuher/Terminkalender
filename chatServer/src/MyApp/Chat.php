@@ -18,10 +18,10 @@ class Chat {
 
     public function addMessage($userDestination, $message) {
         if($userDestination == $this->user1) {
-            array_push($this->messages, $this->user2 . Chat::CHATSPLIT . $message);
+            array_push($this->messages, array("time"=>date("H:i:s"), "message"=>$this->user2 . Chat::CHATSPLIT . $message));
         }
         else if($userDestination == $this->user2) {
-            array_push($this->messages, $this->user1 . Chat::CHATSPLIT . $message);
+            array_push($this->messages, array("time"=>date("H:i:s"), "message"=>$this->user1 . Chat::CHATSPLIT . $message));
         }
         else echo sprintf('No "%s" in Chat' . "\n", $userDestination);
         //print_r($this->messages);
@@ -32,7 +32,7 @@ class Chat {
         $conversation = "";
         if($user == $this->user1 || $user == $this->user2) {
             foreach($this->messages as $message) {
-                $conversation = $conversation . $message . Chat::MESSAGESPLIT;
+                $conversation = $conversation . $message["message"] . Chat::MESSAGESPLIT;
             }
         }
         return $conversation;
@@ -41,11 +41,11 @@ class Chat {
     public function pickUpChat() {
         $conversation = "";
         foreach($this->messages as $message) {
-            $user = explode(Chat::CHATSPLIT, $message)[0];
+            $user = explode(Chat::CHATSPLIT, $message["message"])[0];
             if($user == $this->user1) $user = $this->userRealName1;
             else $user = $this->userRealName2;
-            $trueMessage = explode(Chat::CHATSPLIT, $message)[1];
-            $conversation = $conversation . $user . ": " . $trueMessage . "\n";
+            $trueMessage = explode(Chat::CHATSPLIT, $message["message"])[1];
+            $conversation = $conversation . $message["time"] . " > ". $user . ": " . $trueMessage . "\n";
         }
         return $conversation;
     }

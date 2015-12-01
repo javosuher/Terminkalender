@@ -24,7 +24,7 @@ public class SlotDescription extends Window implements SlotListener {
 		}
 		
 		clear();
-		Label label = new Label(slot.getTask().getDescription(), Resources.skin, "labelBig");
+		Label label = new Label(slot.getTask().getDescription() + " [" + slot.getTask().getNumberPartners() + "]", Resources.skin, "labelBig");
 		add(label);
 		pack();
 	}

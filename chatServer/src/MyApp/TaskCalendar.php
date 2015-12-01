@@ -21,11 +21,12 @@ class TaskCalendar {
                     $userTask["location"] = $location;
                     $userTask["position"] = $this->stringPositionToPosition($position);
                     $userTask["partners"] = $this->stringPartnersToPartners($partners);
+                    $userTask["time"] = date("H:i:s");
                     return true;
                 }
             }
         }
-        array_push($this->usersTask, array("userName"=>$userUserName, "userRealName"=>$userRealName, "location"=>$location, "position"=>$this->stringPositionToPosition($position), "partners"=>$this->stringPartnersToPartners($partners)));
+        array_push($this->usersTask, array("userName"=>$userUserName, "userRealName"=>$userRealName, "location"=>$location, "position"=>$this->stringPositionToPosition($position), "partners"=>$this->stringPartnersToPartners($partners), "time"=>date("H:i:s")));
         return false;
 	}
     private function stringPositionToPosition($position) {
@@ -70,7 +71,7 @@ class TaskCalendar {
             if($this->numberPartners > 0) {
                $data = $data  . "Partners: " . $this->pickUpPartnersToString($userTask["partners"]) . "\n";
             }
-            $data = $data . "\n";
+            $data = $data . "Time: " . $userTask["time"] . "\n";
         }
         return $data;
     }

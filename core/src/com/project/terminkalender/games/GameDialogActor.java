@@ -34,6 +34,7 @@ import com.project.terminkalender.tools.DialogActor;
 import com.project.terminkalender.tools.ScrollWindow;
 import com.project.terminkalender.userdata.Task;
 import com.project.terminkalender.websockets.TeacherWebSockets;
+import com.project.terminkalender.websockets.WebSockets;
 
 public class GameDialogActor extends GameDialog {
 	public final static String XML = "xml";
@@ -291,26 +292,24 @@ public class GameDialogActor extends GameDialog {
 	private void addTask() {
 		String taskName = taskNameText.getText();
 		taskNameText.setText("");
-		addTask(taskName, tasksLimitUserSelect.getSelected());
+		addTask(taskName, tasksLimitUserSelect.getSelected(), taskWhatText.getText(), taskWhereText.getText(), tasksBoxDialog);
 	}
-	private void addTask(String taskName, String taskLimit) {
+	private void addTask(String taskName, String taskLimit, String whatString, String whereString, List<String> list) {
 		if(!taskName.equals("") && validateFieldString(taskName)) {
 			boolean add = true;
 			String task = taskName + " [" + taskLimit + "]";
-			String whatString = taskWhatText.getText();
 			if(validateTaskSecondaryFieldString(whatString)) {
-				task = task + " [" + taskWhatText.getText() + "]";
+				task = task + " [" + whatString + "]";
 			}
 			else add = false;
 			taskWhatText.setText("");
-			String whereString = taskWhereText.getText();
 			if(validateTaskSecondaryFieldString(whereString)) {
-				task = task + " [" + taskWhereText.getText() + "]";
+				task = task + " [" + whereString + "]";
 			}
 			else add = false;
 			taskWhereText.setText("");
 			if(add) {
-				addInList(task, tasksBoxDialog);
+				addInList(task, list);
 			}
 		}
 	}
@@ -430,8 +429,10 @@ public class GameDialogActor extends GameDialog {
 		    		if(setting.equals(TASK)) {
 		    			Array<Element> newTasks = xmlFile.getChildrenByName("task");
 		    			for(Element task : newTasks) {
+		    				String what = secondaryField(task, "what");
+		    				String where = secondaryField(task, "where");
 		    				if(inTaskLimitRange(task.get("limit"))) {
-		    					addTask(task.get("name"), task.get("limit"));
+		    					addTask(task.get("name"), task.get("limit"), what, where, tasksBox);
 		    				}
 		    			}
 		    		}
@@ -462,5 +463,19 @@ public class GameDialogActor extends GameDialog {
 	
 	private boolean inTaskLimitRange(String taskLimit) {
 		return taskLimit.equals("1") || taskLimit.equals("2") || taskLimit.equals("3") || taskLimit.equals("4");
+	}
+	private String secondaryField(Element task, String field) {
+		String string = "";
+		Element elementFields = task.getChildByName(field);
+		if(elementFields != null) {
+			Array<Element> stringArray = elementFields.getChildrenByName("field");
+			for(Element element : stringArray) {
+				string = string + element.getText() + WebSockets.SPLIT;
+			}
+			if(!string.equals("")) {
+				string = string.substring(0, string.length() - 1);
+			}
+		}
+		return string;
 	}
 }

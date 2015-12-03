@@ -101,6 +101,10 @@ public class SetTaskInCalendarDialog extends Dialog {
 					Label otherPartnerLabel = new Label("und", Resources.skin);
 					getContentTable().add(otherPartnerLabel);
 				}
+				if(index == 2) {
+					getContentTable().row();
+					getContentTable().add(new Label("", Resources.skin));
+				}
 				partnertsboxes.add(partnertsBox);
 				getContentTable().add(partnertsBox).width(226).right();
 			}

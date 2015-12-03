@@ -20,6 +20,7 @@ public class TasktableActor extends ScrollWindow {
 			SlotActor slotActor = new SlotActor(skin, slot);
 			dragAndDrop.addSource(new SlotSource(slotActor));
 			dragAndDrop.addTarget(new SlotTarget(slotActor));
+			dragAndDrop.setDragActorPosition(-CalendarScreen.WIDTHTASK / 2, CalendarScreen.HEIGHTTASK / 2);
 			table.add(slotActor).width(CalendarScreen.WIDTHTASK).height(CalendarScreen.HEIGHTTASK);
 
 			table.row().padTop(5);

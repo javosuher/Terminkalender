@@ -6,16 +6,16 @@ import com.project.terminkalender.AppMain;
 import com.project.terminkalender.websockets.WebSockets;
 
 public class TaskCalendar {
-	public final static String MITTWOCH = "Mittwoch";
-	public final static String DONNERSTAG = "Donnerstag";
-	public final static String FREITAG = "Freitag";
-	public final static String SAMSTAG = "Samstag";
-	public final static String SONNTAG = "Sonntag";
+	public final static String X0 = "Mittwoch";
+	public final static String X1 = "Donnerstag";
+	public final static String X2 = "Freitag";
+	public final static String X3 = "Samstag";
+	public final static String X4 = "Sonntag";
 	
-	public final static String MORGENS = "Morgens";
-	public final static String MITTAGS = "Mittags";
-	public final static String NACHMITTAGS = "Nachmittags";
-	public final static String ABENDS = "Abends";
+	public final static String Y0 = "Morgens";
+	public final static String Y1 = "Mittags";
+	public final static String Y2 = "Nachmittags";
+	public final static String Y3 = "Abends";
 	
 	private Array<String> whatArray, whereArray;
 	
@@ -71,16 +71,16 @@ public class TaskCalendar {
 		if(hasPosition()) {
 			String x = "", y = "";
 			
-			if(position.x == 0) x = MITTWOCH;
-			else if(position.x == 1) x = DONNERSTAG;
-			else if(position.x == 2) x = FREITAG;
-			else if(position.x == 3) x = SAMSTAG;
-			else if(position.x == 4) x = SONNTAG;
+			if(position.x == 0) x = X0;
+			else if(position.x == 1) x = X1;
+			else if(position.x == 2) x = X2;
+			else if(position.x == 3) x = X3;
+			else if(position.x == 4) x = X4;
 			
-			if(position.y == 0) y = MORGENS;
-			else if(position.y == 1) y = MITTAGS;
-			else if(position.y == 2) y = NACHMITTAGS;
-			else if(position.y == 3) y = ABENDS;
+			if(position.y == 0) y = Y0;
+			else if(position.y == 1) y = Y1;
+			else if(position.y == 2) y = Y2;
+			else if(position.y == 3) y = Y3;
 			
 			return x + WebSockets.SPLIT + y;
 		}
@@ -124,16 +124,16 @@ public class TaskCalendar {
 	}
 	public void setPositionCalendar(String x, String y) {
 		Vector2 position = new Vector2();
-		if(x.equals(MITTWOCH)) position.x = 0;
-		else if(x.equals(DONNERSTAG)) position.x = 1;
-		else if(x.equals(FREITAG)) position.x = 2;
-		else if(x.equals(SAMSTAG)) position.x = 3;
-		else if(x.equals(SONNTAG)) position.x = 4;
+		if(x.equals(X0)) position.x = 0;
+		else if(x.equals(X1)) position.x = 1;
+		else if(x.equals(X2)) position.x = 2;
+		else if(x.equals(X3)) position.x = 3;
+		else if(x.equals(X4)) position.x = 4;
 		
-		if(y.equals(MORGENS)) position.y = 0;
-		else if(y.equals(MITTAGS)) position.y = 1;
-		else if(y.equals(NACHMITTAGS)) position.y = 2;
-		else if(y.equals(ABENDS)) position.y = 3;
+		if(y.equals(Y0)) position.y = 0;
+		else if(y.equals(Y1)) position.y = 1;
+		else if(y.equals(Y2)) position.y = 2;
+		else if(y.equals(Y3)) position.y = 3;
 		
 		this.position = position;
 	}

@@ -43,6 +43,7 @@ public class TimetableActor extends TWindow {
 			slotActors.add(slotActor);
 			dragAndDrop.addSource(new SlotSource(slotActor));
 			dragAndDrop.addTarget(new SlotTarget(slotActor));
+			dragAndDrop.setDragActorPosition(-CalendarScreen.WIDTHTASK / 2, CalendarScreen.HEIGHTTASK / 2);
 			if(index % Timetable.COLUMN == 0) {
 				add(slotActor).width(CalendarScreen.WIDTHTASK).height(CalendarScreen.HEIGHTTASK).padRight(30);
 			}

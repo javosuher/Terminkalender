@@ -16,8 +16,6 @@ public class SlotTarget extends Target {
 
 	@Override
 	public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
-		//Slot payloadSlot = (Slot) payload.getObject();
-		//getActor().setColor(Color.RED);
 		return true;
 	}
 

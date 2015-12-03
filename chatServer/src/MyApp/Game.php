@@ -11,7 +11,7 @@ class Game {
     const TASKPLIT = "/";
     const SPLIT = ",";
 
-    protected $gameName, $teacher, $password, $tasks, $users, $chats, $tasksData;
+    protected $gameName, $teacher, $password, $tasks, $users, $chats, $tasksData, $timeStart;
 
     public function __construct($gameName, $teacher, $password, $tasks, $users) {
         $this->gameName = $gameName;
@@ -52,6 +52,8 @@ class Game {
             $taskData = new TaskCalendar($name, $limit, $this->users, $this->stringToArrayField($what), $this->stringToArrayField($where));
             $this->tasksData->attach($taskData);
         }
+
+        $this->timeStart = date("H:i:s");
     }
 
     private function stringToArrayField($string) {
@@ -226,7 +228,7 @@ class Game {
         if(!empty($taskUser["partners"])) {
             foreach($taskUser["partners"] as $partner) {
                 $taskPartner = $task->getUserTaskDataByUserName($partner);
-                if($taskPartner == "NotFound" || ($taskUser["position"]["x"] !== $taskPartner["position"]["x"] || $taskUser["position"]["y"] !== $taskPartner["position"]["y"])) {
+                if($taskPartner == "NotFound" || ($taskUser["position"]["x"] !== $taskPartner["position"]["x"] || $taskUser["position"]["y"] !== $taskPartner["position"]["y"] || $taskUser["what"] !== $taskPartner["what"] || $taskUser["where"] !== $taskPartner["where"])) {
                     return false;
                 }
             }
@@ -274,6 +276,9 @@ class Game {
     }
     public function getTasksData() {
         return $this->tasksData;
+    }
+    public function getTimeStart() {
+        return $this->timeStart;
     }
 }
 

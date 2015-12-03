@@ -72,17 +72,19 @@ class TaskCalendar {
     public function pickUpTaskCalendar() {
         $data = "";
         foreach($this->usersTask as $userTask) {
-            $data = $data . "-----> " . $userTask["userRealName"] . "\n" . "Where: " . $userTask["location"] . "\n" . "Position: " . $userTask["position"]["x"] . ", " . $userTask["position"]["y"] . "\n";
+            $data = $data . "-----> " . $userTask["userRealName"] . "\n";
             if($this->numberPartners > 0) {
                 $data = $data  . "Partners: " . $this->pickUpPartnersToString($userTask["partners"]) . "\n";
             }
+            $data = $data . "Position: " . $userTask["position"]["x"] . ", " . $userTask["position"]["y"] . "\n";
             if($userTask["what"] !== "") {
-                $data = $data  . "What exactly: " . $userTask["what"] . "\n";
+                $data = $data . "What exactly: " . $userTask["what"] . "\n";
             }
+            $data = $data . "Where: " . $userTask["location"] . "\n";
             if($userTask["where"] !== "") {
                 $data = $data  . "Where exactly: " . $userTask["where"] . "\n";
             }
-            $data = $data . "Time: " . $userTask["time"] . "\n";
+            $data = $data . "Time: " . $userTask["time"] . "\n\n";
         }
         return $data;
     }

@@ -49,7 +49,9 @@ class Main implements MessageComponentInterface {
 
         echo "Init Server!\n";
 
-        $this->games->attach(new Game("dodo", "sandra", "f", "zoo-2,beber-2,aletear-2,pescar-3,leer un libro-1,migrar-4,tomar un tentempie-2,jugar videojuegos-3,jugar al futbol-4,hacer la comida-1,estudiar-2", "juan,pepe,maria,andrés,perico,taquiato,pedro,camilo,afterwak,petanca,casimiro,pafer,hyeri,lontu.vetertu,calsd,fewjwd,sadkjda,dasjdja,das,dsa")); // Example OpenGame
+        /*$this->games->attach(new Game("dodo", "sandra", "f", "zoo-2,beber-2,aletear-2,pescar-3,leer un libro-1,migrar-4,tomar un tentempie-2,jugar videojuegos-3,jugar al futbol-4,hacer la comida-1,estudiar-2", "juan,pepe,maria,andrés,perico,taquiato,pedro,camilo,afterwak,petanca,casimiro,pafer,hyeri,lontu.vetertu,calsd,fewjwd,sadkjda,dasjdja,das,dsa")); // Example OpenGame*/
+
+        $this->games->attach(new Game("dodo", "sandra", "f", "zoo-2-hola,tete,camorra-petas,tio/beber-2-primero-segundo/aletear-2--solo segundo/estudiar-2-solo primero-/migrar-4--", "juan,pepe,maria,andrés,perico")); // Example OpenGame
     }
 
     public function onOpen(ConnectionInterface $conn) {
@@ -248,19 +250,22 @@ class Main implements MessageComponentInterface {
         }
     }
     private function addTaskCalendar(ConnectionInterface $from, $msg) {
-        $userUserName = explode(Main::POINTSPLIT, $msg)[1];
-        $gameName = explode(Main::POINTSPLIT, $msg)[2];
-        $teacher = explode(Main::POINTSPLIT, $msg)[3];
-        $description = explode(Main::POINTSPLIT, $msg)[4];
-        $location = explode(Main::POINTSPLIT, $msg)[5];
-        $position = explode(Main::POINTSPLIT, $msg)[6];
-        $partners = explode(Main::POINTSPLIT, $msg)[7];
-        echo sprintf('"%s" add Task Data: Description: "%s", Location: "%s", Position: "%s", Partners: "%s"' . "\n", $userUserName, $description, $location, $position, $partners);
+        $messageSplit = explode(Main::POINTSPLIT, $msg);
+        $userUserName = $messageSplit[1];
+        $gameName = $messageSplit[2];
+        $teacher = $messageSplit[3];
+        $description = $messageSplit[4];
+        $location = $messageSplit[5];
+        $position = $messageSplit[6];
+        $partners = $messageSplit[7];
+        $what =$messageSplit[8];
+        $where = $messageSplit[9];
+        echo sprintf('"%s" add Task Data: Description: "%s", Location: "%s", Position: "%s", Partners: "%s", $what: "%s", $where: "%s"' . "\n", $userUserName, $description, $location, $position, $partners, $what, $where);
 
         $game = $this->getOpenGame($teacher, $gameName);
         if($game !== "Empty") {
             sem_acquire($this->semaphore);
-            $game->addTaskCalendar($description, $userUserName, $location, $position, $partners);
+            $game->addTaskCalendar($description, $userUserName, $location, $position, $partners, $what, $where);
             sem_release($this->semaphore);
         }
         else {

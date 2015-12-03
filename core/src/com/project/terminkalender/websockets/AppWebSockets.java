@@ -142,10 +142,11 @@ public class AppWebSockets extends WebSockets {
 		return sendMessage(CHAT + POINTSPLIT + user.getUserName() + POINTSPLIT + user.getGame().getName() + 
 				POINTSPLIT + user.getTeacher() + POINTSPLIT + userDestination + POINTSPLIT + messagesSize);
 	}
-	public boolean sendTaskFill(String description, String location, String position, String partners) {
+	public boolean sendTaskFill(String description, String location, String position, String partners, String what, String where) {
 		User user = AppMain.user;
 		return sendMessage(TASK + POINTSPLIT + user.getUserName() + POINTSPLIT + user.getGame().getName() + 
-				POINTSPLIT + user.getTeacher() + POINTSPLIT + description + POINTSPLIT + location + POINTSPLIT + position + POINTSPLIT + partners);
+				POINTSPLIT + user.getTeacher() + POINTSPLIT + description + POINTSPLIT + location + POINTSPLIT + 
+				position + POINTSPLIT + partners + POINTSPLIT + what + POINTSPLIT + where);
 	}
 	public boolean validateCalendarData() {
 		User user = AppMain.user;

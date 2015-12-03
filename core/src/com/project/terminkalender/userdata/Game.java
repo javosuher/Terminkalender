@@ -87,7 +87,7 @@ public class Game {
 		if(users.size > 0) {
 			String userString = "";
 			for(String user : users) {
-				userString += user + TeacherWebSockets.TASKSPLIT;
+				userString += user + TeacherWebSockets.SPLIT;
 			}
 			return userString.substring(0, userString.length() - 1);
 		}

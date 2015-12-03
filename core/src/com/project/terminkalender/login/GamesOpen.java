@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.Resources;
+import com.project.terminkalender.games.GameDialog;
 import com.project.terminkalender.games.TeacherGame;
 import com.project.terminkalender.userdata.Game;
 import com.project.terminkalender.userdata.Task;
@@ -41,16 +42,16 @@ public class GamesOpen {
 			}
 			else {
 				if(gameData[2].equals("")) {
-					Array<String> usersArray = new Array<String>(gameData[3].split(TeacherWebSockets.TASKSPLIT));
+					Array<String> usersArray = new Array<String>(gameData[3].split(TeacherWebSockets.SPLIT));
 					Array<String> users = stringUsersTousers(usersArray);
 					games.add(new TeacherGame(gameData[0], gameData[1], new Array<Task>(), users));
 				}
 				else {
 					Array<String> tasksArray = new Array<String>(gameData[2].split(TeacherWebSockets.TASKSPLIT));
-					Array<String> usersArray = new Array<String>(gameData[3].split(TeacherWebSockets.TASKSPLIT));
+					Array<String> usersArray = new Array<String>(gameData[3].split(TeacherWebSockets.SPLIT));
 					Array<String> users = stringUsersTousers(usersArray);
 					Array<Task> tasks = stringTasksToTasks(tasksArray);
-					games.add(new TeacherGame(gameData[0], gameData[1], tasks, users));
+					games.add(new Game(gameData[0], gameData[1], tasks, users));
 				}
 			}
 		}
@@ -59,8 +60,17 @@ public class GamesOpen {
 	private Array<Task> stringTasksToTasks(Array<String> tasksArray) {
 		Array<Task> tasks = new Array<Task>();
 		for(String task : tasksArray) {
-			String [] taskSplit = task.split(TeacherWebSockets.TASKLIMITSPLIT);
-			Task newTask = new Task(taskSplit[0], taskSplit[1]);
+			String [] taskSplit = task.split(TeacherWebSockets.TASKFIELDPLIT);
+			Array<String> whatArray = new Array<String>();
+			if(taskSplit.length > 2 && !taskSplit[2].equals("")) {
+				whatArray = GameDialog.addSecondaryArray(taskSplit[2]);
+			}
+			Array<String> whereArray = new Array<String>();
+			if(taskSplit.length > 3 && !taskSplit[3].equals("")) {
+				whereArray = GameDialog.addSecondaryArray(taskSplit[3]);
+			}
+			
+			Task newTask = new Task(taskSplit[0], taskSplit[1], whatArray, whereArray);
 			tasks.add(newTask);
 		}
 		return tasks;

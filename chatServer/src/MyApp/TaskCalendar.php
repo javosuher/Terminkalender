@@ -5,28 +5,33 @@ namespace MyApp;
 class TaskCalendar {
     const SPLIT = ",";
 
-	protected $name, $numberPartners, $users, $usersTask;
+	protected $name, $numberPartners, $users, $what, $where, $usersTask;
 
-	public function __construct($name, $numberPartners, $users) {
+	public function __construct($name, $numberPartners, $users, $what, $where) {
 		$this->name = $name;
 		$this->numberPartners = $numberPartners - 1;
         $this->users = $users;
+        $this->what = $what;
+        $this->where = $where;
 		$this->usersTask = array();
 	}
 
-	public function addUserData($userUserName, $userRealName, $location, $position, $partners) {
+	public function addUserData($userUserName, $userRealName, $location, $position, $partners, $what, $where) {
         if(!empty($this->usersTask)) {
             foreach($this->usersTask as &$userTask) {
                 if($userTask["userName"] == $userUserName) {
                     $userTask["location"] = $location;
                     $userTask["position"] = $this->stringPositionToPosition($position);
-                    $userTask["partners"] = $this->stringPartnersToPartners($partners);
+                    $userTask["partners"] = $this->stringToArrayField($partners);
+                    $userTask["what"] = $what;
+                    $userTask["where"] = $where;
                     $userTask["time"] = date("H:i:s");
                     return true;
                 }
             }
         }
-        array_push($this->usersTask, array("userName"=>$userUserName, "userRealName"=>$userRealName, "location"=>$location, "position"=>$this->stringPositionToPosition($position), "partners"=>$this->stringPartnersToPartners($partners), "time"=>date("H:i:s")));
+        array_push($this->usersTask, array("userName"=>$userUserName, "userRealName"=>$userRealName, "location"=>$location, "position"=>$this->stringPositionToPosition($position), "partners"=>$this->stringToArrayField($partners), "what"=>$what, "where"=>$where, "time"=>date("H:i:s")));
+
         return false;
 	}
     private function stringPositionToPosition($position) {
@@ -34,10 +39,10 @@ class TaskCalendar {
         $positionArray = array("x"=>$positionSplit[0], "y"=>$positionSplit[1]);
         return $positionArray;
     }
-    private function stringPartnersToPartners($partners) {
-        $users = explode(TaskCalendar::SPLIT, $partners);
-        if($users[0] !== "") {
-            return $users;
+    private function stringToArrayField($string) {
+        $array = explode(TaskCalendar::SPLIT, $string);
+        if($array[0] !== "") {
+            return $array;
         }
         else return array();
     }
@@ -67,9 +72,15 @@ class TaskCalendar {
     public function pickUpTaskCalendar() {
         $data = "";
         foreach($this->usersTask as $userTask) {
-            $data = $data . "-----> " . $userTask["userRealName"] . "\n" . "Location: " . $userTask["location"] . "\n" . "Position: " . $userTask["position"]["x"] . ", " . $userTask["position"]["y"] . "\n";
+            $data = $data . "-----> " . $userTask["userRealName"] . "\n" . "Where: " . $userTask["location"] . "\n" . "Position: " . $userTask["position"]["x"] . ", " . $userTask["position"]["y"] . "\n";
             if($this->numberPartners > 0) {
-               $data = $data  . "Partners: " . $this->pickUpPartnersToString($userTask["partners"]) . "\n";
+                $data = $data  . "Partners: " . $this->pickUpPartnersToString($userTask["partners"]) . "\n";
+            }
+            if($userTask["what"] !== "") {
+                $data = $data  . "What exactly: " . $userTask["what"] . "\n";
+            }
+            if($userTask["where"] !== "") {
+                $data = $data  . "Where exactly: " . $userTask["where"] . "\n";
             }
             $data = $data . "Time: " . $userTask["time"] . "\n";
         }
@@ -90,6 +101,14 @@ class TaskCalendar {
         }
         $usersString = rtrim($usersString, $separator);
         return $usersString;
+    }
+    private function arrayToString($array) {
+        $string = "";
+        foreach ($array as $newString) {
+            $string = $string . $newString . TaskCalendar::SPLIT;
+        }
+        $string = rtrim($string, TaskCalendar::SPLIT);
+        return $string;
     }
     private function getUserRealName($userName) {
         foreach($this->users as $user) {

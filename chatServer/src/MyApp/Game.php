@@ -8,6 +8,7 @@ class Game {
     const POINTSPLIT = ":";
     const DATASPLIT = ";";
     const TASKLIMITSPLIT = "-";
+    const TASKPLIT = "/";
     const SPLIT = ",";
 
     protected $gameName, $teacher, $password, $tasks, $users, $chats, $tasksData;
@@ -21,7 +22,7 @@ class Game {
         $this->chats = new \SplObjectStorage;
         $this->tasksData = new \SplObjectStorage;
 
-        $taksSplit = explode(Game::SPLIT, $tasks);
+        $taksSplit = explode(Game::TASKPLIT, $tasks);
         $usersSplit = explode(Game::SPLIT, $users);
 
         $file = fopen("src/MyApp/Names.csv","r");
@@ -34,14 +35,31 @@ class Game {
         }
 
         foreach($taksSplit as $task) {
-            $name = explode(Game::TASKLIMITSPLIT, $task)[0];
-            $limit = explode(Game::TASKLIMITSPLIT, $task)[1];
+            $taskArray = explode(Game::TASKLIMITSPLIT, $task);
+            $name = $taskArray[0];
+            $limit = $taskArray[1];
+            $what = "";
+            if(count($taskArray) > 2) {
+                $what = $taskArray[2];
+            }
+            $where = "";
+            if(count($taskArray) > 3) {
+                $where = $taskArray[3];
+            }
 
-            array_push($this->tasks, array("name"=>$name, "limit"=>$limit));
+            array_push($this->tasks, array("name"=>$name, "limit"=>$limit, "what"=>$this->stringToArrayField($what), "where"=>$this->stringToArrayField($where)));
 
-            $taskData = new TaskCalendar($name, $limit, $this->users);
+            $taskData = new TaskCalendar($name, $limit, $this->users, $this->stringToArrayField($what), $this->stringToArrayField($where));
             $this->tasksData->attach($taskData);
         }
+    }
+
+    private function stringToArrayField($string) {
+        $array = explode(TaskCalendar::SPLIT, $string);
+        if($array[0] !== "") {
+            return $array;
+        }
+        else return array();
     }
 
     public function isUserInGame($userName) {
@@ -80,10 +98,18 @@ class Game {
     public function getStringTasks() {
         $tasksString = "";
         foreach ($this->tasks as $task) {
-            $tasksString = $tasksString . $task["name"] . Game::TASKLIMITSPLIT . $task["limit"] . Game::SPLIT;
+            $tasksString = $tasksString . $task["name"] . Game::TASKLIMITSPLIT . $task["limit"] . Game::TASKLIMITSPLIT . $this->arrayToString($task["what"]) . Game::TASKLIMITSPLIT . $this->arrayToString($task["where"]) . Game::TASKPLIT;
         }
-        $tasksString = rtrim($tasksString, ",");
+        $tasksString = rtrim($tasksString, Game::TASKPLIT);
         return $tasksString;
+    }
+    private function arrayToString($array) {
+        $string = "";
+        foreach ($array as $newString) {
+            $string = $string . $newString . TaskCalendar::SPLIT;
+        }
+        $string = rtrim($string, TaskCalendar::SPLIT);
+        return $string;
     }
 
     public function getUserNames() {
@@ -167,10 +193,10 @@ class Game {
         return "";
     }
 
-    public function addTaskCalendar($description, $userUserName, $location, $position, $partners) {
+    public function addTaskCalendar($description, $userUserName, $location, $position, $partners, $what, $where) {
         foreach ($this->tasksData as $taskData) {
             if($taskData->getName() == $description) {
-                $taskData->addUserData($userUserName, $this->getUserName($userUserName), $location, $position, $partners);
+                $taskData->addUserData($userUserName, $this->getUserName($userUserName), $location, $position, $partners, $what, $where);
                 return true;
             }
         }
@@ -181,7 +207,7 @@ class Game {
         foreach($this->tasksData as $task) {
             $taskUser = $task->getUserTaskDataByRealName($userName);
             if($taskUser !== "NotFound") {
-                $tasks = $tasks . $task->getName() . Game::DATASPLIT . $taskUser["location"] . Game::DATASPLIT . $taskUser["position"]["x"] . Game::SPLIT . $taskUser["position"]["y"] . Game::DATASPLIT . $task->partnersToString($taskUser["partners"]) . Game::POINTSPLIT;
+                $tasks = $tasks . $task->getName() . Game::DATASPLIT . $taskUser["location"] . Game::DATASPLIT . $taskUser["position"]["x"] . Game::SPLIT . $taskUser["position"]["y"] . Game::DATASPLIT . $task->partnersToString($taskUser["partners"]) . Game::DATASPLIT . $taskUser["what"] . Game::DATASPLIT. $taskUser["where"] . Game::POINTSPLIT;
             }
         }
         return $tasks;

@@ -14,7 +14,7 @@ public class OpenGameDialogActor extends GameDialog {
 		super(skin, game, thisButton);
 		
 		actionButton = new TextButton("Close Game", skin, "textButtonLargeRed");
-		Label nameLabel = new Label("Name: " + game.getName(), skin);
+		Label nameLabel = new Label("Game name: " + game.getName(), skin);
 		Label passwordLabel = new Label("Password: " + game.getPassword(), skin);
 		
 		Table tasksBoxTable = new Table(skin);

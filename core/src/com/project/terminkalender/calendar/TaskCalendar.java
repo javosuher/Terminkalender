@@ -17,8 +17,10 @@ public class TaskCalendar {
 	public final static String NACHMITTAGS = "Nachmittags";
 	public final static String ABENDS = "Abends";
 	
+	private Array<String> whatArray, whereArray;
+	
 	private Slot slot;
-	private String description, location;
+	private String description, location, what, where;
 	private int numberPartners;
 	private Vector2 position;
 	private Array<String> partners;
@@ -26,14 +28,18 @@ public class TaskCalendar {
 	public TaskCalendar() {
 		erase();
 	}
-	public TaskCalendar(String description, int numberPartners) {
-		this(description, numberPartners, "");
+	public TaskCalendar(String description, int numberPartners, Array<String> whatArray, Array<String> whereArray) {
+		this(description, numberPartners, "", "", "");
+		this.whatArray = whatArray;
+		this.whereArray = whereArray;
 	}
-	public TaskCalendar(String description, int numberPartners, String location) {
+	public TaskCalendar(String description, int numberPartners, String location, String what, String where) {
 		this.description = description;
 		this.numberPartners = numberPartners - 1;
 		this.position = new Vector2(-1, -1);
 		this.location = location;
+		this.what = what;
+		this.where = where;
 		partners = new Array<String>(numberPartners);
 	}
 	
@@ -43,17 +49,19 @@ public class TaskCalendar {
 		position = new Vector2(-1, -1);
 		location = "";
 		partners = new Array<String>();
+		what = "";
+		where = "";
 	}
 	
 	public void addDataServer() {
-		AppMain.webSockets.sendTaskFill(description, location, positionToString(), partnersToString());
+		AppMain.webSockets.sendTaskFill(description, location, positionToString(), partnersToString(), what, where);
 	}
 	
 	private String partnersToString() {
 		if(partners.size > 0) {
 			String partnersString = "";
 			for(String partner : partners) {
-				partnersString += partner + WebSockets.TASKSPLIT;
+				partnersString += partner + WebSockets.SPLIT;
 			}
 			return partnersString.substring(0, partnersString.length() - 1);
 		}
@@ -74,7 +82,7 @@ public class TaskCalendar {
 			else if(position.y == 2) y = NACHMITTAGS;
 			else if(position.y == 3) y = ABENDS;
 			
-			return x + WebSockets.TASKSPLIT + y;
+			return x + WebSockets.SPLIT + y;
 		}
 		else return "NoPosition";
 	}
@@ -144,6 +152,20 @@ public class TaskCalendar {
 		this.numberPartners = numberPartners;
 	}
 	
+	public String getWhat() {
+		return what;
+	}
+	public void setWhat(String what) {
+		this.what = what;
+	}
+	
+	public String getWhere() {
+		return where;
+	}
+	public void setWhere(String where) {
+		this.where = where;
+	}
+	
 	public Slot getSlot() {
 		return slot;
 	}
@@ -151,9 +173,17 @@ public class TaskCalendar {
 		this.slot = slot;
 	}
 	
+	public Array<String> getWhatArray() {
+		return whatArray;
+	}
+	public Array<String> getWhereArray() {
+		return whereArray;
+	}
+	
 	@Override
 	public String toString() {
 		return "Task [description=" + description + ", Position=" + position
-				+ ", location=" + location + ", NumberPartners=" + numberPartners + "]";
+				+ ", location=" + location + ", NumberPartners=" + numberPartners 
+				+ ", what=" + what + ", where=" + where + "]";
 	}
 }

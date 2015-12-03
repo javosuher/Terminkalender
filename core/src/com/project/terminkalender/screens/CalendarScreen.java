@@ -105,11 +105,17 @@ public class CalendarScreen extends AbstractScreen {
 				TaskCalendar originalTask = tasksTableSlots.get(index).getTask();
 				if(taskSplit[0].equals(originalTask.getDescription())) {
 					originalTask.setLocation(taskSplit[1]);
-					String [] taskPosition = taskSplit[2].split(WebSockets.TASKSPLIT);
+					String [] taskPosition = taskSplit[2].split(WebSockets.SPLIT);
 					originalTask.setPositionCalendar(taskPosition[0], taskPosition[1]);
 					if(taskSplit.length > 3) {
-						Array<String> taskPartners = new Array<String>(taskSplit[3].split(WebSockets.TASKSPLIT));
+						Array<String> taskPartners = new Array<String>(taskSplit[3].split(WebSockets.SPLIT));
 						originalTask.setPartners(taskPartners);
+					}
+					if(taskSplit.length > 4) {
+						originalTask.setWhat(taskSplit[4]);
+					}
+					if(taskSplit.length > 5) {
+						originalTask.setWhere(taskSplit[5]);
 					}
 					updateTasks.add(tasksTableSlots.get(index));
 					index = tasksTableSlots.size;

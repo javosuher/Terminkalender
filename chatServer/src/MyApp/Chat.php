@@ -24,8 +24,6 @@ class Chat {
             array_push($this->messages, array("time"=>date("H:i:s"), "message"=>$this->user1 . Chat::CHATSPLIT . $message));
         }
         else echo sprintf('No "%s" in Chat' . "\n", $userDestination);
-        //print_r($this->messages);
-        //echo "\n";
     }
 
     public function getMessagesUser($user) {

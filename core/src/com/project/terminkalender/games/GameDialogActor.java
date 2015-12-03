@@ -12,6 +12,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
@@ -29,6 +30,7 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 import com.project.terminkalender.Resources;
 import com.project.terminkalender.TeacherMain;
 import com.project.terminkalender.tools.CsvReader;
+import com.project.terminkalender.tools.DialogActor;
 import com.project.terminkalender.tools.ScrollWindow;
 import com.project.terminkalender.userdata.Task;
 import com.project.terminkalender.websockets.TeacherWebSockets;
@@ -42,9 +44,13 @@ public class GameDialogActor extends GameDialog {
 	public final static String OPEN = "open";
 	public final static String DELETE = "delete";
 	
+	private final DialogActor tasksDialog = new DialogActor("", Resources.skin);
 	private final List<String> tasksBox = new List<String>(Resources.skin);
+	private final List<String> tasksBoxDialog = new List<String>(Resources.skin);
 	private final TextField taskNameText = new TextField("", Resources.skin);
 	SelectBox<String> tasksLimitUserSelect = new SelectBox<String>(Resources.skin);
+	private final TextField taskWhatText = new TextField("", Resources.skin);
+	private final TextField taskWhereText = new TextField("", Resources.skin);
 	private final List<String> usersBox = new List<String>(Resources.skin);
 	private final TextField usersText = new TextField("", Resources.skin);
 	
@@ -59,12 +65,20 @@ public class GameDialogActor extends GameDialog {
 		Label essentialDataLabel = new Label("ESSENTIAL DATA", skin);
 		Label nameLabel = new Label("Game name: ", skin);
 		Label nameGameLabel = new Label(game.getName(), skin);
+		CheckBox showPasswordCheckBox = new CheckBox("Show", skin);
 		Label passwordLabel = new Label("Password: ", skin);
 		final TextField passwordText = new TextField(game.getPassword(), skin);
 		Label tasksSettingsLabel = new Label("\nTASKS SETTINGS", skin);
 		Table taskDataTable = new Table(skin);
+		TextButton configTasksButton = new TextButton("Config Tasks", skin);
+		TextButton tasksAccept = new TextButton("OK", skin, "textButtonLarge");
+		Label primaryFieldsLabel = new Label("PRIMARY FIELDS", skin);
 		Label newTasksLabel = new Label("Task Name: ", skin);
 		Label newTasksNumLabel = new Label("Task Limit:", skin);
+		Label secondaryFieldsLabel = new Label("SECONDARY FIELDS", skin);
+		Label newTaskWhatLabel = new Label("What: ", skin);
+		Label newTaskWhereLabel = new Label("Where: ", skin);
+		Label tasksExplanationLabel = new Label("Secondary fields can be empty. Their structure is formed by words split with commas. eg: 'word,word,word'", skin);
 		Table taskAddDeleteTable = new Table(skin);
 		TextButton addTaskButton = new TextButton("Enter", skin);
 		TextButton deleteTaskButton = new TextButton("Delete", skin, "redTextButton");
@@ -72,11 +86,13 @@ public class GameDialogActor extends GameDialog {
 		Label userSettingsLabel = new Label("\nUSERS SETTINGS", skin);
 		Label newUsersLabel = new Label("New User: ", skin);
 		Table userAddDeleteTable = new Table(skin);
-		TextButton addUserButton = new TextButton("Shift", skin);
+		TextButton addUserButton = new TextButton("Enter", skin);
 		TextButton deleteUserButton = new TextButton("Delete", skin, "redTextButton");
 		ImageButton openUserFileButton = new ImageButton(skin, "imageButtonFolder");
 		Table tasksBoxTable = new Table(skin);
+		Table tasksBoxTableDialog = new Table(skin);
 		ScrollWindow tasksBoxWindow = new ScrollWindow("TASKS LIST", skin, tasksBoxTable);
+		ScrollWindow tasksBoxWindowDialog = new ScrollWindow("TASKS LIST", skin, tasksBoxTableDialog);
 		Table usersBoxTable = new Table(skin);
 		ScrollWindow usersBoxWindow = new ScrollWindow("USERS LIST", skin, usersBoxTable);
 		tasksBox.setItems(tasksToTaskBox(game.getTasks()));
@@ -91,39 +107,55 @@ public class GameDialogActor extends GameDialog {
 		tasksLimitRange.add("4");
 		tasksLimitUserSelect.setItems(tasksLimitRange);
 		tasksLimitUserSelect.setSelectedIndex(1);
+		tasksExplanationLabel.setWrap(true);
 		
+		taskDataTable.add(primaryFieldsLabel).colspan(2).row();
 		taskDataTable.add(newTasksLabel);
 		taskDataTable.add(taskNameText).row();
-		taskDataTable.add(newTasksNumLabel).left();
-		taskDataTable.add(tasksLimitUserSelect).left().width(50);
+		taskDataTable.add(newTasksNumLabel);
+		taskDataTable.add(tasksLimitUserSelect).width(50).padBottom(20).row();
+		taskDataTable.add(secondaryFieldsLabel).colspan(2).row();
+		taskDataTable.add(newTaskWhatLabel);
+		taskDataTable.add(taskWhatText).row();
+		taskDataTable.add(newTaskWhereLabel);
+		taskDataTable.add(taskWhereText).row();
+		taskDataTable.add(tasksExplanationLabel).colspan(2).width(300).height(10).padTop(50);
 		taskAddDeleteTable.add(addTaskButton).width(70).height(35).padBottom(4).row();
 		taskAddDeleteTable.add(deleteTaskButton).width(70).height(35);
 		tasksBoxTable.add(tasksBox).expand().fill();
 		userAddDeleteTable.add(addUserButton).width(70).height(35).padBottom(4).row();
 		userAddDeleteTable.add(deleteUserButton).width(70).height(35);
 		usersBoxTable.add(usersBox).expand().fill();
+		tasksBoxTableDialog.add(tasksBoxDialog).expand().fill();
 		
 		getContentTable().padTop(40);
 		getButtonTable().defaults().width(185).height(60);
 		
-		mainParemetersTable.add(essentialDataLabel).colspan(2).row();
+		mainParemetersTable.add(essentialDataLabel).colspan(3).row();
 		mainParemetersTable.add(nameLabel);
 		mainParemetersTable.add(nameGameLabel).row();
 		mainParemetersTable.add(passwordLabel);
-		mainParemetersTable.add(passwordText).row();
+		mainParemetersTable.add(passwordText).padRight(8);
+		mainParemetersTable.add(showPasswordCheckBox).row();
 		
-		taskParametersTable.add(tasksSettingsLabel).colspan(4).row();
-		taskParametersTable.add(taskDataTable);
-		taskParametersTable.add(openTaskFileButton).width(50).height(50).padRight(8).padLeft(8);
-		taskParametersTable.add(taskAddDeleteTable).row();
-		taskParametersTable.add(tasksBoxWindow).padTop(8).colspan(3).width(300).height(200);
+		taskParametersTable.add(tasksSettingsLabel).colspan(2).row();
+		taskParametersTable.add(configTasksButton).width(125).height(50).padTop(12);
+		tasksDialog.getContentTable().padTop(40);
+		tasksDialog.getButtonTable().defaults().width(175).height(100);
+		tasksDialog.getContentTable().add(taskDataTable);
+		tasksDialog.getContentTable().add(taskAddDeleteTable);
+		tasksDialog.getContentTable().add(tasksBoxWindowDialog).padLeft(20).padTop(8).colspan(3).width(400).height(300).row();
+		tasksDialog.getContentTable().padBottom(20);
+		tasksDialog.button(tasksAccept);
+		taskParametersTable.add(openTaskFileButton).width(50).height(50).padRight(8).padTop(12).row();
+		taskParametersTable.add(tasksBoxWindow).padLeft(30).padTop(20).colspan(3).width(300).height(200);
 		
-		userParametersTable.add(userSettingsLabel).colspan(2).row();
+		userParametersTable.add(userSettingsLabel).colspan(4).row();
 		userParametersTable.add(newUsersLabel);
 		userParametersTable.add(usersText);
 		userParametersTable.add(openUserFileButton).width(50).height(50).padRight(8).padLeft(8);
 		userParametersTable.add(userAddDeleteTable).row();
-		userParametersTable.add(usersBoxWindow).padTop(8).colspan(3).width(300).height(200);
+		userParametersTable.add(usersBoxWindow).padTop(8).padLeft(40).colspan(3).width(300).height(200);
 		
 		getContentTable().add(mainParemetersTable).colspan(2).row();
 		getContentTable().add(taskParametersTable);
@@ -132,6 +164,18 @@ public class GameDialogActor extends GameDialog {
 		getButtonTable().add(applyChangesButton);
 		button(actionButton, OPEN);
 		button(deleteGameButton, DELETE);
+		
+		configTasksButton.addListener(new ChangeListener() {
+			public void changed (ChangeEvent event, Actor actor) {
+				tasksBoxDialog.setItems(tasksBox.getItems());
+				tasksDialog.show(getStage());
+			} 
+		});
+		tasksAccept.addListener(new ChangeListener() {
+			public void changed (ChangeEvent event, Actor actor) {
+				tasksBox.setItems(tasksBoxDialog.getItems());
+			} 
+		});
 		
 		addTaskButton.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
@@ -168,7 +212,7 @@ public class GameDialogActor extends GameDialog {
 		
 		applyChangesButton.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				Array<Task> tasks = TaskBoxToTask(tasksBox.getItems());
+				Array<Task> tasks = taskBoxToTask(tasksBox.getItems());
 				Array<String> users = usersBox.getItems();
 				
 				if(isTaskRepeat(tasks)) {
@@ -186,7 +230,7 @@ public class GameDialogActor extends GameDialog {
 			}
 		});
 		
-		tasksBox.addListener(new ClickListener(Buttons.RIGHT) {
+		tasksBoxDialog.addListener(new ClickListener(Buttons.RIGHT) {
 
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -205,12 +249,26 @@ public class GameDialogActor extends GameDialog {
 			@Override
 			public boolean keyDown(InputEvent event, int keycode) {
 				if(keycode == Keys.ENTER) {
-					addTask();
-				}
-				if(keycode == Keys.SHIFT_RIGHT) {
 					addUser();
 				}
 				return true;
+			}
+		});
+		tasksDialog.addListener(new InputListener() {
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				if(keycode == Keys.ENTER) {
+					addTask();
+				}
+				return true;
+			}
+		});
+		
+		passwordText.setPasswordCharacter('*');
+		passwordText.setPasswordMode(true);
+		showPasswordCheckBox.addListener(new ChangeListener() {
+			public void changed (ChangeEvent event, Actor actor) {
+				passwordText.setPasswordMode(!passwordText.isPasswordMode());
 			}
 		});
 	}
@@ -225,7 +283,7 @@ public class GameDialogActor extends GameDialog {
 	}
 	
 	private void removeTask() {
-		removeInList(tasksBox);
+		removeInList(tasksBoxDialog);
 	}
 	private void removeUser() {
 		removeInList(usersBox);
@@ -236,37 +294,65 @@ public class GameDialogActor extends GameDialog {
 		addTask(taskName, tasksLimitUserSelect.getSelected());
 	}
 	private void addTask(String taskName, String taskLimit) {
-		if(!taskName.equals("")) {
+		if(!taskName.equals("") && validateFieldString(taskName)) {
+			boolean add = true;
 			String task = taskName + " [" + taskLimit + "]";
-			addInList(task, tasksBox);
+			String whatString = taskWhatText.getText();
+			if(validateTaskSecondaryFieldString(whatString)) {
+				task = task + " [" + taskWhatText.getText() + "]";
+			}
+			else add = false;
+			taskWhatText.setText("");
+			String whereString = taskWhereText.getText();
+			if(validateTaskSecondaryFieldString(whereString)) {
+				task = task + " [" + taskWhereText.getText() + "]";
+			}
+			else add = false;
+			taskWhereText.setText("");
+			if(add) {
+				addInList(task, tasksBoxDialog);
+			}
 		}
 	}
+	private boolean validateFieldString(String string) {
+		if(string.contains(TeacherWebSockets.TASKSPLIT) || string.contains(TeacherWebSockets.TASKFIELDPLIT) || 
+			string.contains(TeacherWebSockets.DATASPLIT) || string.contains(TeacherWebSockets.POINTSPLIT) || string.contains(TeacherWebSockets.SPLIT)) {
+			Resources.warningDialog.show("you musn't use '/', ',', ';', ':' or '-'", TeacherMain.teacherGamesScreen.getStage());
+			return false;
+		}
+		else return true;
+	}
+	private boolean validateTaskSecondaryFieldString(String string) {
+		if(string.contains(TeacherWebSockets.TASKFIELDPLIT) || string.contains(TeacherWebSockets.DATASPLIT) || 
+		   string.contains(TeacherWebSockets.POINTSPLIT) || string.contains(TeacherWebSockets.TASKSPLIT)) {
+			Resources.warningDialog.show("you musn't use '/', ';', ':' or '-' in secondary fields", TeacherMain.teacherGamesScreen.getStage());
+			return false;
+		}
+		else return true;
+	}
 	private void addUser(String user) {
-		addInList(user, usersBox);
+		addInListValidate(user, usersBox);
 	}
 	
 	private void addUser() {
 		String user = usersText.getText();
 		usersText.setText("");
-		addInList(user, usersBox);
+		addInListValidate(user, usersBox);
 	}
 	private void removeInList(List<String> list) {
 		String item = list.getSelected();
 		deleteItemtInStringList(list, item);
 		resizeStringList(list);
 	}
-	private void addInList(String string, List<String> list) {
-		if(!string.equals("")) {
-			if(string.contains(TeacherWebSockets.TASKSPLIT) || string.contains(TeacherWebSockets.TASKLIMITSPLIT) || 
-					string.contains(TeacherWebSockets.DATASPLIT) || string.contains(TeacherWebSockets.POINTSPLIT)) {
-				Resources.warningDialog.show("you musn't use ',', ';', ':' or '-'", TeacherMain.teacherGamesScreen.getStage());
-			}
-			else {
-				list.getItems().add(string);
-				list.setSelectedIndex(list.getItems().size - 1);
-				resizeStringList(list);
-			}
+	private void addInListValidate(String string, List<String> list) {
+		if(validateFieldString(string)) {
+			addInList(string, list);
 		}
+	}
+	private void addInList(String string, List<String> list) {
+		list.getItems().add(string);
+		list.setSelectedIndex(list.getItems().size - 1);
+		resizeStringList(list);
 	}
 	private void resizeStringList(List<String> list) {
 		list.validate();

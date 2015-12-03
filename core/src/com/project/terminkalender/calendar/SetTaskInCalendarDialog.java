@@ -22,8 +22,9 @@ public class SetTaskInCalendarDialog extends Dialog {
 	public static final String CANCEL = "CANCEL";
 	
 	private TaskCalendar task;
-	private Label partnerLabel, locationLabel;
+	private Label partnerLabel, locationLabel, whatLabel, whereLabel;
 	private Array<SelectBox<String>> partnertsboxes;
+	private SelectBox<String> whatBox, whereBox;
 	private TextFieldActor locationText;
 	private Array<String> users;
 
@@ -40,11 +41,13 @@ public class SetTaskInCalendarDialog extends Dialog {
 		task = new TaskCalendar();
 		partnerLabel = new Label("Mit? ", skin);
 		locationLabel = new Label("Wo? ", skin);
-		
-		
+		whatLabel = new Label("Was konkret? ", skin);
+		whereLabel = new Label("Wo konkret? ", skin);
 		
 		partnertsboxes = new Array<SelectBox<String>>();
 		locationText = new TextFieldActor("", skin);
+		whatBox = new SelectBox<String>(skin);
+		whereBox = new SelectBox<String>(skin);
 		TextButton acceptButton = new TextButton("OK", skin);
 		TextButton cancelButton = new TextButton("Cancel", skin, "redTextButton");
 		
@@ -103,9 +106,25 @@ public class SetTaskInCalendarDialog extends Dialog {
 			}
 		}
 		getContentTable().row();
+		if(task.getWhatArray().size > 0) {
+			getContentTable().add(whatLabel);
+			whatBox.setItems(task.getWhatArray());
+			if(!task.getWhat().equals("")) {
+				whatBox.setSelected(task.getWhat());
+			}
+			getContentTable().add(whatBox).width(226).row();
+		}
 		locationText.setText(task.getLocation());
 		getContentTable().add(locationLabel);
-		getContentTable().add(locationText).width(226);
+		getContentTable().add(locationText).width(226).row();
+		if(task.getWhereArray().size > 0) {
+			getContentTable().add(whereLabel);
+			whereBox.setItems(task.getWhereArray());
+			if(!task.getWhere().equals("")) {
+				whereBox.setSelected(task.getWhere());
+			}
+			getContentTable().add(whereBox).width(226);
+		}
 	}
 	
 	protected void result(Object object) {
@@ -130,6 +149,12 @@ public class SetTaskInCalendarDialog extends Dialog {
 			for(int index = 0; index < numberPartners; ++index) {
 				SelectBox<String> partnertsBox = partnertsboxes.get(index);
 				task.addPartner(partnertsBox.getSelected());
+			}
+			if(task.getWhatArray().size > 0) {
+				task.setWhat(whatBox.getSelected());
+			}
+			if(task.getWhereArray().size > 0) {
+				task.setWhere(whereBox.getSelected());
 			}
 			task.addDataServer();
 		}

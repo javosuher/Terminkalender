@@ -14,8 +14,9 @@ import com.project.terminkalender.Resources;
 public abstract class WebSockets {
 	public final static String POINTSPLIT = ":";
 	public final static String DATASPLIT = ";";
-	public final static String TASKSPLIT = ",";
-	public final static String TASKLIMITSPLIT = "-";
+	public final static String TASKSPLIT = "/";
+	public final static String SPLIT = ",";
+	public final static String TASKFIELDPLIT = "-";
 	public final static String CHATSPLIT = "=";
 	
 	public final static String TEACHERS = "Teachers";

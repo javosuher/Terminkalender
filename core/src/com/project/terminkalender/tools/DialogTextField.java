@@ -62,6 +62,9 @@ public class DialogTextField extends Dialog {
 				if(keycode == Keys.ENTER) {
 					sendText();
 				}
+				if(keycode == Keys.BACK) {
+					cancelText();
+				}
 				return true;
 			}
 		});

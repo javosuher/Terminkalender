@@ -20,10 +20,16 @@ import com.project.terminkalender.tools.TextFieldActor;
 import com.project.terminkalender.websockets.AppWebSockets;
 
 public class ChatActor extends Table {
+	public final static String LEFT = "Left";
+	public final static String RIGHT = "Right";
+	public final static float MAXMESSAGEWIDTH = 450;
+	public final static float STARTMESSAGEWIDTH = 60;
+	public final static float INSCROLL = 2;
+	
 	private Chat chat;
 	private final TextFieldActor textMessage;
 	private ScrollWindow scrollMessagesTable;
-	private boolean notInBottom;
+	private float notInBottom;
 
 	public ChatActor(final Skin skin) {
 		super(skin);
@@ -37,7 +43,7 @@ public class ChatActor extends Table {
 		TWindow sendWindow = new TWindow("", skin);
 		textMessage = new TextFieldActor("", skin, this);
 		ImageButton sendButton = new ImageButton(skin, "imageButtonArrowLeft");
-
+		
 		sendWindow.setMovable(false);
 		float widthMessages = 600;
 		float heightMessages = 450;
@@ -52,6 +58,8 @@ public class ChatActor extends Table {
 		
 		Label label = new Label("Choose an user", Resources.skin);
 		messageTable.add(label).expandX().center();
+		
+		notInBottom = 0;
 
 		sendButton.addListener(new ClickListener() {
 
@@ -82,12 +90,11 @@ public class ChatActor extends Table {
 				Resources.warningDialog.show("you musn't use '=', ';', or ':'", getStage());
 			}
 			else if(!chat.isEmptyChat()) {
-				TextButton newMessage = new TextButton(Chat.YOU + Chat.CHATSPACE + message, Resources.skin, "fullTextButtonDescription");
-				messageTable.add(newMessage).expandX().right().padRight(20).padTop(4).row();
+				TextButton newMessage = new TextButton(message, Resources.skin, "fullTextButtonDescription");
+				addMessageButton(messageTable, newMessage, RIGHT);
 				chat.addMessage(message);
 			}
 		}
-		srollBottom();
 		textMessage.setText("");
 	}
 	
@@ -99,10 +106,9 @@ public class ChatActor extends Table {
 			Table messageTable = chat.getMessageTable();
 			Array<Pair<String>> messages = chat.getMessages();
 			
-			TextButton newMessage = new TextButton(messages.peek().toString(), Resources.skin, "chatUserOrange");
-			messageTable.add(newMessage).expandX().left().padLeft(20).padTop(4).row();
-			
-			srollBottom();
+			TextButton newMessage = new TextButton(messages.peek().getSecond(), Resources.skin, "chatUserOrange");
+			addMessageButton(messageTable, newMessage, RIGHT);
+
 			chat.finishUpdateMessage();
 		}
 		
@@ -114,36 +120,62 @@ public class ChatActor extends Table {
 			
 			for(Pair<String> message : messages) {
 				if(message.getFirst().equals(Chat.YOU)) {
-					TextButton newMessage = new TextButton(message.toString(), Resources.skin, "fullTextButtonDescription");
-					messageTable.add(newMessage).expandX().right().padRight(20).padTop(4).row();
+					TextButton newMessage = new TextButton(message.getSecond(), Resources.skin, "fullTextButtonDescription");
+					addMessageButton(messageTable, newMessage, RIGHT);
+					
+					
 				}
 				else {
-					TextButton newMessage = new TextButton(message.toString(), Resources.skin, "chatUserOrange");
-					messageTable.add(newMessage).expandX().left().padLeft(20).padTop(4).row();
+					TextButton newMessage = new TextButton(message.getSecond(), Resources.skin, "chatUserOrange");
+					addMessageButton(messageTable, newMessage, LEFT);
 				}
 				
 			}
 			
-			srollBottom();
 			chat.finishUpdateMessage();
 			chat.finishUpdateMessages();
 		}
 		
 		scrollBottonAct();
 	}
+	private void addMessageButton(Table messageTable, TextButton textButton, String side) {
+		float width = MAXMESSAGEWIDTH;
+		float height = STARTMESSAGEWIDTH;
+		
+		float labelWidth = textButton.getLabel().getWidth() + 15;
+		textButton.getLabel().setWrap(true);
+		int widthDiference = (int) (labelWidth / (width));
+		if(widthDiference > 0) {
+			++widthDiference;
+			height = widthDiference * height;
+			if(side.equals(LEFT)) {
+				messageTable.add(textButton).expandX().left().padLeft(20).padTop(4).width(width).height(height).row();
+			}
+			else if(side.equals(RIGHT)) {
+				messageTable.add(textButton).expandX().right().padRight(20).padTop(4).width(width).height(height).row();
+			}
+		}
+		else {
+			if(side.equals(LEFT)) {
+				messageTable.add(textButton).expandX().left().padLeft(20).padTop(4).width(labelWidth).height(height).row();
+			}
+			else if(side.equals(RIGHT)) {
+				messageTable.add(textButton).expandX().right().padRight(20).padTop(4).width(labelWidth).height(height).row();
+			}
+		}
+		updateScroll();	
+	}
 	
-	private void srollBottom() {
-		Table messageTable = chat.getMessageTable();
-		messageTable.padBottom(70);
+	private void scrollBottom() {
 		ScrollPane scroll = scrollMessagesTable.getScrollTable();
 		scroll.setScrollY(scroll.getMaxY());
 	}
 	private void scrollBottonAct() {
-		if(notInBottom) {
-			srollBottom();
+		if(notInBottom > 0) {
+			scrollBottom();
 			ScrollPane scroll = scrollMessagesTable.getScrollTable();
 			if(scroll.getMaxY() == scroll.getVisualScrollY() && scroll.getMaxY() != 0) {
-				notInBottom = false;
+				--notInBottom;
 			}
 		}
 	}
@@ -167,6 +199,6 @@ public class ChatActor extends Table {
 	}
 	
 	public void updateScroll() {
-		notInBottom = true;
+		notInBottom = INSCROLL;
 	}
 }

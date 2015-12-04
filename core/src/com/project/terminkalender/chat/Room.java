@@ -1,5 +1,6 @@
 package com.project.terminkalender.chat;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.project.terminkalender.AppMain;
@@ -50,10 +51,13 @@ public class Room {
 		else chats.get(indexUser).addMessageServer(message);
 	}
 	public void updateMessageUser(String user, String message) {
-		int indexUser = indexUser(user);
-		Chat chat = chats.get(indexUser);
-		chat.addMessageServer(message);
-		setFirstChat(chat, indexUser);
+		if(!user.equals(AppMain.user.getUserName())) {
+			int indexUser = indexUser(user);
+			Chat chat = chats.get(indexUser);
+			chat.addMessageServer(message);
+			setFirstChat(chat, indexUser);
+		}
+		else Gdx.app.log("Chat", "Same ID");
 	}
 	public void setFirstChat(Chat chat) {
 		int index = indexUser(chat.getUser());

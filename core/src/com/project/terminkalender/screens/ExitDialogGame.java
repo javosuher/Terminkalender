@@ -6,7 +6,7 @@ import com.project.terminkalender.AppMain;
 public class ExitDialogGame  extends ExitDialog {
 
 	public ExitDialogGame(Skin skin) {
-		super(skin, "Do you want to exit the Game?");	
+		super(skin, "Willst du das Spiel beenden?");	
 	}
 
 	@Override

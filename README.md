@@ -20,9 +20,9 @@ Las dos aplicaciones están implementadas en el mismo proyecto de [LibGDX](https
 
 #### Servidor
 
-El servidor se encuentra en el directorio [chatServer](https://github.com/javosuher/Terminkalender/tree/master/chatServer), y para hacerlo funcionar se necesitará tener instalado PHP, Apache y MySQL, ya que usa una base de datos para almacenar información. Una guia de instalación para Ubuntu 14.04 sería la [siguiente](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-14-04). Para la configuración del usuario de la base de datos, se realiza en el fichero [config.php](https://github.com/javosuher/Terminkalender/blob/master/chatServer/src/MyApp/config.php), se puede dejar el que tengo yo o modificar al que se quiera.
+El servidor se encuentra en el directorio [server](https://github.com/javosuher/Terminkalender/tree/master/server), y para hacerlo funcionar se necesitará tener instalado PHP, Apache y MySQL, ya que usa una base de datos para almacenar información. Una guia de instalación para Ubuntu 14.04 sería la [siguiente](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-14-04). Para la configuración del usuario de la base de datos, se realiza en el fichero [config.php](https://github.com/javosuher/Terminkalender/blob/master/chatServer/src/MyApp/config.php), se puede dejar el que tengo yo o modificar al que se quiera.
 
-Para instalar las dependecias del servidor se usa [Composer](https://getcomposer.org/), así que suponiendo que ya tenemos descargado el fichero composer.phar en nuestro directorio de usuario, se instalarían con el siguiente comando estando situados en [chatServer](https://github.com/javosuher/Terminkalender/tree/master/chatServer):
+Para instalar las dependecias del servidor se usa [Composer](https://getcomposer.org/), así que suponiendo que ya tenemos descargado el fichero composer.phar en nuestro directorio de usuario, se instalarían con el siguiente comando estando situados en [server](https://github.com/javosuher/Terminkalender/tree/master/server):
 
 ```
 php ~/composer.phar install

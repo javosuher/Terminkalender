@@ -38,10 +38,21 @@ public class TeacherGame extends Game {
 		if(tasks.size == 0 || users.size == 0) {
 			Resources.warningDialog.show("You must add at least one task and one user", TeacherMain.teacherGamesScreen.getStage());
 		}
+		else if(isNotMinUser()) {
+			Resources.warningDialog.show("You must need the at least the same users as task partners", TeacherMain.teacherGamesScreen.getStage());
+		}
 		else {
 			TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;
 			TeacherMain.teacherWebSockets.openGame(name, teacherGamesScreen.getTeacher(), password, tasksToString(), usersToString());
 		}
+	}
+	private boolean isNotMinUser() {
+		for(Task task : tasks) {
+			if(users.size < task.getLimit()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	public void closeGamePetition() {
 		TeacherGamesScreen teacherGamesScreen = (TeacherGamesScreen) TeacherMain.teacherGamesScreen;

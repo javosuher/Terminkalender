@@ -107,7 +107,7 @@ public class ChatActor extends Table {
 			Array<Pair<String>> messages = chat.getMessages();
 			
 			TextButton newMessage = new TextButton(messages.peek().getSecond(), Resources.skin, "chatUserOrange");
-			addMessageButton(messageTable, newMessage, RIGHT);
+			addMessageButton(messageTable, newMessage, LEFT);
 
 			chat.finishUpdateMessage();
 		}

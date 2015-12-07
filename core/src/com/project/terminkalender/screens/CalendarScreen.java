@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -16,12 +17,15 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.project.terminkalender.AppMain;
 import com.project.terminkalender.Resources;
+import com.project.terminkalender.calendar.GuideDialog;
+import com.project.terminkalender.calendar.InteractionsDialog;
 import com.project.terminkalender.calendar.Slot;
 import com.project.terminkalender.calendar.SlotActor;
 import com.project.terminkalender.calendar.TaskCalendar;
 import com.project.terminkalender.calendar.TasktableActor;
 import com.project.terminkalender.calendar.Timetable;
 import com.project.terminkalender.calendar.TimetableActor;
+import com.project.terminkalender.tools.DialogActor;
 import com.project.terminkalender.tools.ReconnectButton;
 import com.project.terminkalender.websockets.WebSockets;
 
@@ -34,6 +38,8 @@ public class CalendarScreen extends AbstractScreen {
 	private TasktableActor tasktableActor;
 	private Array<TaskCalendar> tasks;
 	private TextButton changeToChatButton, validateButton;
+	private ImageButton guideButton, interactionButton;
+	private DialogActor interactionDialog, guideDialog;
 	private ReconnectButton reconnectButton;
 	private boolean closeGame, inCalendar;
 
@@ -54,6 +60,10 @@ public class CalendarScreen extends AbstractScreen {
 		}
 		changeToChatButton = new TextButton("Chat", Resources.skin);
 		validateButton = new TextButton("Aktivität beendet!", Resources.skin, "greenTextButton");
+		interactionButton = new ImageButton(Resources.skin, "interactionButton");
+		guideButton = new ImageButton(Resources.skin, "guideButton");
+		interactionDialog = new InteractionsDialog("", Resources.skin);
+		guideDialog = new GuideDialog("", Resources.skin);
 		closeGame = false;
 		inCalendar = false;
 		
@@ -62,9 +72,13 @@ public class CalendarScreen extends AbstractScreen {
 		stage.addActor(tasktableActor);
 		stage.addActor(changeToChatButton);
 		stage.addActor(validateButton);
+		stage.addActor(interactionButton);
+		stage.addActor(guideButton);
 		
 		changeToChatButton.setBounds(15, 2, 135, 66);
 		validateButton.setBounds(510, 2, 260, 66);
+		interactionButton.setBounds(340, 2, 100, 66);
+		guideButton.setBounds(220, 2, 100, 66);
 		
 		changeToChatButton.addListener(new ClickListener() {
 
@@ -80,6 +94,22 @@ public class CalendarScreen extends AbstractScreen {
 			@Override 
 			public void clicked(InputEvent event, float x, float y){
 				AppMain.webSockets.validateCalendarData();
+			}
+		});
+		
+		interactionButton.addListener(new ClickListener() {
+
+			@Override 
+			public void clicked(InputEvent event, float x, float y){
+				interactionDialog.show(stage);
+			}
+		});
+		
+		guideButton.addListener(new ClickListener() {
+
+			@Override 
+			public void clicked(InputEvent event, float x, float y){
+				guideDialog.show(stage);
 			}
 		});
 		
@@ -177,7 +207,7 @@ public class CalendarScreen extends AbstractScreen {
 		
 		if(closeGame) {
 			AppMain.setNewScreen(AppMain.loginScreen);
-			Resources.warningDialog.show("Game Closed", AppMain.loginGamesScreen.getStage());
+			Resources.warningDialog.show("Spiel momentan nicht verfügbar", AppMain.loginGamesScreen.getStage());
 			ChatScreen chatScreen = (ChatScreen) AppMain.chatScreen;
 			chatScreen.closeGameFalse();
 			closeGame = false;
@@ -203,5 +233,9 @@ public class CalendarScreen extends AbstractScreen {
 	}
 	public void ChatNormal() {
 		changeToChatButton.setStyle(Resources.skin.get("default", TextButtonStyle.class));
+	}
+	
+	public Array<Slot> getCalendarSlots() {
+		return timetableActor.getTimetable().getSlots();
 	}
 }

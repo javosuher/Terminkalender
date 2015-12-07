@@ -27,6 +27,19 @@ final public class Resources {
 		assets.load("return.png", Texture.class);
 		assets.load("reconnect.png", Texture.class);
 		assets.load("connect.png", Texture.class);
+		assets.load("question.png", Texture.class);
+		assets.load("interaction.png", Texture.class);
+		
+		assets.load("guide/1.png", Texture.class);
+		assets.load("guide/2.png", Texture.class);
+		assets.load("guide/3.png", Texture.class);
+		assets.load("guide/4.png", Texture.class);
+		assets.load("guide/5.png", Texture.class);
+		assets.load("guide/6.png", Texture.class);
+		assets.load("guide/7.png", Texture.class);
+		assets.load("guide/8.png", Texture.class);
+		assets.load("guide/9.png", Texture.class);
+		
 		assets.finishLoading();
 		skin = new KennySkin(application);
 		warningDialog = new WarningDialogActor(skin);

@@ -60,14 +60,7 @@ public class KennySkin extends Skin {
 		BitmapFont fontLarge = generator.generateFont(parameter);
 		generator.dispose();
 		
-		//BitmapFont font12 = new BitmapFont(Gdx.files.internal("skins/kenvector_future-12.fnt"));
-		//BitmapFont font18 = new BitmapFont(Gdx.files.internal("skins/kenvector_future-18.fnt"));
-		//BitmapFont font32 = new BitmapFont(Gdx.files.internal("skins/kenvector_future-32.fnt"));
-		
 		addRegions(blueAtlas);
-		//add("KenPixelFont12", font12);
-		//add("FontMed", font18);
-		//add("FontBig", font32);
 		add("FontMed", fontMed);
 		add("FontBig", fontBig);
 		add("FontLarge", fontLarge);
@@ -125,7 +118,23 @@ public class KennySkin extends Skin {
 																			 getDrawable("button_04"), 
 																			 new TextureRegionDrawable(image), 
 																			 new TextureRegionDrawable(image), 
-																			 new TextureRegionDrawable(image));	
+																			 new TextureRegionDrawable(image));
+		
+		image = new TextureRegion(Resources.assets.get("interaction.png", Texture.class));														 
+		final ImageButtonStyle interactionButtonStyle = new ImageButtonStyle(getDrawable("button_04"), 
+																			 getDrawable("button_02"), 
+																			 getDrawable("button_04"), 
+																			 new TextureRegionDrawable(image), 
+																			 new TextureRegionDrawable(image), 
+																			 new TextureRegionDrawable(image));
+		
+		image = new TextureRegion(Resources.assets.get("question.png", Texture.class));														 
+		final ImageButtonStyle guideButtonStyle = new ImageButtonStyle(getDrawable("button_04"), 
+																	   getDrawable("button_02"), 
+																	   getDrawable("button_04"), 
+																	   new TextureRegionDrawable(image), 
+																	   new TextureRegionDrawable(image), 
+																	   new TextureRegionDrawable(image));	
 			
 		
 		final ScrollPaneStyle scrollPaneStyle = new ScrollPaneStyle(getDrawable("color_widgettext"), 
@@ -231,7 +240,9 @@ public class KennySkin extends Skin {
 		add("imageButtonFolder", imageButtonStyleFolder); 
 		add("imageButtonArrowLeft", imageButtonStyleArrowLeft); 
 		add("imageButtonReconnect", imageButtonStyleReconnect);
+		add("interactionButton", interactionButtonStyle);
 		add("imageButtonBack", imageButtonStyleBack);
+		add("guideButton", guideButtonStyle);
 		add("default", scrollPaneStyle);
 		add("window", scrollPaneWindowStyle);
 		add("scrollPaneWindowTasksCalendar", scrollPaneWindowTasksCalendarStyle);

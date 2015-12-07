@@ -47,6 +47,8 @@ class Main implements MessageComponentInterface {
         $autoRelease = 1;
         $this->semaphore = sem_get($key, $maxAcquire, $permissions, $autoRelease);
 
+        date_default_timezone_set("Europe/Madrid");
+
         echo "Init Server!\n";
     }
 
@@ -492,7 +494,7 @@ class Main implements MessageComponentInterface {
     }
     private function pickUpOpenGameData($teacher, $gameName) {
         $game = $this->getOpenGame($teacher, $gameName);
-        $timeData = "Date: " . date("Y/m/d") . "\nGame Start: " . $game->getTimeStart() . "\nGame End: " . date("H:i:s") . "\n\n";
+        $timeData = "Date: " . date('l jS \of F Y') . "\nGame Start: " . $game->getTimeStart() . "\nGame End: " . date("H:i:s") . "\n\n";
         $data = $game->pickUpData();
         echo $gameName . " closed" . "\n";
         return $timeData . $data;

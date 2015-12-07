@@ -85,7 +85,7 @@ public class ChatScreen extends AbstractScreen {
 		
 		if(closeGame) {
 			AppMain.setNewScreen(AppMain.loginScreen);
-			Resources.warningDialog.show("Game Closed", AppMain.loginGamesScreen.getStage());
+			Resources.warningDialog.show("Spiel momentan nicht verfügbar", AppMain.loginGamesScreen.getStage());
 			CalendarScreen calendarScreen = (CalendarScreen) AppMain.calendarScreen;
 			calendarScreen.closeGameFalse();
 			closeGame = false;

@@ -24,22 +24,23 @@ public class GuideDialog extends DialogActor {
 		
 		Table table = new Table(skin);
 		ScrollPane scroll = new ScrollPane(table, skin, "window");
-		Label guide1Label = new Label("1. Mira las actividades disponibles", skin);
+		Label guide1Label = new Label("1. Schau, was du machen kannst!", skin);
 		Image image1 = new Image(Resources.assets.get("guide/1.png", Texture.class));
-		Label guide2Label = new Label("2. Mira con cuantos compañeros \n   necesitas hacer una actividad", skin);
+		Label guide2Label = new Label("2. Schau mit wie vielen Spielern du\n   eine Aktivität machen kannst!", skin);
 		Image image2 = new Image(Resources.assets.get("guide/2.png", Texture.class));
-		Label guide3Label = new Label("3. Habla en el chat con tus \n   compañeros para completar las \n   actividades en tu calendario", skin);
+		Label guide3Label = new Label("3. Benutz den Chat und sprich\n   mit deinen Spielpartnern!", skin);
 		Image image31 = new Image(Resources.assets.get("guide/3.png", Texture.class));
 		Image image32 = new Image(Resources.assets.get("guide/4.png", Texture.class));
-		Label guide4Label = new Label("4. Rellena tu calendario con \n   las actividades poniendote \n   de acuerdo con tus compañeros", skin);
+		Label guide4Label = new Label("4. Sprich mit deinen Spielpartnern und\n   ergänz deinen Terminkalender!", skin);
 		Image image4 = new Image(Resources.assets.get("guide/5.png", Texture.class));
-		Label guide5Label = new Label("5. Completa todos los datos \n   acorde a tus compañeros", skin);
+		Label guide5Label = new Label("5. Ergänz deinen Terminkalender mit\n   den Daten deiner Spielpartner!", skin);
 		Image image5 = new Image(Resources.assets.get("guide/6.png", Texture.class));
-		Label guide6Label = new Label("6. Valida tus actividades. \n   Si se ilumina la actividad en rojo, \n   los datos de tus compañeros \n  y los tuyos no concuerdan, \n   habla de nuevo con ellos \n   para corregirlos", skin);
-		Image image61 = new Image(Resources.assets.get("guide/7.png", Texture.class));
-		Image image62 = new Image(Resources.assets.get("guide/8.png", Texture.class));
-		Label guide7Label = new Label("7. Completa tu calendario \n   correctamente para finalizar \n   el juego", skin);
-		Image image7 = new Image(Resources.assets.get("guide/9.png", Texture.class));
+		Label guide6Label = new Label("6. Validier deine Aktivitäten!", skin);
+		Image image6 = new Image(Resources.assets.get("guide/7.png", Texture.class));
+		Label guide7Label = new Label("7. Achtung!! Die Farbe grün bedeutet,\n   dass deine Informationen und die\n   Informationen von deinem Spielpartner\n   identisch sind. Rot bedeutet, dass Eure\n   Informationen nicht identisch sind.", skin);
+		Image image7 = new Image(Resources.assets.get("guide/8.png", Texture.class));
+		Label guide8Label = new Label("8. Ergänz deinen Terminkalender!", skin);
+		Image image8 = new Image(Resources.assets.get("guide/9.png", Texture.class));
 		TextButton acceptButton = new TextButton("OK", skin);
 		
 		table.add(guide1Label).padBottom(20).row();
@@ -54,10 +55,11 @@ public class GuideDialog extends DialogActor {
 		table.add(guide5Label).padBottom(20).row();
 		table.add(image5).width(image1.getWidth() / 2).height(image1.getHeight() / 2).padBottom(20).row();
 		table.add(guide6Label).padBottom(20).row();
-		table.add(image61).width(image1.getWidth() / 2).height(image1.getHeight() / 2).padBottom(20).row();
-		table.add(image62).width(image1.getWidth() / 2).height(image1.getHeight() / 2).padBottom(20).row();
+		table.add(image6).width(image1.getWidth() / 2).height(image1.getHeight() / 2).padBottom(20).row();
 		table.add(guide7Label).padBottom(20).row();
 		table.add(image7).width(image1.getWidth() / 2).height(image1.getHeight() / 2).padBottom(20).row();
+		table.add(guide8Label).padBottom(20).row();
+		table.add(image8).width(image1.getWidth() / 2).height(image1.getHeight() / 2).padBottom(20).row();
 		
 		scroll.setFadeScrollBars(false);
 		

@@ -39,7 +39,7 @@ public class SetTaskInCalendarDialog extends Dialog {
 		padTop(35);
 		
 		task = new TaskCalendar();
-		partnerLabel = new Label("Mit? ", skin);
+		partnerLabel = new Label("Mit wem? ", skin);
 		locationLabel = new Label("Wo? ", skin);
 		whatLabel = new Label("Was konkret? ", skin);
 		whereLabel = new Label("Wo konkret? ", skin);

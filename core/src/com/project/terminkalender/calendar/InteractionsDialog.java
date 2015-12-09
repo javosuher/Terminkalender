@@ -67,8 +67,12 @@ public class InteractionsDialog extends DialogActor {
 		}
 		usersInteraction.sort();
 		
-		table.add(new Label("Benutzer     ", Resources.skin)).left();
-		table.add(new Label("Interaktion", Resources.skin)).right().row();
+		Label userLabel = new Label("Spieler        ", Resources.skin);
+		Label interactionLabel = new Label("Interaktion", Resources.skin);
+		Label separatorLabel = new Label("------------------------", Resources.skin);
+		table.add(userLabel).left();
+		table.add(interactionLabel).right().row();
+		table.add(separatorLabel).colspan(2).row();
 		for(int index = 0; index < usersInteraction.getSize(); ++index) {
 			table.add(usersInteraction.getIteractionNameByIndex(index)).left();
 			table.add(Integer.toString(usersInteraction.getIteractionNumByIndex(index))).right().row();

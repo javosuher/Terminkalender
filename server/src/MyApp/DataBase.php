@@ -4,24 +4,32 @@ namespace MyApp;
 use \PDO;
 
 class DataBase {
-	protected $dataBase;
+	protected $host, $port, $user, $pass, $dbName, $dataBase;
 
 	public function __construct() {
-        $host = "localhost"; // Hostname
-		$port = "3306"; // MySQL Port : Default : 3306
-		$user = "kalenderUser"; // Username
-		$pass = "1475"; //Password
-		$dbName = "Terminkalender"; // Database Name
+        $this->host = "localhost"; // Hostname
+		$this->port = "3306"; // MySQL Port : Default : 3306
+		$this->user = "kalenderUser"; // Username
+		$this->pass = "1475"; //Password
+		$this->dbName = "Terminkalender"; // Database Name
 
-		try {
-			$this->dataBase = new PDO('mysql:dbname=' . $dbName . ';host=' . $host . ';port=' . $port, $user, $pass);
-
-		} catch (PDOException $e) { 
-			echo "Connection failed: " . $e->getMessage(); 
-		}
+		$this->connect();
     }
 
-        // ------------------------------- Data Base Functions -------------------------------
+    private function connect() {
+        try {
+            $this->dataBase = new PDO('mysql:dbname=' . $this->dbName . ';host=' . $this->host . ';port=' . $this->port, $this->user, $this->pass);
+
+        } catch (PDOException $e) { 
+            echo "Connection failed: " . $e->getMessage(); 
+        }
+    }
+    private function reconnect() {
+        $this->dataBase = null;
+        $this->connect();
+    }
+
+    // ------------------------------- Data Base Functions -------------------------------
 
     public function searchTeachersInDataBase() {
         try {
@@ -31,6 +39,7 @@ class DataBase {
             return $result;
         } catch(PDOException $e) {
             echo $sql . "<br>" . $e->getMessage();
+            $this->reconnect();
         }
     }
     public function searchTeacherInDataBase($userTeacher) {
@@ -42,6 +51,7 @@ class DataBase {
  			return $result;
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
+            $this->reconnect();
     	}
     }
     public function storeTeacherInDataBase($userTeacher, $passwordTeacher) {
@@ -50,6 +60,7 @@ class DataBase {
  			$sql -> execute(array($userTeacher, $passwordTeacher));
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
+            $this->reconnect();
     	}
     }
     public function searchGamesInDataBase($teacher) {
@@ -60,6 +71,7 @@ class DataBase {
  			return $result;
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
+            $this->reconnect();
     	}
     }
     public function searchGameInDataBase($gameName, $teacher) {
@@ -70,6 +82,7 @@ class DataBase {
  			return $result;
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
+            $this->reconnect();
     	}
     }
     public function deleteGameInDataBase($gameName, $teacher) {
@@ -79,6 +92,7 @@ class DataBase {
  			$sql->fetchAll();
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
+            $this->reconnect();
     	}
     }
     public function storeNewGameInDataBase($gameName, $teacher, $password) {
@@ -87,6 +101,7 @@ class DataBase {
  			$sql -> execute(array($gameName, $teacher, $password, "", ""));
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
+            $this->reconnect();
     	}
     }
     public function updateGameInDataBase($gameName, $teacher, $password, $tasks, $users) {
@@ -97,6 +112,7 @@ class DataBase {
  			$sql -> execute(array(":gameName" => $gameName, ":teacher" => $teacher, ":password" => $password, ":tasks" => $tasks, ":users" => $users));
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
+            $this->reconnect();
     	}
     }
 }

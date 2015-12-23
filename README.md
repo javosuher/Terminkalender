@@ -20,15 +20,26 @@ Las dos aplicaciones están implementadas en el mismo proyecto de [LibGDX](https
 
 #### Servidor
 
-El servidor se encuentra en el directorio [server](https://github.com/javosuher/Terminkalender/tree/master/server), y para hacerlo funcionar se necesitará tener instalado PHP, Apache y MySQL, ya que usa una base de datos para almacenar información. Una guia de instalación para Ubuntu 14.04 sería la [siguiente](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-14-04). Para la configuración del usuario de la base de datos, se realiza en el fichero [config.php](https://github.com/javosuher/Terminkalender/blob/master/chatServer/src/MyApp/config.php), se puede dejar el que tengo yo o modificar al que se quiera.
+El servidor se encuentra en el directorio [server](https://github.com/javosuher/Terminkalender/tree/master/server), y para hacerlo funcionar se necesitará tener instalado PHP, Apache y MySQL, ya que usa una base de datos para almacenar información. Una guia de instalación para Ubuntu 14.04 sería la [siguiente](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-14-04). Para la configuración del usuario de la base de datos, se realiza en el fichero [DataBase.php](https://github.com/javosuher/Terminkalender/blob/master/server/src/MyApp/DataBase.php), y para la base de datos en MySQL se dispone del script [DataBase.sql](https://github.com/javosuher/Terminkalender/blob/master/server/src/MyApp/DataBase.sql). Se puede dejar el que tengo yo o modificar al que se quiera.
 
 Para instalar las dependecias del servidor se usa [Composer](https://getcomposer.org/), así que suponiendo que ya tenemos descargado el fichero composer.phar en nuestro directorio de usuario, se instalarían con el siguiente comando estando situados en [server](https://github.com/javosuher/Terminkalender/tree/master/server):
 
 ```
 php ~/composer.phar install
 ```
-Por último, para ejecutar el servidor en nuestro PC, estando de nuevo en la carpeta raíz del servidor, se introduce el siguiente comando:
+Para ejecutar el servidor en nuestro PC, estando de nuevo en la carpeta raíz del servidor, se introduce el siguiente comando:
 
 ```
 php Server.php
+```
+Cuando queramos dejar nuestro servidor en funcionamiento, lo mas recomendable es ejecutarlo usando [Supervisord](http://supervisord.org/). Supervisor es un demonio que lanza procesos y los mantiene en funcionamiento, y si por alguna razón se detiene la aplicación, este se aseguraria de ejecutarla de nuevo. Para instalar supervisor, se puede hacer mediante herramientas como pip, easy_install, apt-get o yum. Si tenemos Ubuntu se podría instalar con el siguiente comando:
+
+```
+sudo apt-get install supervisor
+```
+
+Por último, en el directorio del servidor disponemos de un fichero llamado [supervisor.conf](https://github.com/javosuher/Terminkalender/blob/master/server/supervisor.conf) configurado para ejecutarlo con supervisord. Para ello, hay que tener Supervisor instalado previamente y estando en la carpeta raíz del servidor, crear una carpeta llamada 'logs' (Esta carpeta recogerá las salidas que genera el servidor y supervisord, incluyendo los errores), y ejecutarlo con el siguiente comando:
+
+```
+sudo supervisord -c supervisor.conf
 ```

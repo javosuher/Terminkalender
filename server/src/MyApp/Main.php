@@ -55,6 +55,8 @@ class Main implements MessageComponentInterface {
     public function onOpen(ConnectionInterface $conn) {
         $this->clients->attach($conn);
         echo "New connection! ({$conn->resourceId})\n";
+        
+        $this->dataBase->checkDataBaseConnection();
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {

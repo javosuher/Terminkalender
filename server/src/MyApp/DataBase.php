@@ -12,7 +12,7 @@ class DataBase {
 		$this->user = "kalenderUser"; // Username
 		$this->pass = "1475"; //Password
 		$this->dbName = "Terminkalender"; // Database Name
-
+        
 		$this->connect();
     }
 
@@ -29,6 +29,13 @@ class DataBase {
         $this->connect();
     }
 
+    public function checkDataBaseConnection() {
+        if(empty($this->searchTeachersInDataBase())) {
+            echo "Data Base Error!! Reconnect!\n";
+            $this->reconnect();
+        }
+    }
+
     // ------------------------------- Data Base Functions -------------------------------
 
     public function searchTeachersInDataBase() {
@@ -36,6 +43,8 @@ class DataBase {
             $sql = $this->dataBase->prepare("SELECT username FROM teachers");
             $sql->execute();
             $result = $sql->fetchAll();
+            //echo "DataBase: searchTeachersInDataBase ----> ";
+            //print_r($result);
             return $result;
         } catch(PDOException $e) {
             echo $sql . "<br>" . $e->getMessage();
@@ -48,6 +57,8 @@ class DataBase {
     		$sql->bindValue(":username", $userTeacher);
     		$sql->execute();
  			$result = $sql->fetchAll();
+            //echo "DataBase: searchTeacherInDataBase by $userTeacher ----> ";
+            //print_r($result);
  			return $result;
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
@@ -68,6 +79,8 @@ class DataBase {
     		$sql = $this->dataBase->prepare("SELECT * FROM games WHERE teacher =:teacher");
     		$sql->execute(array(":teacher" => $teacher));
  			$result = $sql->fetchAll();
+            //echo "DataBase: searchGamesInDataBase ----> ";
+            //print_r($result);
  			return $result;
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();
@@ -79,6 +92,8 @@ class DataBase {
     		$sql = $this->dataBase->prepare("SELECT * FROM games WHERE name =:gameName AND teacher =:teacher");
     		$sql->execute(array(":gameName" => $gameName, ":teacher" => $teacher));
  			$result = $sql->fetchAll();
+            //echo "DataBase: searchGameInDataBase ----> ";
+            //print_r($result);
  			return $result;
     	} catch(PDOException $e) {
     		echo $sql . "<br>" . $e->getMessage();

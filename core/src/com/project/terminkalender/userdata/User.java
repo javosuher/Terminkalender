@@ -27,7 +27,7 @@ public class User {
 	}
 	public void enterGame(String name, String gameName, String password) {
 		if(name.equals("") || password.equals("")) {
-			Resources.warningDialog.show("You must fill the gaps", AppMain.loginGamesScreen.getStage());
+			Resources.warningDialog.show("Ergänz die Lücken!", AppMain.loginGamesScreen.getStage());
 		}
 		else if(name.contains(TeacherWebSockets.DATASPLIT) || name.contains(TeacherWebSockets.POINTSPLIT) || 
 				name.contains(TeacherWebSockets.TASKSPLIT) || password.contains(TeacherWebSockets.DATASPLIT) || password.contains(TeacherWebSockets.POINTSPLIT) || 
